@@ -84,19 +84,19 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex min-h-screen items-center justify-center">
       <div className="w-full max-w-[600px] px-[60px] lg:px-[120px] md:px-[100px] py-[50px] bg-white border border-gray-500 rounded-3xl shadow-md relative">
         <div className="flex justify-center">
-          <div className="w-16 h-16 bg-gray-400 rounded-full"></div>
+          <div className="w-16 h-16 bg-naviblue rounded-full"></div>
         </div>
-        <h2 className="mt-6 text-center text-13xl font-extrabold text-gray-200">
+        <h2 className="mt-6 text-center text-13xl font-extrabold text-naviblue">
           Create an account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <a
             href="/login"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+            className="font-medium text-naviblue hover:text-indigo-500 no-underline"
           >
             Log in
           </a>
@@ -115,7 +115,7 @@ const Register: React.FC = () => {
                     setFormData({ ...formData, companyName: e.target.value })
                   }
                   placeholder="Enter your company name"
-                  className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-naviblue focus:border-naviblue sm:text-sm"
                 />
               </div>
               {errors.companyName && (
@@ -131,7 +131,7 @@ const Register: React.FC = () => {
                 onChange={(e) =>
                   setFormData({ ...formData, companyCategory: e.target.value })
                 }
-                className="mt-1 block w-full  h-12 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full  h-12 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-naviblue focus:border-naviblue sm:text-sm"
               >
                 <option>Select category</option>
                 <option>Software</option>
@@ -157,7 +157,7 @@ const Register: React.FC = () => {
                   setFormData({ ...formData, email: e.target.value })
                 }
                 placeholder="Enter your email address"
-                className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-naviblue focus:border-naviblue sm:text-sm"
               />
             </div>
             {errors.email && (
@@ -189,7 +189,7 @@ const Register: React.FC = () => {
                     setFormData({ ...formData, password: e.target.value })
                   }
                   placeholder="Enter your password"
-                  className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-naviblue focus:border-naviblue sm:text-sm"
                 />
               </div>
               {errors.password && (
@@ -223,7 +223,7 @@ const Register: React.FC = () => {
                     })
                   }
                   placeholder="Confirm your password"
-                  className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-naviblue focus:border-naviblue sm:text-sm"
                 />
               </div>
               {errors.confirmPassword && (
@@ -236,7 +236,7 @@ const Register: React.FC = () => {
           </p>
           <button
             type="submit"
-            className="flex items-center justify-center w-[250px] h-[50px] mt-6 mx-auto py-2 px-4 border border-transparent rounded-3xl shadow-sm text-lg font-medium text-white bg-gray-200 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="flex items-center justify-center w-[250px] h-[50px] mt-6 mx-auto py-2 px-4 border border-transparent rounded-3xl shadow-sm text-lg font-medium text-white bg-naviblue hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-naviblue focus:border-naviblue"
           >
             Create an account
           </button>
