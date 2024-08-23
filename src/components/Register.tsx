@@ -57,7 +57,7 @@ const Register: React.FC = () => {
     if (!validateForm()) return;
 
     try {
-      await axios.post("http://localhost:8080/exhibitor/register", {
+      await axios.post(`${import.meta.env.VITE_SAVECONNECTS_SERVER_URL}/exhibitor/register`, {
         companyName: formData.companyName,
         companyCategory: formData.companyCategory,
         email: formData.email,
@@ -172,7 +172,7 @@ const Register: React.FC = () => {
                   onClick={togglePasswordVisibility}
                   className="absolute right-0 top-0 w-6 h-6 cursor-pointer"
                   alt="Toggle visibility"
-                  src={hide ? "/show.svg" : "/hide.svg"}
+                  src={hide ? "/icon/show.svg" : "/icon/hide.svg"}
                 />
                 <span
                   onClick={togglePasswordVisibility}
@@ -203,7 +203,7 @@ const Register: React.FC = () => {
                   onClick={toggleConfirmVisibility}
                   className="absolute right-0 top-0 w-6 h-6 cursor-pointer"
                   alt="Toggle visibility"
-                  src={confirmHide ? "/show.svg" : "/hide.svg"}
+                  src={confirmHide ? "/icon/show.svg" : "/icon/hide.svg"}
                 />
                 <span
                   onClick={toggleConfirmVisibility}

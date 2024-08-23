@@ -44,11 +44,12 @@ const Login: React.FC = () => {
     }
 
     try {
-      await axios.post("http://localhost:8080/user/login", {
+      const response = await axios.post(`${import.meta.env.VITE_SAVECONNECTS_SERVER_URL}/user/login`, {
         email: formData.email,
         password: formData.password,
       });
 
+      localStorage.setItem("accesstoken", response.data.token);
       toast.success("Login Successful");;
       navigate("/dashboard");
     } catch (error) {
@@ -99,7 +100,7 @@ const Login: React.FC = () => {
                 onClick={togglePasswordVisibility}
                 className="absolute right-0 top-0 w-6 h-6 cursor-pointer"
                 alt="Toggle visibility"
-                src={hide ? "/show.svg" : "/hide.svg"}
+                src={hide ? "/icon/show.svg" : "/icon/hide.svg"}
               />
               <span
                 onClick={togglePasswordVisibility}
@@ -127,7 +128,7 @@ const Login: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="flex items-center justify-center w-full h-[50px] mt-6 mx-auto py-2 px-4 border border-transparent rounded-3xl shadow-sm text-lg font-medium text-white bg-naviblue hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="flex items-center justify-center w-full h-[50px] mt-6 mx-auto py-2 px-4 border border-transparent rounded-3xl shadow-sm text-lg font-medium text-white bg-naviblue hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-naviblue"
           >
             Log in
           </button>

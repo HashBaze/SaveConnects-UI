@@ -66,7 +66,7 @@ const AdminRegister: React.FC = () => {
     }
 
     try {
-      await axios.post("http://localhost:8080/admin/register", {
+      await axios.post(`${import.meta.env.VITE_SAVECONNECTS_SERVER_URL}/admin/register`, {
         email: formData.email,
         password: formData.password,
       });
@@ -131,7 +131,7 @@ const AdminRegister: React.FC = () => {
                   onClick={togglePasswordVisibility}
                   className="absolute right-0 top-0 w-6 h-6 cursor-pointer "
                   alt="Toggle visibility"
-                  src={hide ? "/show.svg" : "/hide.svg"}
+                  src={hide ? "/icon/show.svg" : "/icon/hide.svg"}
                 />
                 <span
                   onClick={togglePasswordVisibility}
@@ -162,7 +162,7 @@ const AdminRegister: React.FC = () => {
                   onClick={toggleConfirmVisibility}
                   className="absolute right-0 top-0 w-6 h-6 cursor-pointer"
                   alt="Toggle visibility"
-                  src={confirmHide ? "/show.svg" : "/hide.svg"}
+                  src={confirmHide ? "/icon/show.svg" : "/icon/hide.svg"}
                 />
                 <span
                   onClick={toggleConfirmVisibility}
