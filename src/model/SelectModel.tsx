@@ -13,7 +13,7 @@ interface Option {
 
 interface SelectModelProps {
   options: Option[];
-  defaultCurrent: number;
+  defaultCurrent?: number;
   placeholder?: string;
   className?: string;
   onChange: (item: Option, name: string) => void;
@@ -23,14 +23,14 @@ interface SelectModelProps {
 
 const SelectModel: React.FC<SelectModelProps> = ({
   options,
-  defaultCurrent,
   placeholder,
   onChange,
   name,
   setapiEndPoint,
 }) => {
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState<Option>(options[defaultCurrent]);
+  const [current, setCurrent] = useState<Option | null>(null);
+  
   const onClose = useCallback(() => {
     setOpen(false);
   }, []);
@@ -42,7 +42,7 @@ const SelectModel: React.FC<SelectModelProps> = ({
     setCurrent(item);
     onChange(item, name);
     onClose();
-    setapiEndPoint(item?.categoryName);
+    setapiEndPoint(item.categoryName);
   };
 
   const handleClick = () => {
@@ -71,16 +71,22 @@ const SelectModel: React.FC<SelectModelProps> = ({
       onKeyPress={handleKeyPress}
       ref={ref}
     >
-      <span className="mr-5 capitalize">
+      <span className="mr-5 capitalize text-sm">
         {current?.categoryName || placeholder}
       </span>
 
       <span
-        className={`absolute right-4 top-1/2 -mt-1 pointer-events-none transition-transform duration-150 ease-in-out ${
-          open ? "rotate-225" : "rotate-45"
+        className={`absolute right-4 top-1/2 pointer-events-none transition-transform duration-150 ease-in-out ${
+          open ? "rotate-180 -mt-3" : "-mt-2"
         }`}
       >
-        <span className="block w-2 h-2 border-b-2 border-r-2 border-naviblue"></span>
+        <img
+          src="/icon/down.svg"
+          alt="down"
+          className="w-4 h-4"
+          width={24}
+          height={24}
+        />
       </span>
 
       <ul
@@ -95,28 +101,26 @@ const SelectModel: React.FC<SelectModelProps> = ({
         onKeyPress={stopPropagation}
       >
         {options.length ? (
-          <>
-            {options?.map((item, index) => (
-              <li
-                key={index}
-                data-value={index}
-                className={`capitalize text-naviblue py-2 px-4 cursor-pointer transition-all duration-200 ${
-                  item.categoryName === current?.categoryName
-                    ? "font-regular bg-gray-100"
-                    : "hover:bg-gray-50"
-                }`}
-                role="menuitem"
-                onClick={() => currentHandler(item)}
-                onKeyPress={(e: KeyboardEvent<HTMLLIElement>) => {
-                  stopPropagation(e);
-                }}
-              >
-                {item.categoryName}
-              </li>
-            ))}
-          </>
+          options.map((item, index) => (
+            <li
+              key={index}
+              data-value={index}
+              className={`capitalize text-naviblue text-sm py-2 px-4 cursor-pointer transition-all duration-200 ${
+                item.categoryName === current?.categoryName
+                  ? "font-regular bg-gray-100"
+                  : "hover:bg-gray-50"
+              }`}
+              role="menuitem"
+              onClick={() => currentHandler(item)}
+              onKeyPress={(e: KeyboardEvent<HTMLLIElement>) => {
+                stopPropagation(e);
+              }}
+            >
+              {item.categoryName}
+            </li>
+          ))
         ) : (
-          <></>
+          <li className="py-2 px-4 text-gray-500">No options available</li>
         )}
       </ul>
     </div>

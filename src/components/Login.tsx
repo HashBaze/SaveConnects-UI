@@ -52,7 +52,11 @@ const Login: React.FC = () => {
       localStorage.setItem("accesstoken", response.data.token);
       localStorage.setItem("companyNameKey", response.data.companyKey);
       toast.success("Login Successful");
-      navigate(`/${response.data.companyKey}`, { replace: true });
+      // Add delay before navigation
+      setTimeout(() => {
+        navigate(`/${response.data.companyKey}`, { replace: true });
+      }, 2000); // 2000ms delay (2 seconds)
+      
       //window.location.reload();
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -147,7 +151,7 @@ const Login: React.FC = () => {
             </p>
             <p className="relative mt-2 text-sm text-center text-gray-500">
               <a
-                href="#"
+                href="/forgot-password"
                 className="absolute right-0 top-0 text-naviblue hover:text-indigo-500 no-underline"
               >
                 Forgot your password?

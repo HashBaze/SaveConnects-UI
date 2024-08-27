@@ -7,6 +7,8 @@ import AdminRegister from "./components/AdminRegister";
 import Landing from "./components/Landing";
 import Dashboard from "./components/Dashboard";
 import Attendees from "./components/Attendees";
+import FogotPossword from "./components/FogotPossword";
+import ResetPossword from "./components/ResetPassword";
 import NotFound from "./components/NotFound";
 
 const AppRoutes: React.FC = () => {
@@ -26,6 +28,8 @@ const AppRoutes: React.FC = () => {
           { path: "admin", element: <AdminRegister /> },
           { path: companyNameKey, element: <Dashboard /> },
           { path: "attendees", element: <Attendees /> },
+          { path: "forgot-password", element: <FogotPossword /> },
+          { path: "reset-password", element: <ResetPossword /> },
         ],
       },
       { path: "*", element: <NotFound /> },

@@ -15,21 +15,25 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
   initialData,
 }) => {
   const [formData, setFormData] = useState<IProfileModal>({
+    salesPersonName: "",
     companyName: "",
     companyEmail: "",
     phoneNumber: "",
     companyAddress: "",
     about: "",
+    website: "",
   });
 
   useEffect(() => {
     if (initialData) {
       setFormData({
+        salesPersonName: initialData.salesPersonName,
         companyName: initialData.companyName,
         companyEmail: initialData.email,
         phoneNumber: initialData.phoneNumber,
         companyAddress: initialData.address,
         about: initialData.about,
+        website: initialData.website,
       });
     }
   }, [initialData]);
@@ -71,6 +75,16 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
             <div className="flex h-12 lg:h-16">
               <input
                 type="text"
+                name="salesPersonName"
+                value={formData.salesPersonName}
+                onChange={handleChange}
+                placeholder="Sales Person Name"
+                className="w-full text-sm lg:text-lg p-4 border rounded-md lg:rounded-lg"
+              />
+            </div>
+            <div className="flex h-12 lg:h-16">
+              <input
+                type="text"
                 name="companyName"
                 value={formData.companyName}
                 onChange={handleChange}
@@ -105,6 +119,16 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 value={formData.companyAddress}
                 onChange={handleChange}
                 placeholder="Company Address"
+                className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
+              />
+            </div>
+            <div className="flex h-12 lg:h-16">
+              <input
+                type="text"
+                name="website"
+                value={formData.website}
+                onChange={handleChange}
+                placeholder="Company Website"
                 className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
               />
             </div>

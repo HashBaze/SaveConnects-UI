@@ -48,20 +48,24 @@ const GetExhibitorProfile = async () => {
 
 const EditExhibitorProfile = async (
   _id: string | undefined,
+  salesPersonName: string,
   companyName: string,
   companyEmail: string,
   phoneNumber: string,
   companyAddress: string,
-  about: string
+  about: string,
+  website: string,
 ) => {
   await api.put(
     "/exhibitor/edit",
     {
       _id,
+      salesPersonName,
       companyName,
-      companyEmail,
+      email: companyEmail,
       phoneNumber,
-      companyAddress,
+      address: companyAddress,
+      website,
       about,
     },
     {
@@ -73,7 +77,7 @@ const EditExhibitorProfile = async (
 };
 
 const EditCoverImage = async (_id: string, coverImage: string) => {
-  await api.post(
+  await api.put(
     "/exhibitor/cover-image",
     {
       _id,
@@ -88,7 +92,7 @@ const EditCoverImage = async (_id: string, coverImage: string) => {
 };
 
 const EditGalleryImage = async (_id: string, image: string) => {
-  await api.post(
+  await api.put(
     "/exhibitor/add-gallery-image",
     {
       _id,
@@ -102,6 +106,21 @@ const EditGalleryImage = async (_id: string, image: string) => {
   );
 };
 
+const FogotPosswordRequest = async (email: string) => {
+  const response = await api.post("/user/forgot-password", {
+    email,
+  });
+  return response;
+}
+
+const ResetPasswordRequest = async (token: string, password: string) => {
+  const response = await api.put("/user/reset-password", {
+    token,
+    password
+  })
+  return response;
+}
+
 export {
   LoginRequest,
   RegisterRequest,
@@ -110,4 +129,6 @@ export {
   EditCoverImage,
   EditGalleryImage,
   EditExhibitorProfile,
+  FogotPosswordRequest,
+  ResetPasswordRequest,
 };

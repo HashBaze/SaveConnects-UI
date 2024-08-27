@@ -31,9 +31,11 @@ export interface IExhibitor {
 }
 
 export interface IProfileModal {
+  salesPersonName: string;
   companyName: string;
   companyEmail: string;
   phoneNumber: string;
   companyAddress: string;
   about: string;
+  website: string;
 }

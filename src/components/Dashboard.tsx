@@ -6,7 +6,12 @@ import QRGenerateModal from "../model/QRGenerateModel";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { analytics } from "../firebase/firebase";
 import { toast } from "react-toastify";
-import { EditCoverImage, EditGalleryImage, GetExhibitorProfile, EditExhibitorProfile } from "../utils/ApiRequest";
+import {
+  EditCoverImage,
+  EditGalleryImage,
+  GetExhibitorProfile,
+  EditExhibitorProfile,
+} from "../utils/ApiRequest";
 
 const Dashboard: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -143,15 +148,26 @@ const Dashboard: React.FC = () => {
 
   const handleSaveProfile = async (newData: IProfileModal) => {
     try {
-      await EditExhibitorProfile(exhibitorData?._id, newData.companyName, newData.companyEmail, newData.phoneNumber, newData.companyAddress, newData.about);
+      await EditExhibitorProfile(
+        exhibitorData?._id,
+        newData.salesPersonName,
+        newData.companyName,
+        newData.companyEmail,
+        newData.phoneNumber,
+        newData.companyAddress,
+        newData.about,
+        newData.website
+      );
       toast.success("Profile updated successfully");
       setExhibitorData((prevData) => ({
         ...prevData!,
+        salesPersonName: newData.salesPersonName,
         companyName: newData.companyName,
         email: newData.companyEmail,
         phoneNumber: newData.phoneNumber,
         address: newData.companyAddress,
         about: newData.about,
+        website: newData.website,
       }));
     } catch (err) {
       toast.error("Failed to update profile");
@@ -246,7 +262,10 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center justify-center lg:justify-start px-8 mb-4">
-          <button onClick={handleOpenQRModal} className="flex items-center justify-center bg-naviblue w-[200px] h-[50px] rounded-lg cursor-pointer hover:bg-naviblue/90 border border-naviblue">
+          <button
+            onClick={handleOpenQRModal}
+            className="flex items-center justify-center bg-naviblue w-[200px] h-[50px] rounded-lg cursor-pointer hover:bg-naviblue/90 border border-naviblue"
+          >
             <img
               src="/icon/qrcode.svg"
               alt="QR Code"

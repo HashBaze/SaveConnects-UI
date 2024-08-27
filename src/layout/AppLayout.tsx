@@ -13,7 +13,7 @@ const AppLayout: React.FC = () => {
   const companyNameKey = localStorage.getItem("companyNameKey") || "";
   const isCompanyRoute = location.pathname === `/${companyNameKey}`;
   
-  const excludedPaths = ["/login", "/signup", "/admin", "/"];
+  const excludedPaths = ["/login", "/signup", "/admin", "/", "/forgot-password", "/reset-password"];
   const shouldShowSidebar = !excludedPaths.includes(location.pathname);
 
   return (
