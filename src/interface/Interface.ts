@@ -20,6 +20,7 @@ export interface IExhibitor {
   email: string;
   salesPersonName: string;
   companyName: string;
+  companyNameKey: string;
   coverImage: string;
   companyCategory: string;
   phoneNumber: string;

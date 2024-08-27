@@ -53,7 +53,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-500 bg-opacity-20 flex items-center justify-center p-6">
+    <div className="fixed absolute z-50 inset-0 bg-gray-500 bg-opacity-20 flex items-center justify-center p-6">
       <div className="flex flex-col bg-white rounded-lg shadow-xl w-full max-w-[800px]">
         <div className="flex bg-naviblue text-white py-3 px-4 rounded-t-lg items-center justify-between">
           <div className="flex-grow text-center">
@@ -125,7 +125,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
             >
               <img
                 src="/icon/done.svg"
-                alt="QR Code"
+                alt="Done"
                 className="w-6 h-6"
                 style={{ filter: "brightness(0) invert(1)" }}
               />

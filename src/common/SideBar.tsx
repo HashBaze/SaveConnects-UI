@@ -1,13 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppProvider";
-import { menuItem } from "../data/MenuItem";
+import { getMenuItems } from "../data/MenuItem";
+import { IMenuItem } from "../interface/Interface";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
   const { sideBarOpen, toggleSideBar } = useAppContext();
   const [activeItem, setActiveItem] = React.useState<number | null>(null);
+  const [menuItems, setMenuItems] = useState<IMenuItem[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const companyNameKey = localStorage.getItem("companyNameKey");
+    setMenuItems(getMenuItems(companyNameKey));
+  }, []);
 
   const handleItemClick = (index: number, link: string) => {
     setActiveItem(index);
@@ -15,11 +22,11 @@ const Sidebar: React.FC = () => {
   };
 
   useEffect(() => {
-    const activeIndex = menuItem.findIndex(
+    const activeIndex = menuItems.findIndex(
       (item) => item.link === location.pathname
     );
     setActiveItem(activeIndex);
-  }, [location.pathname]);
+  }, [location.pathname, menuItems]);
 
   // useEffect(() => {
   //   const handleResize = () => {
@@ -59,7 +66,7 @@ const Sidebar: React.FC = () => {
         )}
       </div>
       <nav className="flex flex-col mt-4 space-y-6 p-4 overflow-y-auto">
-        {menuItem.map((item, index) => (
+        {menuItems.map((item, index) => (
           <a
             key={index}
             onClick={() => handleItemClick(index, item.link)}

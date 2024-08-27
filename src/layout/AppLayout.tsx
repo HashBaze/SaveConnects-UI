@@ -1,19 +1,20 @@
+import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppContext } from "../context/AppProvider";
-
 import SideBar from "../common/SideBar";
 import Header from "../common/Header";
 
-const AppLayout = () => {
+const AppLayout: React.FC = () => {
   const location = useLocation();
   const { sideBarOpen } = useAppContext();
+  
+  const companyNameKey = localStorage.getItem("companyNameKey") || "";
+  const isCompanyRoute = location.pathname === `/${companyNameKey}`;
+  
   const excludedPaths = ["/login", "/signup", "/admin", "/"];
-
   const shouldShowSidebar = !excludedPaths.includes(location.pathname);
-  const shouldShowHeader =
-    location.pathname === "/dashboard" || location.pathname === "/attendees";
 
   return (
     <div className="relative flex h-screen overflow-hidden">
@@ -23,14 +24,14 @@ const AppLayout = () => {
           shouldShowSidebar ? (sideBarOpen ? "lg:ml-64" : "lg:ml-0") : "lg:ml-0"
         } ${sideBarOpen && !shouldShowSidebar ? "ml-0" : ""}`}
       >
-        {shouldShowHeader && (
+        {shouldShowSidebar && (
           <Header
             breadcrumb={
-              location.pathname === "/dashboard" ? "Dashboard" : "Attendees"
+              isCompanyRoute ? "Dashboard" : location.pathname === "/dashboard" ? "Dashboard" : "Attendees"
             }
           />
         )}
-        <main className="flex-grow overflow-auto p-6">
+        <main className="flex-grow overflow-auto p-2">
           <Outlet />
         </main>
         <ToastContainer

@@ -1,18 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IExhibitor, IProfileModal } from "../interface/Interface";
-import axios from "axios";
 import ProfileModal from "../model/ProfileModel";
 import LoadingModal from "../model/LoadingModel";
+import QRGenerateModal from "../model/QRGenerateModel";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { analytics } from "../firebase/firebase";
+import { toast } from "react-toastify";
+import { EditCoverImage, EditGalleryImage, GetExhibitorProfile, EditExhibitorProfile } from "../utils/ApiRequest";
 
 const Dashboard: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isQRModalOpen, setIsQRModalOpen] = useState<boolean>(false);
   const [exhibitorData, setExhibitorData] = useState<IExhibitor | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+
+  const handleOpenQRModal = () => setIsQRModalOpen(true);
+  const handleCloseQRModal = () => setIsQRModalOpen(false);
 
   const coverImageInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
@@ -23,19 +29,13 @@ const Dashboard: React.FC = () => {
     if (accessToken) {
       const fetchExhibitorData = async () => {
         try {
-          const response = await axios.get(
-            `${import.meta.env.VITE_SAVECONNECTS_SERVER_URL}/exhibitor/profile`,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
+          const response = await GetExhibitorProfile();
           setExhibitorData({
             _id: response.data.exhibitor._id,
             email: response.data.exhibitor.email,
             salesPersonName: response.data.exhibitor.salesPersonName,
             companyName: response.data.exhibitor.companyName,
+            companyNameKey: response.data.exhibitor.companyNameKey,
             coverImage: response.data.exhibitor.coverImage,
             companyCategory: response.data.exhibitor.companyCategory,
             phoneNumber: response.data.exhibitor.phoneNumber,
@@ -101,20 +101,7 @@ const Dashboard: React.FC = () => {
           `cover-images/${file.name}`
         );
 
-        await axios.put(
-          `${
-            import.meta.env.VITE_SAVECONNECTS_SERVER_URL
-          }/exhibitor/cover-image`,
-          {
-            _id: exhibitorData._id,
-            coverImage: imageUrl,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        await EditCoverImage(exhibitorData._id, imageUrl);
 
         setExhibitorData((prevData) => ({
           ...prevData!,
@@ -140,20 +127,7 @@ const Dashboard: React.FC = () => {
           `gallery-images/${file.name}`
         );
 
-        await axios.post(
-          `${
-            import.meta.env.VITE_SAVECONNECTS_SERVER_URL
-          }/exhibitor/add-gallery-image`,
-          {
-            _id: exhibitorData._id,
-            image: imageUrl,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        await EditGalleryImage(exhibitorData._id, imageUrl);
 
         setExhibitorData((prevData) => ({
           ...prevData!,
@@ -169,23 +143,8 @@ const Dashboard: React.FC = () => {
 
   const handleSaveProfile = async (newData: IProfileModal) => {
     try {
-      const data = {
-        _id: exhibitorData?._id,
-        companyName: newData.companyName,
-        email: newData.companyEmail,
-        phoneNumber: newData.phoneNumber,
-        address: newData.companyAddress,
-        about: newData.about,
-      };
-      await axios.put(
-        `${import.meta.env.VITE_SAVECONNECTS_SERVER_URL}/exhibitor/edit`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      await EditExhibitorProfile(exhibitorData?._id, newData.companyName, newData.companyEmail, newData.phoneNumber, newData.companyAddress, newData.about);
+      toast.success("Profile updated successfully");
       setExhibitorData((prevData) => ({
         ...prevData!,
         companyName: newData.companyName,
@@ -195,6 +154,7 @@ const Dashboard: React.FC = () => {
         about: newData.about,
       }));
     } catch (err) {
+      toast.error("Failed to update profile");
       console.error("Failed to update profile:", err);
     }
   };
@@ -286,7 +246,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center justify-center lg:justify-start px-8 mb-4">
-          <button className="flex items-center justify-center bg-naviblue w-[200px] h-[50px] rounded-lg cursor-pointer hover:bg-naviblue/90 border border-naviblue">
+          <button onClick={handleOpenQRModal} className="flex items-center justify-center bg-naviblue w-[200px] h-[50px] rounded-lg cursor-pointer hover:bg-naviblue/90 border border-naviblue">
             <img
               src="/icon/qrcode.svg"
               alt="QR Code"
@@ -306,7 +266,7 @@ const Dashboard: React.FC = () => {
         <div className="text-[16px] text-gray-500 font-medium px-8 mt-1">
           Best Products
         </div>
-        <div className="flex flex-col items-center justify-center lg:justify-start px-8 mt-4 mb-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid lg:grid-cols-4 lg:gap-8">
+        <div className="flex flex-col items-center justify-center lg:justify-start px-8 mt-4 mb-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid lg:grid-cols-5 lg:gap-8">
           {exhibitorData?.gallery.map((image, index) => (
             <div
               className="flex flex-col items-center justify-center bg-naviblue w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-naviblue/90 border border-naviblue shadow-lg"
@@ -341,6 +301,11 @@ const Dashboard: React.FC = () => {
         onClose={handleCloseModal}
         onSave={handleSaveProfile}
         initialData={exhibitorData}
+      />
+      <QRGenerateModal
+        isOpen={isQRModalOpen}
+        onClose={handleCloseQRModal}
+        companyKey={exhibitorData?.companyNameKey}
       />
       {isUploading && <LoadingModal />}
     </div>
