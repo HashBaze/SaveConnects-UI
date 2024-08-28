@@ -30,6 +30,15 @@ export interface IExhibitor {
   gallery: string[];
 }
 
+export interface IAttendee {
+  _id?: string;
+  name: string;
+  email: string;
+  contactNumber: string;
+  companyName: string;
+  note: string;
+}
+
 export interface IProfileModal {
   salesPersonName: string;
   companyName: string;

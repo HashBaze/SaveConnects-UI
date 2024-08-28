@@ -28,9 +28,8 @@ const Dashboard: React.FC = () => {
   const coverImageInputRef = useRef<HTMLInputElement>(null);
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
-  const accessToken = localStorage.getItem("accesstoken");
-
   useEffect(() => {
+    const accessToken = localStorage.getItem("accesstoken");
     if (accessToken) {
       const fetchExhibitorData = async () => {
         try {
