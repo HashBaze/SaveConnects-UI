@@ -153,6 +153,16 @@ const DeleteAttendee = async (_id: string, attendeeId: string | undefined) => {
   return response;
 };
 
+const sendInquiryEmail = async (name: string, from: string, to: string, message: string) => {
+  const response = await api.post("/mail/send-inquiry-email", {
+    name,
+    from,
+    to,
+    message,
+  });
+  return response;
+}
+
 export {
   LoginRequest,
   RegisterRequest,
@@ -167,4 +177,5 @@ export {
   AddAttendee,
   EditAttendee,
   DeleteAttendee,
+  sendInquiryEmail,
 };

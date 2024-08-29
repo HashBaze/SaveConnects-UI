@@ -17,15 +17,24 @@ import NotFoundPage from "./pages/NotFoundPage";
 import LoadingPage from "./pages/LoadingPage";
 
 import { companyKeyExistsRequest } from "./utils/ApiRequest";
+import ProfileCardPage from "./pages/ProfileCardPage";
 
 const AppRoutes: React.FC = () => {
   const [validCompanyKey, setValidCompanyKey] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
   const path = window.location.pathname.split("/").pop() || "/";
   useEffect(() => {
     const checkCompanyKey = async () => {
-      const availableRoutes = ["signup", "login", "admin", "forgot-password", "reset-password", "attendees"];
+      const availableRoutes = [
+        "signup",
+        "login",
+        "admin",
+        "forgot-password",
+        "reset-password",
+        "attendees",
+      ];
 
       if (!availableRoutes.includes(path)) {
         try {
@@ -45,6 +54,16 @@ const AppRoutes: React.FC = () => {
       setLoading(false);
     };
 
+    const checkIfSignedIn = async () => {
+      const accesstoken = localStorage.getItem("accesstoken");
+      const companyNameKey = localStorage.getItem("companyNameKey");
+
+      if (accesstoken && companyNameKey && companyNameKey === path) {
+        setIsSignedIn(true);
+      }
+    };
+
+    checkIfSignedIn();
     checkCompanyKey();
   });
 
@@ -57,7 +76,18 @@ const AppRoutes: React.FC = () => {
         { path: "signup", element: <RegisterPage /> },
         { path: "login", element: <LoginPage /> },
         { path: "admin", element: <AdminRegisterPage /> },
-        { path: ":companyNameKey", element: validCompanyKey ? <DashboardPage /> : <NotFoundPage /> },
+        {
+          path: ":companyNameKey",
+          element: validCompanyKey ? (
+            isSignedIn ? (
+              <DashboardPage />
+            ) : (
+              <ProfileCardPage />
+            )
+          ) : (
+            <NotFoundPage />
+          ),
+        },
         { path: "attendees", element: <AttendeePage /> },
         { path: "forgot-password", element: <FogotPasswordPage /> },
         { path: "reset-password", element: <ResetPasswordPage /> },

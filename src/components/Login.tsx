@@ -54,7 +54,7 @@ const Login: React.FC = () => {
       toast.success("Login Successful");
       navigate(`/${response.data.companyKey}`, { replace: true });
       
-      //window.location.reload();
+      window.location.reload();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data.message || "Login failed");

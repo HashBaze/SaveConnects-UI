@@ -14,7 +14,7 @@ const QRGenerateModal: React.FC<QRGenerateModalProps> = ({
   companyKey,
 }) => {
   const qrRef = useRef<HTMLDivElement>(null);
-  const exhibitorUrl = `http://localhost:3000/${companyKey}`;
+  const exhibitorUrl = `${import.meta.env.VITE_SAVECONNECTS_FRONT_URL}/${companyKey}`;
 
   if (!isOpen) return null;
 
@@ -24,7 +24,7 @@ const QRGenerateModal: React.FC<QRGenerateModalProps> = ({
       const pngUrl = canvas.toDataURL("image/png");
       const downloadLink = document.createElement("a");
       downloadLink.href = pngUrl;
-      downloadLink.download = "qr_code.png";
+      downloadLink.download = `${companyKey}.png`;
       downloadLink.click();
     }
   };
@@ -34,8 +34,8 @@ const QRGenerateModal: React.FC<QRGenerateModalProps> = ({
     if (canvas) {
       const pdf = new jsPDF();
       const pngUrl = canvas.toDataURL("image/png");
-      pdf.addImage(pngUrl, "PNG", 15, 40, 180, 180);
-      pdf.save("qr_code.pdf");
+      pdf.addImage(pngUrl, "PNG", 15, 40, 100, 100);
+      pdf.save(`${companyKey}.pdf`);
     }
   };
 

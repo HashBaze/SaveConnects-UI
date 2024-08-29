@@ -99,6 +99,7 @@ const Register: React.FC = () => {
       toast.success("Registration Successful");
       reset();
       navigate(`/${response.data.companyKey}`, { replace: true });
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting form: ", error);
     }
