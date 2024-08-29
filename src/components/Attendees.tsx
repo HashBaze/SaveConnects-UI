@@ -22,7 +22,7 @@ const Attendees: React.FC = () => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage] = useState(2);
+  const [itemsPerPage] = useState(12);
 
   const handleOpenModel = () => setIsOpen(true);
 

@@ -5,15 +5,16 @@ import {
   RouteObject,
 } from "react-router-dom";
 import AppLayout from "./layout/AppLayout";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import AdminRegister from "./components/AdminRegister";
-import Landing from "./components/Landing";
-import Dashboard from "./components/Dashboard";
-import Attendees from "./components/Attendees";
-import FogotPossword from "./components/FogotPossword";
-import ResetPossword from "./components/ResetPassword";
-import NotFound from "./components/NotFound";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import AdminRegisterPage from "./pages/AdminRegisterPage";
+import LandingPage from "./pages/LandingPage";
+import DashboardPage from "./pages/DashboardPage";
+import AttendeePage from "./pages/AttendeePage";
+import FogotPasswordPage from "./pages/FogotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import LoadingPage from "./pages/LoadingPage";
 
 import { companyKeyExistsRequest } from "./utils/ApiRequest";
 
@@ -52,21 +53,21 @@ const AppRoutes: React.FC = () => {
       path: "/",
       element: <AppLayout />,
       children: [
-        { index: true, element: <Landing /> },
-        { path: "signup", element: <Register /> },
-        { path: "login", element: <Login /> },
-        { path: "admin", element: <AdminRegister /> },
-        { path: ":companyNameKey", element: validCompanyKey ? <Dashboard /> : <NotFound /> },
-        { path: "attendees", element: <Attendees /> },
-        { path: "forgot-password", element: <FogotPossword /> },
-        { path: "reset-password", element: <ResetPossword /> },
+        { index: true, element: <LandingPage /> },
+        { path: "signup", element: <RegisterPage /> },
+        { path: "login", element: <LoginPage /> },
+        { path: "admin", element: <AdminRegisterPage /> },
+        { path: ":companyNameKey", element: validCompanyKey ? <DashboardPage /> : <NotFoundPage /> },
+        { path: "attendees", element: <AttendeePage /> },
+        { path: "forgot-password", element: <FogotPasswordPage /> },
+        { path: "reset-password", element: <ResetPasswordPage /> },
       ],
     },
-    { path: "*", element: <NotFound /> },
+    { path: "*", element: <NotFoundPage /> },
   ];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingPage />;
   }
 
   const router = createBrowserRouter(routes);
