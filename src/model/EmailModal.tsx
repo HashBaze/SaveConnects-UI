@@ -48,7 +48,7 @@ const EmailModal: React.FC<EmailModalProps> = ({
   return (
     <div className="fixed inset-0 absolute mx-auto md:ml-[-30px] flex items-center justify-center bg-gray-900 bg-opacity-50 z-50 p-4">
       <div className="bg-white rounded-lg p-6 max-w-md w-full">
-        <h2 className="text-lg text-naviblue font-semibold mb-4">Connect</h2>
+        <h2 className="text-lg text-naviblue font-semibold mb-4">Send Email</h2>
         <p className="mb-4 text-sm text-gray-600">
           Share your contact details with {exhibitorName}
         </p>
