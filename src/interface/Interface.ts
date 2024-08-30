@@ -13,6 +13,10 @@ export interface AppContextType {
   sideBarOpen: boolean;
   setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>
   toggleSideBar: () => void;
+  companyKey: string;
+  setCompanyKey: React.Dispatch<React.SetStateAction<string>>;
+  exhibitor: IExhibitor;
+  setExhibitor: React.Dispatch<React.SetStateAction<IExhibitor>>;
 }
 
 export interface IExhibitor {
@@ -28,6 +32,15 @@ export interface IExhibitor {
   address: string;
   about: string;
   gallery: string[];
+}
+
+export interface IAttendee {
+  _id?: string;
+  name: string;
+  email: string;
+  contactNumber: string;
+  companyName: string;
+  note: string;
 }
 
 export interface IProfileModal {

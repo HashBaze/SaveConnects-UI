@@ -52,12 +52,9 @@ const Login: React.FC = () => {
       localStorage.setItem("accesstoken", response.data.token);
       localStorage.setItem("companyNameKey", response.data.companyKey);
       toast.success("Login Successful");
-      // Add delay before navigation
-      setTimeout(() => {
-        navigate(`/${response.data.companyKey}`, { replace: true });
-      }, 2000); // 2000ms delay (2 seconds)
+      navigate(`/${response.data.companyKey}`, { replace: true });
       
-      //window.location.reload();
+      window.location.reload();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data.message || "Login failed");

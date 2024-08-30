@@ -26,7 +26,24 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       value={{
         sideBarOpen,
         setSideBarOpen,
-        toggleSideBar
+        toggleSideBar,
+        companyKey: "",
+        setCompanyKey: () => {},
+        exhibitor: {
+          _id: "",
+          email: "",
+          salesPersonName: "",
+          companyName: "",
+          companyNameKey: "",
+          coverImage: "",
+          companyCategory: "",
+          phoneNumber: "",
+          website: "",
+          address: "",
+          about: "",
+          gallery: [],
+        },
+        setExhibitor: () => {},
       }}
     >
       {children}

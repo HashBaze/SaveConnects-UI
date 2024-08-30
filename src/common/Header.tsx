@@ -6,7 +6,7 @@ const Header: React.FC<Breadcrumb> = ({ breadcrumb }: Breadcrumb) => {
   const { toggleSideBar } = useAppContext();
 
   return (
-    <div className="relative flex h-12 items-center justify-between bg-white p-4 shadow-md border-b border-gray-200">
+    <div className="relative top-0 z-10 fixed flex h-12 items-center justify-between bg-white p-4 shadow-md border-b border-gray-200">
       <div className="flex items-center">
         <span className="font-bold text-[22px] text-naviblue hidden md:inline">
           {breadcrumb}
