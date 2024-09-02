@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - staging
-      - Develop-qa
+      - develop-qa
       - master
 
 jobs:
   deploy_qa:
-    if: github.ref == 'refs/heads/Develop-qa'
+    if: github.ref == 'refs/heads/develop-qa'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -28,9 +28,9 @@ jobs:
 
             if [ -d ".git" ]; then
               git reset --hard HEAD
-              git pull origin Develop-qa
+              git pull origin develop-qa
             else
-              git clone -b Develop-qa git@github.com:HashBaze/SaveConnects-UI.git .
+              git clone -b develop-qa git@github.com:HashBaze/SaveConnects-UI.git .
             fi
 
             npm install --force
