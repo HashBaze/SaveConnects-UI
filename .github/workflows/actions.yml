@@ -23,15 +23,16 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            mkdir -p apps/save-connects/frontend && cd apps/save-connects/frontend
-            
+            mkdir -p /home/tishan/apps/save-connects/frontend
+            cd /home/tishan/apps/save-connects/frontend
+
             if [ -d ".git" ]; then
-              git stash
+              git reset --hard HEAD
               git pull origin Develop-qa
             else
-              git clone -b Develop-qa https://github.com/HashBaze/SaveConnects-UI
+              git clone -b Develop-qa https://github.com/HashBaze/SaveConnects-UI .
             fi
-            
+
             npm install --force
             npm run build
 
