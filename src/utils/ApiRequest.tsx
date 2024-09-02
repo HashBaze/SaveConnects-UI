@@ -96,7 +96,7 @@ const ResetPasswordRequest = async (token: string, password: string) => {
   return response;
 };
 
-const companyKeyExistsRequest = async (companyNameKey: string) => {
+const CompanyKeyExistsRequest = async (companyNameKey: string) => {
   const response = await api.post("/exhibitor/check-company-name-key", {
     companyNameKey,
   });
@@ -153,12 +153,46 @@ const DeleteAttendee = async (_id: string, attendeeId: string | undefined) => {
   return response;
 };
 
-const sendInquiryEmail = async (name: string, from: string, to: string, message: string) => {
+const SendInquiryEmail = async (name: string, from: string, to: string, message: string) => {
   const response = await api.post("/mail/send-inquiry-email", {
     name,
     from,
     to,
     message,
+  });
+  return response;
+}
+
+const GetAllExhibitors = async () => {
+  const response = await api.get("/admin/get-all-exhibitors");
+  return response;
+};
+
+const ExhibitorStatusChange = async (email: string, status: boolean) => {
+  const response = await api.post("/admin/change-exhibitor-status", {
+    email,
+    status,
+  });
+  return response;
+}
+
+const CreateCategory = async (name: string) => {
+  const response = await api.post("/category/create", {
+    name,
+  });
+  return response;
+}
+
+const GetAllCategories = async () => {
+  const response = await api.get("/category/all");
+  return response;
+}
+
+const DeleteCategory = async (name: string) => {
+  const response = await api.delete("/category/delete", {
+    data: {
+      name,
+    },
   });
   return response;
 }
@@ -173,9 +207,14 @@ export {
   EditExhibitorProfile,
   FogotPosswordRequest,
   ResetPasswordRequest,
-  companyKeyExistsRequest,
+  CompanyKeyExistsRequest,
   AddAttendee,
   EditAttendee,
   DeleteAttendee,
-  sendInquiryEmail,
+  SendInquiryEmail,
+  GetAllExhibitors,
+  ExhibitorStatusChange,
+  CreateCategory,
+  GetAllCategories,
+  DeleteCategory
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { sendInquiryEmail } from "../utils/ApiRequest";
+import { SendInquiryEmail } from "../utils/ApiRequest";
 import { toast } from "react-toastify";
 
 interface EmailModalProps {
@@ -34,7 +34,7 @@ const EmailModal: React.FC<EmailModalProps> = ({
     if (exhibitorEmail) {
       try {
         setLoading(true);
-        await sendInquiryEmail(name, email, exhibitorEmail, message);
+        await SendInquiryEmail(name, email, exhibitorEmail, message);
         toast.success("Email sent successfully");
         onClose();
       } catch (err) {

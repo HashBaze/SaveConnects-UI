@@ -6,17 +6,14 @@ import React, {
   MouseEvent,
 } from "react";
 import { useClickAway } from "react-use";
-
-interface Option {
-  categoryName: string;
-}
+import { ICategory } from "../interface/Interface";
 
 interface SelectModelProps {
-  options: Option[];
+  options: ICategory[];
   defaultCurrent?: number;
   placeholder?: string;
   className?: string;
-  onChange: (item: Option, name: string) => void;
+  onChange: (item: ICategory, name: string) => void;
   name: string;
   setapiEndPoint: (categoryName: string) => void;
 }
@@ -29,7 +26,7 @@ const SelectModel: React.FC<SelectModelProps> = ({
   setapiEndPoint,
 }) => {
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState<Option | null>(null);
+  const [current, setCurrent] = useState<ICategory | null>(null);
   
   const onClose = useCallback(() => {
     setOpen(false);
@@ -38,11 +35,11 @@ const SelectModel: React.FC<SelectModelProps> = ({
   const ref = useRef<HTMLDivElement>(null);
   useClickAway(ref, onClose);
 
-  const currentHandler = (item: Option) => {
+  const currentHandler = (item: ICategory) => {
     setCurrent(item);
     onChange(item, name);
     onClose();
-    setapiEndPoint(item.categoryName);
+    setapiEndPoint(item.name);
   };
 
   const handleClick = () => {
@@ -72,7 +69,7 @@ const SelectModel: React.FC<SelectModelProps> = ({
       ref={ref}
     >
       <span className="mr-5 capitalize text-sm">
-        {current?.categoryName || placeholder}
+        {current?.name || placeholder}
       </span>
 
       <span
@@ -106,7 +103,7 @@ const SelectModel: React.FC<SelectModelProps> = ({
               key={index}
               data-value={index}
               className={`capitalize text-naviblue text-sm py-2 px-4 cursor-pointer transition-all duration-200 ${
-                item.categoryName === current?.categoryName
+                item.name === current?.name
                   ? "font-regular bg-gray-100"
                   : "hover:bg-gray-50"
               }`}
@@ -116,7 +113,7 @@ const SelectModel: React.FC<SelectModelProps> = ({
                 stopPropagation(e);
               }}
             >
-              {item.categoryName}
+              {item.name}
             </li>
           ))
         ) : (

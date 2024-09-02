@@ -2,6 +2,7 @@ import React from "react";
 
 interface DeleteConfirmModalProps {
   isOpen: boolean;
+  isCategory: boolean;
   name: string | undefined;
   onClose: () => void;
   onConfirm: () => void;
@@ -9,6 +10,7 @@ interface DeleteConfirmModalProps {
 
 const DeleteConfirm: React.FC<DeleteConfirmModalProps> = ({
   isOpen,
+  isCategory,
   name,
   onClose,
   onConfirm,
@@ -20,8 +22,8 @@ const DeleteConfirm: React.FC<DeleteConfirmModalProps> = ({
       <div className="flex flex-col bg-white rounded-lg shadow-xl w-full max-w-[300px] p-6">
         <div className="flex bg-white text-white px-4 rounded-t-lg items-center justify-between">
           <div className="flex-grow text-center">
-            <h2 className="text-lg text-naviblue font-semibold">
-              Delete Customer - "{name}"{" "}
+          <h2 className="text-lg text-naviblue font-semibold">
+              {isCategory ? `Delete Category - "${name}"` : `Delete Attendee - "${name}"`}
             </h2>
           </div>
           {/* <button
