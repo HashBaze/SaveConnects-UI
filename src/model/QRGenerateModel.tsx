@@ -14,7 +14,9 @@ const QRGenerateModal: React.FC<QRGenerateModalProps> = ({
   companyKey,
 }) => {
   const qrRef = useRef<HTMLDivElement>(null);
-  const exhibitorUrl = `${import.meta.env.VITE_SAVECONNECTS_FRONT_URL}/${companyKey}`;
+  const exhibitorUrl = `${
+    import.meta.env.VITE_SAVECONNECTS_FRONT_URL
+  }/${companyKey}`;
 
   if (!isOpen) return null;
 
@@ -24,7 +26,7 @@ const QRGenerateModal: React.FC<QRGenerateModalProps> = ({
       const pngUrl = canvas.toDataURL("image/png");
       const downloadLink = document.createElement("a");
       downloadLink.href = pngUrl;
-      downloadLink.download = `${companyKey}.png`;
+      downloadLink.download = `${companyKey}_qr.png`;
       downloadLink.click();
     }
   };
@@ -32,19 +34,32 @@ const QRGenerateModal: React.FC<QRGenerateModalProps> = ({
   const downloadQRAsPDF = () => {
     const canvas = qrRef.current?.querySelector("canvas");
     if (canvas) {
-      const pdf = new jsPDF();
-      const pngUrl = canvas.toDataURL("image/png");
-      pdf.addImage(pngUrl, "PNG", 15, 40, 100, 100);
-      pdf.save(`${companyKey}.pdf`);
+      const pdf = new jsPDF("portrait", "mm", "a4");
+      
+      const pngUrl = canvas.toDataURL("image/png", 1.0);
+  
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+  
+      const qrSize = 120;
+  
+      const x = (pdfWidth - qrSize) / 2;
+      const y = (pdfHeight - qrSize) / 2;
+  
+      pdf.addImage(pngUrl, "PNG", x, y, qrSize, qrSize);
+      pdf.save(`${companyKey}_qr.pdf`);
     }
   };
+  
 
   return (
     <div className="fixed absolute z-50 inset-0 bg-gray-500 bg-opacity-20 flex items-center justify-center p-6">
       <div className="flex flex-col bg-white rounded-lg shadow-xl w-full max-w-[350px] p-6">
         <div className="flex bg-white text-white px-4 rounded-t-lg items-center justify-between">
           <div className="flex-grow text-center">
-            <h2 className="text-sm text-naviblue font-semibold">Share Your Card</h2>
+            <h2 className="text-sm text-naviblue font-semibold">
+              Share Your Card
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -68,7 +83,9 @@ const QRGenerateModal: React.FC<QRGenerateModalProps> = ({
               className="w-8 h-8"
               style={{ filter: "brightness(0) invert(1)" }}
             />
-            <span className="text-white text-base text-sm ml-2">Download As PNG</span>
+            <span className="text-white text-base text-sm ml-2">
+              Download As PNG
+            </span>
           </button>
           <button
             onClick={downloadQRAsPDF}
@@ -80,7 +97,9 @@ const QRGenerateModal: React.FC<QRGenerateModalProps> = ({
               className="w-8 h-8"
               style={{ filter: "brightness(0) invert(1)" }}
             />
-            <span className="text-white text-base text-sm ml-2">Download As PDF</span>
+            <span className="text-white text-base text-sm ml-2">
+              Download As PDF
+            </span>
           </button>
         </div>
       </div>

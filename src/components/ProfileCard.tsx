@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { IExhibitor } from "../interface/Interface";
-import { companyKeyExistsRequest } from "../utils/ApiRequest";
+import { CompanyKeyExistsRequest } from "../utils/ApiRequest";
 import EmailModal from "../model/EmailModal";
 import { toast } from "react-toastify";
 
@@ -22,7 +22,7 @@ const ProfileCard: React.FC = () => {
     if (!availableRoutes.includes(path)) {
       const fetchExhibitorData = async () => {
         try {
-          const { data } = await companyKeyExistsRequest(path);
+          const { data } = await CompanyKeyExistsRequest(path);
 
           setExhibitorData({
             _id: data.data._id,

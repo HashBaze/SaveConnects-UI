@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import {
   EditCoverImage,
   EditGalleryImage,
-  companyKeyExistsRequest,
+  CompanyKeyExistsRequest,
   EditExhibitorProfile,
 } from "../utils/ApiRequest";
 
@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
       setIsLoading(true);
       const fetchExhibitorData = async () => {
         try {
-          const { data } = await companyKeyExistsRequest(path);
+          const { data } = await CompanyKeyExistsRequest(path);
 
           setExhibitorData({
             _id: data.data._id,

@@ -32,6 +32,7 @@ export interface IExhibitor {
   address: string;
   about: string;
   gallery: string[];
+  isEnabled: boolean;
 }
 
 export interface IAttendee {
@@ -51,4 +52,9 @@ export interface IProfileModal {
   companyAddress: string;
   about: string;
   website: string;
+}
+
+export interface ICategory {
+  _id?: string;
+  name: string;
 }

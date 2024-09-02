@@ -297,6 +297,7 @@ const Attendees: React.FC = () => {
       />
       <DeleteConformModel
         isOpen={isOpenDelete}
+        isCategory={false}
         name={initialData?.name}
         onClose={handleCloseDeleteModel}
         onConfirm={handleDeleteConform}

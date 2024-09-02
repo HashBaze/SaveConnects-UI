@@ -175,7 +175,7 @@ const AdminRegister: React.FC = () => {
                     onClick={toggleConfirmVisibility}
                     className="absolute right-[10px] top-[50%] translate-y-[-50%] w-6 h-6 cursor-pointer"
                     alt="Toggle visibility"
-                    src={hide ? "/icon/hide.svg" : "/icon/show.svg"}
+                    src={confirmHide ? "/icon/hide.svg" : "/icon/show.svg"}
                   />
                 </div>
                 {errors.confirmPassword && (
