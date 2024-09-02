@@ -30,7 +30,7 @@ jobs:
               git reset --hard HEAD
               git pull origin Develop-qa
             else
-              git clone -b Develop-qa https://github.com/HashBaze/SaveConnects-UI .
+              git clone -b Develop-qa git@github.com:HashBaze/SaveConnects-UI.git .
             fi
 
             npm install --force
