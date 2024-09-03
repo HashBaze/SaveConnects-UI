@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { RegisterRequest } from "../utils/ApiRequest";
 import { toast } from "react-toastify";
 import SelectModel from "../model/SelectModel";
-
-interface Option {
-  categoryName: string;
-}
+import { GetAllCategories } from "../utils/ApiRequest";
+import { ICategory } from "../interface/Interface";
 
 const Register: React.FC = () => {
   const [hide, setHide] = useState<boolean>(true);
@@ -19,27 +18,7 @@ const Register: React.FC = () => {
     confirmPassword: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
-  const options: Option[] = [
-    {
-      categoryName: "Software",
-    },
-    {
-      categoryName: "Electronics",
-    },
-    {
-      categoryName: "Manufacturing",
-    },
-    {
-      categoryName: "Healthcare",
-    },
-    {
-      categoryName: "Education",
-    },
-    {
-      categoryName: "Other",
-    },
-  ];
+  const [categories, setCategories] = useState<ICategory[]>([]);
 
   const navigate = useNavigate();
 
@@ -51,11 +30,23 @@ const Register: React.FC = () => {
     setConfirmHide(!confirmHide);
   };
 
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await GetAllCategories();
+        setCategories(response.data.categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
     const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[#$@!%*?&])[A-Za-z\d#$@!%*?&]{8,}$/;
 
     if (!formData.companyName)
       newErrors.companyName = "Company Name is required.";
@@ -96,12 +87,22 @@ const Register: React.FC = () => {
 
       localStorage.setItem("accesstoken", response.data.token);
       localStorage.setItem("companyNameKey", response.data.companyKey);
+      localStorage.setItem("role", response.data.role);
       toast.success("Registration Successful");
       reset();
-      navigate(`/${response.data.companyKey}`, { replace: true });
-      window.location.reload();
+      if(response.data.role === "Exhibitor") {
+        navigate(`/${response.data.companyKey}`, { replace: true });
+        window.location.reload();
+      } else {
+        navigate("/login", { replace: true });
+      }
     } catch (error) {
-      console.error("Error submitting form: ", error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.message || "Registration failed");
+      } else {
+        toast.error("An unexpected error occurred");
+        console.error("Error during registration: ", error);
+      }
     }
   };
 
@@ -116,10 +117,10 @@ const Register: React.FC = () => {
     setErrors({});
   };
 
-  const selectHandler = (selectedOption: Option) => {
+  const selectHandler = (selectedOption: ICategory) => {
     setFormData({
       ...formData,
-      companyCategory: selectedOption.categoryName,
+      companyCategory: selectedOption.name,
     });
   };
 
@@ -169,14 +170,14 @@ const Register: React.FC = () => {
                 </label>
                 <div className="absalute border border-gray-300 #{!important} rounded-md shadow-sm focus:outline-none focus:ring-naviblue focus:border-naviblue">
                   <SelectModel
-                    options={options}
+                    options={categories}
                     onChange={selectHandler}
                     name="companyCategory"
                     placeholder="Select Category"
-                    setapiEndPoint={(categoryName: string) => {
+                    setapiEndPoint={(name: string) => {
                       setFormData({
                         ...formData,
-                        companyCategory: categoryName,
+                        companyCategory: name,
                       });
                     }}
                   />

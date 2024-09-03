@@ -15,9 +15,11 @@ import FogotPasswordPage from "./pages/FogotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoadingPage from "./pages/LoadingPage";
-
-import { companyKeyExistsRequest } from "./utils/ApiRequest";
 import ProfileCardPage from "./pages/ProfileCardPage";
+import CategoryPage from "./pages/CategoryPage";
+import ExhibitorsPage from "./pages/ExhibitorsPage";
+
+import { CompanyKeyExistsRequest } from "./utils/ApiRequest";
 
 const AppRoutes: React.FC = () => {
   const [validCompanyKey, setValidCompanyKey] = useState<string | null>(null);
@@ -34,13 +36,15 @@ const AppRoutes: React.FC = () => {
         "forgot-password",
         "reset-password",
         "attendees",
+        "categories",
+        "exhibitors",
       ];
 
       if (!availableRoutes.includes(path)) {
         try {
-          const response = await companyKeyExistsRequest(path);
+          const response = await CompanyKeyExistsRequest(path);
 
-          if (response.status === 200) {
+          if (response.status === 200 && response.data.data.isEnabled === true) {
             setValidCompanyKey(path);
           } else {
             setValidCompanyKey(null);
@@ -91,6 +95,8 @@ const AppRoutes: React.FC = () => {
         { path: "attendees", element: <AttendeePage /> },
         { path: "forgot-password", element: <FogotPasswordPage /> },
         { path: "reset-password", element: <ResetPasswordPage /> },
+        { path: "categories", element: <CategoryPage /> },
+        { path: "exhibitors", element: <ExhibitorsPage /> },
       ],
     },
     { path: "*", element: <NotFoundPage /> },

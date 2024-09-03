@@ -51,10 +51,16 @@ const Login: React.FC = () => {
 
       localStorage.setItem("accesstoken", response.data.token);
       localStorage.setItem("companyNameKey", response.data.companyKey);
+      localStorage.setItem("role", response.data.role);
       toast.success("Login Successful");
-      navigate(`/${response.data.companyKey}`, { replace: true });
-      
-      window.location.reload();
+      if (response.data.role === "Admin") {
+        navigate("/categories", { replace: true });
+      } else if (response.data.role === "Exhibitor") {
+        navigate(`/${response.data.companyKey}`, { replace: true });
+        window.location.reload();
+      } else {
+        navigate("/login", { replace: true });
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.response?.data.message || "Login failed");
