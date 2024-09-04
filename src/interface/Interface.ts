@@ -32,7 +32,7 @@ export interface IExhibitor {
   address: string;
   about: string;
   gallery: string[];
-  isEnabled: boolean;
+  isEnabled?: boolean;
 }
 
 export interface IAttendee {
