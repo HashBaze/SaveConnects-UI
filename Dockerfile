@@ -22,8 +22,8 @@ FROM nginx:alpine
 # Copy the build artifacts from the previous stage to the Nginx directory
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expose port 80 to the outside world
-EXPOSE 80
+# Expose port 3000 to the outside world
+EXPOSE 3000
 
 # Run Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
