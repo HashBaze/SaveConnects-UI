@@ -20,7 +20,7 @@ RUN npm run build
 FROM nginx:alpine
 
 # Copy the build artifacts from the previous stage to the Nginx directory
-COPY --from=build /app/dist /usr/share/nginx/SaveConnects
+COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose port 80 to the outside world
 EXPOSE 80
