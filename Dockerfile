@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --force
+RUN npm install
 
 # Copy the rest of the application files to the working directory
 COPY . .
@@ -19,10 +19,13 @@ RUN npm run build
 # Stage 2: Serve the React application with Nginx
 FROM nginx:alpine
 
+# Remove the default nginx index.html
+RUN rm /usr/share/nginx/html/index.html
+
 # Copy the build artifacts from the previous stage to the Nginx directory
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Expose port 3000 to the outside world
+# Expose port 80 to the outside world
 EXPOSE 80
 
 # Run Nginx in the foreground
