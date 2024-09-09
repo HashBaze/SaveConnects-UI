@@ -98,8 +98,7 @@ const AppRoutes: React.FC = () => {
         { path: "categories", element: <CategoryPage /> },
         { path: "exhibitors", element: <ExhibitorsPage /> },
       ],
-    },
-    { path: "*", element: <NotFoundPage /> },
+    }
   ];
 
   if (loading) {
