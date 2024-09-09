@@ -38,11 +38,16 @@ jobs:
             mkdir -p /home/tishan/apps/SaveConnects
             cd /home/tishan/apps/SaveConnects
 
-            # Pull the latest Docker image
+            echo "Stopping frontend container..."
+            docker-compose stop frontend
+
+            echo "Pulling latest frontend Docker image..."
             docker-compose pull frontend
 
-            # Restart the backend service
+            echo "Restarting the frontend service..."
             docker-compose up -d frontend
 
-            # Cleanup old images
+            echo "Cleaning up unused Docker images..."
             docker image prune -f
+
+            echo "Deployment successful."
