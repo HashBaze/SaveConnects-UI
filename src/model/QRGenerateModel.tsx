@@ -15,7 +15,7 @@ const QRGenerateModal: React.FC<QRGenerateModalProps> = ({
 }) => {
   const qrRef = useRef<HTMLDivElement>(null);
   const exhibitorUrl = `${
-    process.env.VITE_SAVECONNECTS_FRONT_URL
+    process.env.REACT_APP_SAVECONNECTS_FRONT_URL
   }/${companyKey}`;
 
   if (!isOpen) return null;
