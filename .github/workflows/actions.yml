@@ -16,7 +16,16 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t save-connects_ui .
+          docker build \
+            --build-arg VITE_SAVECONNECTS_SERVER_URL=${{ secrets.SAVECONNECTS_SERVER_URL }} \
+            --build-arg VITE_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }} \
+            --build-arg VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }} \
+            --build-arg VITE_FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }} \
+            --build-arg VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }} \
+            --build-arg VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID }} \
+            --build-arg VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }} \
+            --build-arg VITE_SAVECONNECTS_FRONT_URL=${{ SAVECONNECTS_FRONT_URL }} \
+            -t save-connects_ui .
 
       - name: Push Docker image to Docker Hub
         env:
