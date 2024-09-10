@@ -8,14 +8,35 @@ on:
       - master
 
 jobs:
-  deploy_qa:
-    if: github.ref == 'refs/heads/develop-qa'
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Connect with VPS
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg VITE_SAVECONNECTS_SERVER_URL=${{ secrets.SAVECONNECTS_SERVER_URL }} \
+            --build-arg VITE_FIREBASE_API_KEY=${{ secrets.FIREBASE_API_KEY }} \
+            --build-arg VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.FIREBASE_AUTH_DOMAIN }} \
+            --build-arg VITE_FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }} \
+            --build-arg VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.FIREBASE_STORAGE_BUCKET }} \
+            --build-arg VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.FIREBASE_MESSAGING_SENDER_ID }} \
+            --build-arg VITE_FIREBASE_APP_ID=${{ secrets.VITE_FIREBASE_APP_ID }} \
+            --build-arg VITE_SAVECONNECTS_FRONT_URL=${{ secrets.SAVECONNECTS_FRONT_URL }} \
+            -t save-connects_ui .
+
+      - name: Push Docker image to Docker Hub
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        run: |
+          echo $DOCKER_HUB_ACCESS_TOKEN | docker login -u $DOCKER_HUB_USERNAME --password-stdin
+          docker tag save-connects_ui $DOCKER_HUB_USERNAME/save-connects_ui:latest
+          docker push $DOCKER_HUB_USERNAME/save-connects_ui:latest
+
+      - name: Connect with VPS and deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -23,27 +44,19 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            mkdir -p /home/tishan/apps/save-connects/frontend
-            cd /home/tishan/apps/save-connects/frontend
+            mkdir -p /home/tishan/apps/SaveConnects
+            cd /home/tishan/apps/SaveConnects
 
-            if [ -d ".git" ]; then
-              git reset --hard HEAD
-              git pull origin develop-qa
-            else
-              git clone -b develop-qa https://github.com/HashBaze/SaveConnects-UI.git .
-            fi
+            echo "Stopping frontend container..."
+            docker-compose stop frontend
 
-            npm install --force
-            npm run build
+            echo "Pulling latest frontend Docker image..."
+            docker-compose pull frontend
 
-            pid=$(pm2 pid "save-connects frontend" 2>/dev/null)
-            if [ -n "$pid" ]; then
-              echo "Reloading application"
-              pm2 reload "save-connects frontend"
-              pm2 save
-            else
-              echo "New application"
-              pm2 start npm --name "save-connects frontend" -- start
-              pm2 startup
-              pm2 save
-            fi
+            echo "Restarting the frontend service..."
+            docker-compose up -d frontend
+
+            echo "Cleaning up unused Docker images..."
+            docker image prune -f
+
+            echo "Deployment successful."
