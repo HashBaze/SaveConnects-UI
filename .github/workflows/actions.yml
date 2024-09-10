@@ -16,7 +16,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t save-connects:frontend .
+          docker build -t save-connects:frontend -f ./Dockerfile .
 
       - name: Push Docker image to Docker Hub
         env:
