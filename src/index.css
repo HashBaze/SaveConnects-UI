@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Set the default font for all elements */
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Apply the background color to the entire page */
+html, body {
+  @apply bg-[#F5F7F8];
+  height: 100%;
+}
+
+/* Ensure the main container also covers the full height */
+#root {
+  min-height: 100vh;
+}
