@@ -16,7 +16,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t save-connects_ui .
+          docker build -t save-connects:frontend -f ./Dockerfile .
 
       - name: Push Docker image to Docker Hub
         env:
@@ -24,8 +24,8 @@ jobs:
           DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         run: |
           echo $DOCKER_HUB_ACCESS_TOKEN | docker login -u $DOCKER_HUB_USERNAME --password-stdin
-          docker tag save-connects_ui $DOCKER_HUB_USERNAME/save-connects_ui:latest
-          docker push $DOCKER_HUB_USERNAME/save-connects_ui:latest
+          docker tag save-connects:frontend $DOCKER_HUB_USERNAME/save-connects:frontend
+          docker push $DOCKER_HUB_USERNAME/save-connects:frontend
 
       - name: Connect with VPS and deploy
         uses: appleboy/ssh-action@master
