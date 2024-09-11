@@ -5,6 +5,6 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: saveconnects-frontend
+    image: saveconnects-frontend:latest
     ports:
       - 3000:3000
