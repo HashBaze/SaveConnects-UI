@@ -15,7 +15,7 @@ const ExhibitorsPage: React.FC = () => {
         } ${sideBarOpen ? "ml-0" : ""}`}
       >
         <Header breadcrumb="Exhibitors" />
-        <main className="flex-grow overflow-auto p-2">
+        <main className="flex-grow overflow-auto p-0 md:p-2">
           <Exhibitors />
         </main>
       </div>

@@ -142,10 +142,8 @@ const Attendees: React.FC = () => {
     handleCloseDeleteModel();
   };
 
-  const handleExportCSV = () => {
-    if (!attendees) return;
-
-    const worksheet = XLSX.utils.json_to_sheet(
+  const createWorksheetFromAttendees = (attendees: IAttendee[]) => {
+    return XLSX.utils.json_to_sheet(
       attendees.map((attendee) => ({
         Name: attendee.name,
         Email: attendee.email,
@@ -154,10 +152,34 @@ const Attendees: React.FC = () => {
         "Additional Note": attendee.note,
       }))
     );
+  };
+
+  const handleExportExcel = () => {
+    if (!attendees) return;
+
+    const worksheet = createWorksheetFromAttendees(attendees);
 
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Attendees");
+
     XLSX.writeFile(workbook, "attendees.xlsx");
+  };
+
+  const handleExportCSV = () => {
+    if (!attendees) return;
+
+    const worksheet = createWorksheetFromAttendees(attendees);
+
+    const csvData = XLSX.utils.sheet_to_csv(worksheet);
+    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "attendees.csv");
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -168,17 +190,29 @@ const Attendees: React.FC = () => {
         </div>
       ) : (
         <div
-          className="bg-white items-center justify-center shadow-md p-6 rounded-lg shadow-md 
-      mx-auto w-[300px] sm:w-auto text-sm sm:text-base"
+          className="bg-white items-center justify-center shadow-md p-[10px] rounded-lg shadow-md 
+      mx-auto w-[320px] sm:w-auto text-sm sm:text-base"
         >
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-naviblue text-sm sm:text-base">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-center mb-4 mt-2">
+            <h2 className="text-lg font-semibold text-naviblue mb-4 sm:mb-0 text-sm sm:text-lg">
               Attendees Table
             </h2>
-            <div className="flex space-x-4">
+
+            <div className="flex flex-row justify-center gap-2">
               <button
-                className="bg-naviblue hover:bg-naviblue/90 text-white px-4 py-2 rounded-[10px] border 
-            border-gray-300 flex items-center justify-center mx-auto"
+                className="flex items-center justify-center bg-naviblue hover:bg-naviblue/90 text-white px-4 py-2 rounded-[10px] border border-gray-300"
+                onClick={handleExportExcel}
+              >
+                <img
+                  className="w-4 h-4 mr-2"
+                  src="/icon/export.svg"
+                  alt="Export Excel"
+                />
+                <span className="hidden sm:inline">Export Excel</span>
+                <span className="inline sm:hidden">Excel</span>
+              </button>
+              <button
+                className="flex items-center justify-center bg-naviblue hover:bg-naviblue/90 text-white px-4 py-2 rounded-[10px] border border-gray-300"
                 onClick={handleExportCSV}
               >
                 <img
@@ -186,11 +220,11 @@ const Attendees: React.FC = () => {
                   src="/icon/export.svg"
                   alt="Export CSV"
                 />
-                <span className="hidden sm:block">Export CSV</span>
+                <span className="hidden sm:inline">Export CSV</span>
+                <span className="inline sm:hidden">CSV</span>
               </button>
               <button
-                className="bg-naviblue hover:bg-naviblue/90 text-white px-4 py-2 rounded-[10px] border 
-              border-gray-300 flex items-center justify-center mx-auto"
+                className="flex items-center justify-center bg-naviblue hover:bg-naviblue/90 text-white px-4 py-2 rounded-[10px] border border-gray-300"
                 onClick={handleOpenModel}
               >
                 <img
@@ -198,10 +232,12 @@ const Attendees: React.FC = () => {
                   src="/icon/plus.svg"
                   alt="New Attendee"
                 />
-                <span className="hidden sm:block">New Attendee</span>
+                <span className="hidden sm:inline">New Attendee</span>
+                <span className="inline sm:hidden">New</span>
               </button>
             </div>
           </div>
+
           <div className="relative overflow-x-auto">
             <table className="w-full text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead>

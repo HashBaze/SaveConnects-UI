@@ -163,11 +163,11 @@ const Login: React.FC = () => {
           </form>
         </div>
         <div className="flex items-center justify-center w-full mt-6">
-          <div className="w-[74px] sm:w-[180px] h-[1px] bg-naviblue"></div>
+          <div className="w-[65px] sm:w-[180px] h-[1px] bg-naviblue"></div>
           <h3 className="px-2 sm:px-4 text-sm font-medium text-naviblue">
             New to our community
           </h3>
-          <div className="w-[74px] sm:w-[180px] h-[1px] bg-naviblue"></div>
+          <div className="w-[65px] sm:w-[180px] h-[1px] bg-naviblue"></div>
         </div>
         <button
           onClick={() => navigate("/signup")}

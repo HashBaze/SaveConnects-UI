@@ -23,18 +23,34 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
     about: "",
     website: "",
   });
+  const [countryCode, setCountryCode] = useState<string>("+94");
+
+  const countryOptions = [
+    "+94 (SR)",
+    "+1 (US)",
+    "+44 (UK)",
+    "+91 (IND)",
+    "+62 (IN)",
+    "+55 (BR)",
+    "+7 (RU)",
+    "+86 (CN)",
+  ];
+
+  const needsScrollbar = countryOptions.length > 5;
 
   useEffect(() => {
     if (initialData) {
+      const [code, number] = initialData.phoneNumber.split(" ", 2);
       setFormData({
         salesPersonName: initialData.salesPersonName,
         companyName: initialData.companyName,
         companyEmail: initialData.email,
-        phoneNumber: initialData.phoneNumber,
+        phoneNumber: number,
         companyAddress: initialData.address,
         about: initialData.about,
         website: initialData.website,
       });
+      setCountryCode(code || "+1");
     }
   }, [initialData]);
 
@@ -48,9 +64,17 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
     }));
   };
 
+  const handleCountryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCountryCode(e.target.value);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    const dataToSave = {
+      ...formData,
+      phoneNumber: `${countryCode} ${formData.phoneNumber}`,
+    };
+    onSave(dataToSave);
     onClose();
   };
 
@@ -103,13 +127,26 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
               />
             </div>
             <div className="flex h-12 lg:h-16">
+              <select
+                value={countryCode}
+                onChange={handleCountryCodeChange}
+                className={`w-[30%] text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg ${
+                  needsScrollbar ? "max-h-36 overflow-y-auto" : ""
+                }`}
+              >
+                {countryOptions.map((option) => (
+                  <option key={option} value={option.split(" ")[0]}>
+                    {option}
+                  </option>
+                ))}
+              </select>
               <input
                 type="tel"
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 placeholder="Phone Number"
-                className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
+                className="w-[70%] ml-1 text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
               />
             </div>
             <div className="flex h-12 lg:h-16">

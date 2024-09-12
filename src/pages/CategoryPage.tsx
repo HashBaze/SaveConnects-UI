@@ -15,7 +15,7 @@ const CategoryPage: React.FC = () => {
         } ${sideBarOpen ? "ml-0" : ""}`}
       >
         <Header breadcrumb="Categories" />
-        <main className="flex-grow overflow-auto p-2">
+        <main className="flex-grow overflow-auto p-0 md:p-2">
           <Categories />
         </main>
       </div>
