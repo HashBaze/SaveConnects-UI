@@ -18,8 +18,10 @@ import LoadingPage from "./pages/LoadingPage";
 import ProfileCardPage from "./pages/ProfileCardPage";
 import CategoryPage from "./pages/CategoryPage";
 import ExhibitorsPage from "./pages/ExhibitorsPage";
+import AccessDeniedPage from "./pages/AccessDeniedPage";
 
 import { CompanyKeyExistsRequest } from "./utils/ApiRequest";
+import { isTokenExpired, logout } from "./utils/JWTUtils";
 
 const AppRoutes: React.FC = () => {
   const [validCompanyKey, setValidCompanyKey] = useState<string | null>(null);
@@ -44,7 +46,10 @@ const AppRoutes: React.FC = () => {
         try {
           const response = await CompanyKeyExistsRequest(path);
 
-          if (response.status === 200 && response.data.data.isEnabled === true) {
+          if (
+            response.status === 200 &&
+            response.data.data.isEnabled === true
+          ) {
             setValidCompanyKey(path);
           } else {
             setValidCompanyKey(null);
@@ -63,13 +68,29 @@ const AppRoutes: React.FC = () => {
       const companyNameKey = localStorage.getItem("companyNameKey");
 
       if (accesstoken && companyNameKey && companyNameKey === path) {
-        setIsSignedIn(true);
+        if (isTokenExpired(accesstoken)) {
+          logout();
+        } else {
+          setIsSignedIn(true);
+        }
+      } else {
+        setIsSignedIn(false);
       }
     };
 
     checkIfSignedIn();
     checkCompanyKey();
   });
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (isSignedIn && isTokenExpired(localStorage.getItem("accesstoken")!)) {
+        logout();
+      }
+    }, 60000);
+
+    return () => clearInterval(intervalId);
+  }, [isSignedIn]);
 
   const routes: RouteObject[] = [
     {
@@ -92,13 +113,22 @@ const AppRoutes: React.FC = () => {
             <NotFoundPage />
           ),
         },
-        { path: "attendees", element: <AttendeePage /> },
+        {
+          path: "attendees",
+          element: isSignedIn ? <AttendeePage /> : <AccessDeniedPage />,
+        },
         { path: "forgot-password", element: <FogotPasswordPage /> },
         { path: "reset-password", element: <ResetPasswordPage /> },
-        { path: "categories", element: <CategoryPage /> },
-        { path: "exhibitors", element: <ExhibitorsPage /> },
+        {
+          path: "categories",
+          element: isSignedIn ? <CategoryPage /> : <AccessDeniedPage />,
+        },
+        {
+          path: "exhibitors",
+          element: isSignedIn ? <ExhibitorsPage /> : <AccessDeniedPage />,
+        },
       ],
-    }
+    },
   ];
 
   if (loading) {

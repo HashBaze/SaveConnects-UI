@@ -32,6 +32,7 @@ const Sidebar: React.FC = () => {
   const handleSignOutConfirm = () => {
     localStorage.removeItem("companyNameKey");
     localStorage.removeItem("accesstoken");
+    localStorage.removeItem("role");
     navigate("/");
     setIsSignOutModalOpen(false);
   };

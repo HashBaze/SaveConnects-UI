@@ -22,6 +22,8 @@ const AttendeeModel: React.FC<AttendeeModalProps> = ({
     note: "",
   });
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
   useEffect(() => {
     if (initialData) {
       setFormData({
@@ -38,7 +40,7 @@ const AttendeeModel: React.FC<AttendeeModalProps> = ({
         contactNumber: "",
         companyName: "",
         note: "",
-      })
+      });
     }
   }, [initialData]);
 
@@ -46,16 +48,51 @@ const AttendeeModel: React.FC<AttendeeModalProps> = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    if (name === "contactNumber") {
+      if (/^\d*$/.test(value)) {
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      }
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const validate = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required.";
+    if (!formData.email.trim()) newErrors.email = "Email is required.";
+    if (!formData.companyName.trim())
+      newErrors.companyName = "Company Name is required.";
+    if (!formData.contactNumber.trim())
+      newErrors.contactNumber = "Contact Number is required.";
+    else if (formData.contactNumber.length !== 10)
+      newErrors.contactNumber = "Phone number must be 10 characters.";
+    if (!formData.note.trim()) newErrors.note = "Note is required.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validate()) return; // Do not proceed if there are validation errors
+
     onSave(formData);
     onClose();
+    setFormData({
+      name: "",
+      email: "",
+      contactNumber: "",
+      companyName: "",
+      note: "",
+    });
   };
 
   if (!isOpen) return null;
@@ -65,7 +102,9 @@ const AttendeeModel: React.FC<AttendeeModalProps> = ({
       <div className="flex flex-col bg-white rounded-lg shadow-xl w-full max-w-[800px]">
         <div className="flex bg-naviblue text-white py-3 px-4 rounded-t-lg items-center justify-between">
           <div className="flex-grow text-center">
-            <h2 className="text-[18px] font-semibold">{initialData ? "Edit Attendee" : "Add New Attendee"}</h2>
+            <h2 className="text-[18px] font-semibold">
+              {initialData ? "Edit Attendee" : "Add New Attendee"}
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -74,57 +113,82 @@ const AttendeeModel: React.FC<AttendeeModalProps> = ({
             <img src="/icon/close.svg" alt="Close" className="w-6 h-6" />
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex h-12 lg:h-14">
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Name"
-                className="w-full text-sm lg:text-md p-4 border rounded-md lg:rounded-lg"
-              />
+        <form onSubmit={handleSubmit} className="p-6 space-y-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="flex flex-col">
+              <div className="flex">
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Name"
+                  className="w-full text-sm lg:text-md p-4 border rounded-md lg:rounded-lg"
+                />
+              </div>
+              {errors.name && (
+                <p className="text-red-500 text-sm m-0">{errors.name}</p>
+              )}
             </div>
-            <div className="flex h-12 lg:h-14">
-              <input
-                type="text"
-                name="companyName"
-                value={formData.companyName}
-                onChange={handleChange}
-                placeholder="Company Name"
-                className="w-full text-sm lg:text-md p-4 border rounded-md lg:rounded-lg"
-              />
+            <div className="flex flex-col">
+              <div className="flex">
+                <input
+                  type="text"
+                  name="companyName"
+                  value={formData.companyName}
+                  onChange={handleChange}
+                  placeholder="Company Name"
+                  className="w-full text-sm lg:text-md p-4 border rounded-md lg:rounded-lg"
+                />
+              </div>
+              {errors.companyName && (
+                <p className="text-red-500 text-sm m-0">{errors.companyName}</p>
+              )}
             </div>
-            <div className="flex h-12 lg:h-14">
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email"
-                className="w-full text-sm lg:text-md p-2 border rounded-md lg:rounded-lg"
-              />
+            <div className="flex flex-col">
+              <div className="flex">
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  className="w-full text-sm lg:text-md p-4 border rounded-md lg:rounded-lg"
+                />
+              </div>
+              {errors.email && (
+                <p className="text-red-500 text-sm m-0">{errors.email}</p>
+              )}
             </div>
-            <div className="flex h-12 lg:h-14">
-              <input
-                type="tel"
-                name="contactNumber"
-                value={formData.contactNumber}
-                onChange={handleChange}
-                placeholder="Phone Number"
-                className="w-full text-sm lg:text-md p-2 border rounded-md lg:rounded-lg"
-              />
+            <div className="flex flex-col">
+              <div className="flex">
+                <input
+                  type="tel"
+                  name="contactNumber"
+                  value={formData.contactNumber}
+                  onChange={handleChange}
+                  placeholder="Phone Number"
+                  className="w-full text-sm lg:text-md p-4 border rounded-md lg:rounded-lg"
+                />
+              </div>
+              {errors.contactNumber && (
+                <p className="text-red-500 text-sm m-0">{errors.contactNumber}</p>
+              )}
             </div>
           </div>
-          <div className="flex h-auto">
-            <textarea
-              name="note"
-              value={formData.note}
-              onChange={handleChange}
-              placeholder="Additional Note"
-              className="w-full text-sm lg:text-md p-2 border rounded-md lg:rounded-lg h-32 lg:h-35"
-            ></textarea>
+          <div className="flex flex-col">
+            <div className="flex">
+              <textarea
+                name="note"
+                value={formData.note}
+                onChange={handleChange}
+                placeholder="Additional Note"
+                className="w-full text-sm lg:text-md p-2 border rounded-md lg:rounded-lg h-32 lg:h-35"
+              ></textarea>
+            </div>
+            {errors.note && (
+              <p className="text-red-500 text-sm m-0">{errors.note}</p>
+            )}
           </div>
           <div className="flex justify-end">
             <button

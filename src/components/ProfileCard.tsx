@@ -51,15 +51,15 @@ const ProfileCard: React.FC = () => {
     if (!exhibitorData) return "";
 
     return `
-BEGIN:VCARD
-VERSION:3.0
-FN:${exhibitorData.salesPersonName}
-ORG:${exhibitorData.companyName}
-TEL:${exhibitorData.phoneNumber}
-EMAIL:${exhibitorData.email}
-ADR:;;${exhibitorData.address}
-URL:${exhibitorData.website}
-END:VCARD
+      BEGIN:VCARD
+      VERSION:3.0
+      FN:${exhibitorData.salesPersonName}
+      ORG:${exhibitorData.companyName}
+      TEL:${exhibitorData.phoneNumber}
+      EMAIL:${exhibitorData.email}
+      ADR:;;${exhibitorData.address}
+      URL:${exhibitorData.website}
+      END:VCARD
     `;
   };
 
@@ -121,7 +121,8 @@ END:VCARD
     const message = `Hi ${exhibitorData?.salesPersonName}, I'm interested in learning more about ${exhibitorData?.companyName}.`;
 
     if (phoneNumber) {
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+      const validPhoneNumber = phoneNumber.replace(/\s+/g, '');
+      const whatsappUrl = `https://wa.me/${validPhoneNumber}?text=${encodeURIComponent(
         message
       )}`;
       window.open(whatsappUrl, "_blank");

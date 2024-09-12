@@ -239,7 +239,7 @@ const Dashboard: React.FC = () => {
             <div className="text-[16px] font-medium px-8 mt-1">
               {exhibitorData?.companyCategory}
             </div>
-            <div className="flex flex-col px-8 mt-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:flex lg:flex-row lg:space-x-[150px]">
+            <div className="flex flex-col px-8 mt-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:flex lg:flex-row lg:space-x-[80px]">
               <div className="flex flex-row space-x-2">
                 <img
                   src="/icon/web.svg"
