@@ -1,0 +1,37 @@
+# This only use for production purpose.
+# This is not for development use.
+# Include this in your vps project folder root and use it with docker compose.yaml
+# as a example: /home/user/apps/SaveConnects/docker-compose.yaml
+# docker pull using DockerHub, so please change username: tishan001 replace to your dockerhub username
+# and also change repo: save-connects to your dockerhub repo
+
+version: '3.8'
+
+services:
+  backend:
+    image: tishan001/save-connects:backend
+    container_name: saveconnects-backend
+    restart: unless-stopped
+    env_file:
+      - ./SaveConnects-BE/.env
+    ports:
+      - 8080:8080
+    networks:
+      - save-connects
+
+  frontend:
+    image: tishan001/save-connects:frontend
+    container_name: saveconnects-frontend
+    restart: unless-stopped
+    env_file:
+      - ./SaveConnects-UI/.env
+    ports:
+      - 3000:3000
+    networks:
+      - save-connects
+    depends_on:
+      - backend
+
+networks:
+  save-connects:
+    driver: bridge
