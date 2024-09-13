@@ -79,10 +79,10 @@ const EditCoverImage = async (_id: string, coverImage: string) => {
   });
 };
 
-const EditGalleryImage = async (_id: string, image: string) => {
+const EditGalleryImage = async (_id: string, images: string[]) => {
   await api.post("/exhibitor/add-gallery-image", {
     _id,
-    image,
+    images,
   });
 };
 

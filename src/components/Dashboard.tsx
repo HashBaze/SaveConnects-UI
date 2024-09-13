@@ -137,20 +137,25 @@ const Dashboard: React.FC = () => {
   const handleGalleryImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file = event.target.files?.[0];
-    if (file && exhibitorData?._id) {
+    const files = Array.from(event.target.files || []);
+    if (files && exhibitorData?._id) {
       setIsUploading(true);
       try {
-        const imageUrl = await uploadImageToFirebase(
-          file,
-          `gallery-images/${file.name}`
+        const imageUrls: string[] = await Promise.all(
+          files.map(async (file) => {
+            const imageUrl = await uploadImageToFirebase(
+              file,
+              `gallery-images/${file.name}`
+            );
+            return imageUrl;
+          })
         );
 
-        await EditGalleryImage(exhibitorData._id, imageUrl);
+        await EditGalleryImage(exhibitorData._id, imageUrls);
 
         setExhibitorData((prevData) => ({
           ...prevData!,
-          gallery: [...prevData!.gallery, imageUrl],
+          gallery: [...prevData!.gallery, ...imageUrls],
         }));
       } catch (error) {
         console.error("Error uploading gallery image:", error);

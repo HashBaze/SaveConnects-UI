@@ -3,12 +3,15 @@ import { IExhibitor } from "../interface/Interface";
 import { CompanyKeyExistsRequest } from "../utils/ApiRequest";
 import EmailModal from "../model/EmailModal";
 import { toast } from "react-toastify";
+import { Loader } from "react-feather";
 
 const ProfileCard: React.FC = () => {
   const [activeTab, setActiveTab] = useState("company");
   const path = window.location.pathname.split("/").pop() || "/";
   const [exhibitorData, setExhibitorData] = useState<IExhibitor | null>(null);
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [loadingImages, setLoadingImages] = useState<boolean[]>([]);
+  const [isCoverImageLoading, setIsCoverImageLoading] = useState(true);
 
   useEffect(() => {
     const availableRoutes = [
@@ -38,6 +41,8 @@ const ProfileCard: React.FC = () => {
             about: data.data.about,
             gallery: data.data.gallery,
           });
+
+          setLoadingImages(new Array(data.data.gallery.length).fill(true));
         } catch (err) {
           console.error("Failed to fetch exhibitor data:", err);
         }
@@ -46,6 +51,18 @@ const ProfileCard: React.FC = () => {
       fetchExhibitorData();
     }
   }, [path]);
+
+  const handleImageLoad = (index: number) => {
+    setLoadingImages((prevLoadingImages) => {
+      const updatedLoadingImages = [...prevLoadingImages];
+      updatedLoadingImages[index] = false;
+      return updatedLoadingImages;
+    });
+  };
+
+  const handleCoverImageLoad = () => {
+    setIsCoverImageLoading(false);
+  };
 
   const generateVCard = () => {
     if (!exhibitorData) return "";
@@ -121,7 +138,7 @@ const ProfileCard: React.FC = () => {
     const message = `Hi ${exhibitorData?.salesPersonName}, I'm interested in learning more about ${exhibitorData?.companyName}.`;
 
     if (phoneNumber) {
-      const validPhoneNumber = phoneNumber.replace(/\s+/g, '');
+      const validPhoneNumber = phoneNumber.replace(/\s+/g, "");
       const whatsappUrl = `https://wa.me/${validPhoneNumber}?text=${encodeURIComponent(
         message
       )}`;
@@ -140,17 +157,25 @@ const ProfileCard: React.FC = () => {
     <>
       <div className="container mx-auto flex items-center justify-center">
         <div className="flex items-center justify-center min-h-screen px-4 sm:px-0">
-          <div className="max-w-sm w-full bg-white shadow-lg rounded-[20px] overflow-hidden ring-1 ring-gray-900/5">
+          <div className="max-w-[450px] w-full bg-white shadow-lg rounded-[20px] overflow-hidden ring-1 ring-gray-900/5">
             {/* Header */}
-            <div className="relative h-48">
+            <div className="relative h-48 md:h-64">
+              {isCoverImageLoading && (
+                <div className="flex items-center justify-center w-full h-full">
+                  <Loader />
+                </div>
+              )}
               <img
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover ${
+                  isCoverImageLoading ? "hidden" : "block"
+                }`}
                 src={exhibitorData?.coverImage}
                 alt="Profile"
+                onLoad={handleCoverImageLoad}
               />
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
                 <img
-                  className="w-24 h-24 rounded-full border-4 border-white"
+                  className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border-4 border-white"
                   src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Profile"
                 />
@@ -178,36 +203,36 @@ const ProfileCard: React.FC = () => {
                   <h3 className="text-[24px] text-naviblue font-semibold my-2 text-center">
                     {exhibitorData?.companyName}
                   </h3>
-                  <p className="text-sm text-gray-600 text-justify">
+                  <p className="text-sm md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
                     {exhibitorData?.about}
                   </p>
-                  <div className="flex flex-row items-center justify-center space-x-4">
+                  <div className="flex flex-row items-center justify-center space-x-4 md:space-x-6">
                     <button
                       onClick={handleSaveContact}
-                      className="bg-naviblue text-white rounded-[10px] p-2  border-0 cursor-pointer"
+                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] p-2 md:p-3  border-0 cursor-pointer"
                     >
                       Contact
                     </button>
                     <button
                       onClick={handleConnect}
-                      className="bg-naviblue text-white rounded-[10px] p-2  border-0 cursor-pointer"
+                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] p-2 md:p-3  border-0 cursor-pointer"
                     >
                       WhatsApp
                     </button>
                     <button
                       onClick={handleEmail}
-                      className="bg-naviblue text-white rounded-[10px] p-2  border-0 cursor-pointer"
+                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] p-2 md:p-3  border-0 cursor-pointer"
                     >
                       Email
                     </button>
                     <button
                       onClick={handleShare}
-                      className="bg-naviblue text-white rounded-full p-2 w-[40px] h-[40px] border-0 cursor-pointer"
+                      className="bg-naviblue text-white rounded-full p-2 w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
                     >
                       <img
                         src="/icon/copy.svg"
                         alt="Share"
-                        className="w-6 h-6 object-cover"
+                        className="w-6 h-6 md:w-8 md:h-8 object-cover"
                       />
                     </button>
                   </div>
@@ -216,9 +241,9 @@ const ProfileCard: React.FC = () => {
                       <img
                         src="/icon/phone.svg"
                         alt="Phone"
-                        className="w-6 h-6"
+                        className="w-6 h-6 md:w-8 md:h-8"
                       />
-                      <p className="text-sm font-semibold text-naviblue">
+                      <p className="text-sm md:text-[16px] font-semibold text-naviblue">
                         {exhibitorData?.phoneNumber}
                       </p>
                     </div>
@@ -226,9 +251,9 @@ const ProfileCard: React.FC = () => {
                       <img
                         src="/icon/email.svg"
                         alt="Email"
-                        className="w-6 h-6"
+                        className="w-6 h-6 md:w-8 md:h-8"
                       />
-                      <p className="text-sm font-semibold text-naviblue">
+                      <p className="text-sm md:text-[16px] font-semibold text-naviblue">
                         {exhibitorData?.email}
                       </p>
                     </div>
@@ -236,9 +261,9 @@ const ProfileCard: React.FC = () => {
                       <img
                         src="/icon/location.svg"
                         alt="Location"
-                        className="w-6 h-6"
+                        className="w-6 h-6 md:w-8 md:h-8"
                       />
-                      <p className="text-sm font-semibold text-naviblue">
+                      <p className="text-sm md:text-[16px] font-semibold text-naviblue">
                         {exhibitorData?.address}
                       </p>
                     </div>
@@ -246,9 +271,9 @@ const ProfileCard: React.FC = () => {
                       <img
                         src="/icon/web.svg"
                         alt="Website"
-                        className="w-6 h-6"
+                        className="w-6 h-6 md:w-8 md:h-8"
                       />
-                      <p className="text-sm font-semibold text-naviblue">
+                      <p className="text-sm md:text-[16px] font-semibold text-naviblue">
                         {exhibitorData?.website}
                       </p>
                     </div>
@@ -258,12 +283,22 @@ const ProfileCard: React.FC = () => {
               {activeTab === "gallery" && (
                 <div className="grid w-full grid-cols-2 gap-2 mt-8">
                   {exhibitorData?.gallery?.slice(0, 4).map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt="Gallery"
-                      className="w-[130px] h-[130px] md:w-[150px] md:h-[150px] rounded-lg object-cover"
-                    />
+                    <div key={index} className="relative">
+                      {loadingImages[index] && (
+                        <div className="flex items-center justify-center p-4">
+                          <Loader />
+                        </div>
+                      )}
+
+                      <img
+                        src={image}
+                        alt="Gallery"
+                        className={`w-[130px] h-[130px] md:w-[200px] md:h-[200px] rounded-lg object-cover ${
+                          loadingImages[index] ? "hidden" : "block"
+                        }`} //
+                        onLoad={() => handleImageLoad(index)}
+                      />
+                    </div>
                   ))}
                 </div>
               )}
@@ -275,7 +310,7 @@ const ProfileCard: React.FC = () => {
                 {["ABOUT", "COMPANY", "GALLERY"].map((tab) => (
                   <button
                     key={tab}
-                    className={`flex-1 text-sm text-naviblue py-2 cursor-pointer font-medium border-0 bg-white ${
+                    className={`flex-1 text-sm md:text-lg text-naviblue py-2 cursor-pointer font-medium border-0 bg-white ${
                       activeTab.toUpperCase() === tab
                         ? "text-naviblue border-b-2 border-white"
                         : "text-gray-500 hover:text-gray-700"
