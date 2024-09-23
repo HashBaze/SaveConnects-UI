@@ -11,7 +11,7 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+  const [errors, setErrors] = useState<{ email?: string; password?: string, userNotFound?: string }>(
     {}
   );
 
@@ -21,7 +21,7 @@ const Login: React.FC = () => {
 
   // Client-side validation function
   const validate = () => {
-    const tempErrors: { email?: string; password?: string } = {};
+    const tempErrors: { email?: string; password?: string , userNotFound? : string} = {};
 
     if (!formData.email) {
       tempErrors.email = "Email is required";
@@ -63,7 +63,9 @@ const Login: React.FC = () => {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data.message || "Login failed");
+        const tempErrors: { email?: string; password?: string , userNotFound? : string} = {};
+        tempErrors.userNotFound = error.response?.data.message + ". Please try again.";
+        setErrors(tempErrors);
       } else {
         toast.error("An unexpected error occurred.");
       }
@@ -136,6 +138,7 @@ const Login: React.FC = () => {
             >
               Log in
             </button>
+            <p className="mt-1 text-sm text-red-600 text-center">{errors.userNotFound}</p>
             <p className="mt-4 text-sm text-left text-gray-500">
               By continuing, you agree to the{" "}
               <a
