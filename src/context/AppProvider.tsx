@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { AppContextType } from "../interface/Interface";
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -20,6 +26,8 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  
 
   return (
     <AppContext.Provider
@@ -43,7 +51,9 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           about: "",
           gallery: [],
         },
-        setExhibitor: () => {},
+        setExhibitor: () => {
+          return;
+        },
       }}
     >
       {children}

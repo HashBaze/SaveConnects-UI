@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import SignOutModal from "../model/SignOutModel";
 
 const Sidebar: React.FC = () => {
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState<boolean>(false);
   const { sideBarOpen, toggleSideBar } = useAppContext();
   const [activeItem, setActiveItem] = React.useState<number | null>(null);
   const [isSignOutModalOpen, setIsSignOutModalOpen] = useState<boolean>(false);
@@ -26,6 +27,11 @@ const Sidebar: React.FC = () => {
     } else {
       setActiveItem(index);
       navigate(link);
+      const mobile = window.innerWidth >= 440;
+      setIsMobileOrTablet(!mobile);
+      if (!mobile && sideBarOpen) {
+        toggleSideBar();
+      }
     }
   };
 

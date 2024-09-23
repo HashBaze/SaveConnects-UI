@@ -13,6 +13,7 @@ import {
   CompanyKeyExistsRequest,
   EditExhibitorProfile,
 } from "../utils/ApiRequest";
+import { useAppContext } from "../context/AppProvider";
 
 const Dashboard: React.FC = () => {
   const path = window.location.pathname.split("/").pop() || "/";
@@ -22,6 +23,8 @@ const Dashboard: React.FC = () => {
   const [exhibitorData, setExhibitorData] = useState<IExhibitor | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { setExhibitor } = useAppContext();
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -46,6 +49,21 @@ const Dashboard: React.FC = () => {
       const fetchExhibitorData = async () => {
         try {
           const { data } = await CompanyKeyExistsRequest(path);
+
+          setExhibitor({
+            _id: data.data._id,
+            email: data.data.email,
+            salesPersonName: data.data.salesPersonName,
+            companyName: data.data.companyName,
+            companyNameKey: data.data.companyNameKey,
+            coverImage: data.data.coverImage,
+            companyCategory: data.data.companyCategory,
+            phoneNumber: data.data.phoneNumber,
+            website: data.data.website,
+            address: data.data.address,
+            about: data.data.about,
+            gallery: data.data.gallery,
+          });
 
           setExhibitorData({
             _id: data.data._id,
@@ -252,7 +270,7 @@ const Dashboard: React.FC = () => {
                   className="w-6 lg:w-8 h-6 lg:h-8"
                 />
                 <div className="text-sm lg:text-lg">
-                  {exhibitorData?.website}
+                  <a style={{ color: 'inherit', textDecoration: 'none' }} href={exhibitorData?.website}>{exhibitorData?.website}</a>
                 </div>
               </div>
               <div className="flex flex-row space-x-2">
@@ -261,7 +279,11 @@ const Dashboard: React.FC = () => {
                   alt="Email"
                   className="w-6 lg:w-8 h-6 lg:h-8"
                 />
-                <div className="text-sm lg:text-lg">{exhibitorData?.email}</div>
+                <div className="text-sm lg:text-lg">
+                  <a style={{ color: 'inherit', textDecoration: 'none' }} href={`mailto:${exhibitorData?.email}`}>
+                    {exhibitorData?.email}
+                  </a>
+                </div>
               </div>
               <div className="flex flex-row space-x-2">
                 <img
@@ -270,7 +292,9 @@ const Dashboard: React.FC = () => {
                   className="w-6 lg:w-8 h-6 lg:h-8"
                 />
                 <div className="text-sm lg:text-lg">
-                  {exhibitorData?.phoneNumber}
+                  <a className="whitespace-nowrap" style={{ color: 'inherit', textDecoration: 'none' }} href={`tel:${exhibitorData?.phoneNumber}`}>
+                    {exhibitorData?.phoneNumber}
+                  </a>
                 </div>
               </div>
               <div className="flex flex-row space-x-2">
@@ -362,7 +386,6 @@ const Dashboard: React.FC = () => {
           {isUploading && <LoadingModal />}
         </div>
       )}
-      ;
     </>
   );
 };
