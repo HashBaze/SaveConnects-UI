@@ -206,33 +206,54 @@ const ProfileCard: React.FC = () => {
                   <p className="text-sm md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
                     {exhibitorData?.about}
                   </p>
-                  <div className="flex flex-row items-center justify-center space-x-4 md:space-x-6">
+                  <div className="flex flex-row items-center justify-between space-x-2 md:space-x-1">
                     <button
                       onClick={handleSaveContact}
-                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] p-2 md:p-3  border-0 cursor-pointer"
+                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] border-0 cursor-pointer flex justify-between"
                     >
-                      Contact
+                      <div className="flex align-content-center justify-center">
+                        <img
+                          src="/icon/contact-light.svg"
+                          alt="Contact"
+                          className="w-4 h-4 p-2"
+                        />
+                        <span className="p-2 text-sm">Contact</span>
+                      </div>
                     </button>
                     <button
                       onClick={handleConnect}
-                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] p-2 md:p-3  border-0 cursor-pointer"
+                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] border-0 cursor-pointer flex"
                     >
-                      WhatsApp
+                      <div className="flex align-content-center justify-center">
+                        <img
+                          src="/icon/whatsapp.svg"
+                          alt="Contact"
+                          className="w-4 h-4 p-2"
+                        />
+                        <span className="p-2 text-sm">Whatsapp</span>
+                      </div>
                     </button>
                     <button
                       onClick={handleEmail}
-                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] p-2 md:p-3  border-0 cursor-pointer"
+                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] border-0 cursor-pointer"
                     >
-                      Email
+                      <div className="flex align-content-center justify-center">
+                        <img
+                          src="/icon/mail-light.svg"
+                          alt="Contact"
+                          className="w-4 h-4 p-2"
+                        />
+                        <span className="p-2 text-sm">Email</span>
+                      </div>
                     </button>
                     <button
                       onClick={handleShare}
-                      className="bg-naviblue text-white rounded-full p-2 w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
+                      className=" hover:bg-blue-950 text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
                     >
                       <img
-                        src="/icon/copy.svg"
+                        src="/icon/copy-content.svg"
                         alt="Share"
-                        className="w-6 h-6 md:w-8 md:h-8 object-cover"
+                        className="w-6 h-6"
                       />
                     </button>
                   </div>
@@ -244,7 +265,11 @@ const ProfileCard: React.FC = () => {
                         className="w-6 h-6 md:w-8 md:h-8"
                       />
                       <p className="text-sm md:text-[16px] font-semibold text-naviblue">
-                        {exhibitorData?.phoneNumber}
+                        <a
+                        className="text-naviblue"
+                        href={`tel:${exhibitorData?.phoneNumber}`}>
+                          {exhibitorData?.phoneNumber}
+                        </a>
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -254,7 +279,11 @@ const ProfileCard: React.FC = () => {
                         className="w-6 h-6 md:w-8 md:h-8"
                       />
                       <p className="text-sm md:text-[16px] font-semibold text-naviblue">
-                        {exhibitorData?.email}
+                        <a
+                        className="text-naviblue"
+                         href={`mailto:${exhibitorData?.email}`}>
+                          {exhibitorData?.email}
+                        </a>
                       </p>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -274,7 +303,9 @@ const ProfileCard: React.FC = () => {
                         className="w-6 h-6 md:w-8 md:h-8"
                       />
                       <p className="text-sm md:text-[16px] font-semibold text-naviblue">
-                        {exhibitorData?.website}
+                        <a className="text-naviblue" href={'https://' + exhibitorData?.website}>
+                          {exhibitorData?.website}
+                        </a>
                       </p>
                     </div>
                   </div>
