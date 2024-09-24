@@ -27,8 +27,6 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  
-
   return (
     <AppContext.Provider
       value={{
@@ -51,9 +49,7 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           about: "",
           gallery: [],
         },
-        setExhibitor: () => {
-          return;
-        },
+        setExhibitor: () => { return; },
       }}
     >
       {children}
