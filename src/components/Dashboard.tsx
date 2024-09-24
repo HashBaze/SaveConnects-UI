@@ -180,7 +180,7 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const handleImageGalereRemoveImage = async () => {
+  const handleGalleryImageRemove = async () => {
     const imageUrlList: string[] = exhibitorData?.gallery.filter(
       (url) => url !== removeUrl
     ) as string[];
@@ -446,7 +446,7 @@ const Dashboard: React.FC = () => {
           {isGalleryRemoveAlertOpen ? (
             <GalleryImageRemoveModel
               onClose={closeAlert}
-              onConfirm={handleImageGalereRemoveImage}
+              onConfirm={handleGalleryImageRemove}
               message={"Are you sure you want to delete?"}
             />
           ) : undefined}
