@@ -11,9 +11,11 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
-    {}
-  );
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+    userNotFound?: string;
+  }>({});
 
   const togglePasswordVisibility = () => {
     setHide(!hide);
@@ -21,7 +23,11 @@ const Login: React.FC = () => {
 
   // Client-side validation function
   const validate = () => {
-    const tempErrors: { email?: string; password?: string } = {};
+    const tempErrors: {
+      email?: string;
+      password?: string;
+      userNotFound?: string;
+    } = {};
 
     if (!formData.email) {
       tempErrors.email = "Email is required";
@@ -63,7 +69,14 @@ const Login: React.FC = () => {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        toast.error(error.response?.data.message || "Login failed");
+        const tempErrors: {
+          email?: string;
+          password?: string;
+          userNotFound?: string;
+        } = {};
+        tempErrors.userNotFound =
+          error.response?.data.message + ". Please try again.";
+        setErrors(tempErrors);
       } else {
         toast.error("An unexpected error occurred.");
       }
@@ -74,15 +87,15 @@ const Login: React.FC = () => {
   return (
     <div className="container mx-auto flex items-center justify-center">
       <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-0">
-        <div className="w-full max-w-[450px] px-[25px] sm:px-[50px] py-[50px] bg-white border border-gray-200 rounded-3xl shadow-md relative">
+        <div className="w-full max-w-[450px] px-[25px] sm:px-[10px] py-[10px] sm:py-[50px] bg-white border border-gray-200 rounded-3xl shadow-md relative">
           <div className="flex justify-center">
-            <div className="w-16 h-16 bg-naviblue rounded-full"></div>
+            <div className="w-16 h-16 bg-naviblue rounded-full"></div> 
           </div>
-          <h2 className="mt-6 text-center text-2xl font-extrabold text-naviblue">
+          <h2 className="sm:mt-2 lg:mt-6 text-center text-2xl font-extrabold text-naviblue">
             Sign In
           </h2>
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div className="mt-4">
+          <form className="mt-1 sm:mt-8 space-y-6" onSubmit={handleSubmit}>
+            <div className="">
               <label className="block text-sm font-medium text-gray-700">
                 Email address
               </label>
@@ -132,11 +145,14 @@ const Login: React.FC = () => {
             </div>
             <button
               type="submit"
-              className="flex items-center justify-center w-full h-[50px] mt-6 mx-auto py-2 px-4 border border-transparent rounded-3xl shadow-sm text-lg font-medium text-white bg-naviblue hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-naviblue"
+              className="flex items-center justify-center w-full h-[40px] sm:h-[50px] mx-auto py-2 px-4 border border-transparent rounded-3xl shadow-sm text-lg font-medium text-white bg-naviblue hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-naviblue"
             >
               Log in
             </button>
-            <p className="mt-4 text-sm text-left text-gray-500">
+            <p className="mt-1 text-sm text-red-600 text-center">
+              {errors.userNotFound}
+            </p>
+            <p className="mt-4 text-sm md:text-center sm:text-left text-center lg:text-center text-gray-500">
               By continuing, you agree to the{" "}
               <a
                 href="#"
@@ -152,26 +168,26 @@ const Login: React.FC = () => {
                 Privacy Policy
               </a>
             </p>
-            <p className="relative mt-2 text-sm text-center text-gray-500">
+            <p className="relative sm:mt=[30px] mt-1 text-sm text-center sm:text-right text-gray-500">
               <a
                 href="/forgot-password"
-                className="absolute right-0 top-0 text-naviblue hover:text-indigo-500 no-underline"
+                className="text-naviblue hover:text-indigo-500 no-underline"
               >
                 Forgot your password?
               </a>
             </p>
           </form>
         </div>
-        <div className="flex items-center justify-center w-full mt-6">
+        <div className="flex items-center justify-center w-full mt-2 sm:mt-6">
           <div className="w-[65px] sm:w-[180px] h-[1px] bg-naviblue"></div>
-          <h3 className="px-2 sm:px-4 text-sm font-medium text-naviblue">
+          <h3 className="px-2 sm:px-4 text-sm text-center font-medium text-naviblue">
             New to our community
           </h3>
           <div className="w-[65px] sm:w-[180px] h-[1px] bg-naviblue"></div>
         </div>
         <button
           onClick={() => navigate("/signup")}
-          className="flex items-center justify-center w-full sm:w-[550px] h-[50px] bg-white mt-6 mx-auto py-2 px-4 border rounded-3xl shadow-sm text-lg font-medium text-naviblue hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-naviblue"
+          className="flex items-center justify-center w-full sm:w-[550px] h-[30px] sm:h-[50px] bg-white mt-0 sm:mt-6 mx-auto py-2 px-4 border rounded-3xl shadow-sm text-lg font-medium text-naviblue hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-naviblue"
         >
           Create an account
         </button>
