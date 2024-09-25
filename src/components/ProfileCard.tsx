@@ -201,7 +201,10 @@ const ProfileCard: React.FC = () => {
               {activeTab === "company" && (
                 <div>
                   <h3 className="text-[24px] text-naviblue font-semibold my-2 text-center">
-                    {exhibitorData?.companyName}
+                    {exhibitorData?.salesPersonName} <br />
+                    <span className="text-[16px] text-gray-600">
+                      {exhibitorData?.companyName}
+                    </span>
                   </h3>
                   <p className="text-[10px] md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
                     {exhibitorData?.about}
