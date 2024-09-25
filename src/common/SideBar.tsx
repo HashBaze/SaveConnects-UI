@@ -26,6 +26,10 @@ const Sidebar: React.FC = () => {
     } else {
       setActiveItem(index);
       navigate(link);
+      const mobile = window.innerWidth >= 440;
+      if (!mobile && sideBarOpen) {
+        toggleSideBar();
+      }
     }
   };
 

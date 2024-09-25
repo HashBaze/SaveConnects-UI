@@ -17,7 +17,11 @@ const Header: React.FC<Breadcrumb> = ({ breadcrumb }: Breadcrumb) => {
           className="flex items-center cursor-pointer md:ml-4 ml-4 absolute md:relative left-0 md:left-auto"
           onClick={toggleSideBar}
         >
-          <img className="w-12 h-12 rounded-full" src="/icon/menu.svg" alt="Menu" />
+          <img
+            className="w-12 h-12 rounded-full"
+            src="/icon/menu.svg"
+            alt="Menu"
+          />
         </div>
         <div className="flex space-x-4 items-center">
           <img
@@ -25,9 +29,9 @@ const Header: React.FC<Breadcrumb> = ({ breadcrumb }: Breadcrumb) => {
             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Profile"
           />
-          <div className="flex flex-col space-y-1 text-sm text-naviblue font-bold">
-            <span>John Doe</span>
-            <span>Admin</span>
+          <div className="flex flex-col space-y-1 text-sm text-naviblue font-mono sm:font-bold">
+            <span>{localStorage.getItem("companyNameKey")}</span>
+            <span>{localStorage.getItem("role")}</span>
           </div>
         </div>
       </div>
