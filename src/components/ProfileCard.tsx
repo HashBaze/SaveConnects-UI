@@ -157,7 +157,7 @@ const ProfileCard: React.FC = () => {
     <>
       <div className="container mx-auto flex items-center justify-center">
         <div className="flex items-center justify-center min-h-screen px-4 sm:px-0">
-          <div className="max-w-[450px] w-full bg-white shadow-lg rounded-[20px] overflow-hidden ring-1 ring-gray-900/5">
+          <div className="max-w-[330px] sm:max-w-[450px] w-full bg-white shadow-lg rounded-[20px] overflow-hidden ring-1 ring-gray-900/5">
             {/* Header */}
             <div className="relative h-48 md:h-64">
               {isCoverImageLoading && (
@@ -166,14 +166,14 @@ const ProfileCard: React.FC = () => {
                 </div>
               )}
               <img
-                className={`w-full h-full object-cover ${
+                className={`w-full h-[120px] sm:h-full object-cover ${
                   isCoverImageLoading ? "hidden" : "block"
                 }`}
                 src={exhibitorData?.coverImage}
                 alt="Profile"
                 onLoad={handleCoverImageLoad}
               />
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/15 sm:translate-y-1/2">
                 <img
                   className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border-4 border-white"
                   src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -183,7 +183,7 @@ const ProfileCard: React.FC = () => {
             </div>
 
             {/* Tab Content */}
-            <div className="p-6 mt-8">
+            <div className="p-6 sm:mt-8 mt-[-30px]">
               {activeTab === "about" && (
                 <div>
                   <h3 className="text-lg font-semibold text-naviblue mb-2">
@@ -203,26 +203,28 @@ const ProfileCard: React.FC = () => {
                   <h3 className="text-[24px] text-naviblue font-semibold my-2 text-center">
                     {exhibitorData?.companyName}
                   </h3>
-                  <p className="text-sm md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
+                  <p className="text-[10px] md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
                     {exhibitorData?.about}
                   </p>
-                  <div className="flex flex-row items-center justify-between space-x-2 md:space-x-1">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1">
+                    <div className="flex gap-1">
+
                     <button
                       onClick={handleSaveContact}
-                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] border-0 cursor-pointer flex justify-between"
+                      className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
                     >
                       <div className="flex align-content-center justify-center">
                         <img
                           src="/icon/contact-light.svg"
                           alt="Contact"
-                          className="w-4 h-4 p-2"
+                          className="w-4 h-4 sm:mt-1 mt-0 p-2"
                         />
-                        <span className="p-2 text-sm">Contact</span>
+                        <span className="p-2 text-[10px] sm:text-[16px]">Contact</span>
                       </div>
                     </button>
                     <button
                       onClick={handleConnect}
-                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] border-0 cursor-pointer flex"
+                      className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex h-8 sm:h-10"
                     >
                       <div className="flex align-content-center justify-center">
                         <img
@@ -230,25 +232,30 @@ const ProfileCard: React.FC = () => {
                           alt="Contact"
                           className="w-4 h-4 p-2"
                         />
-                        <span className="p-2 text-sm">Whatsapp</span>
+                        <span className="p-2 text-[10px] sm:text-[16px]">Whatsapp</span>
                       </div>
                     </button>
+                    </div>
+                    
+
+                    <div className="flex gap-1">
+                      
                     <button
                       onClick={handleEmail}
-                      className="bg-naviblue text-white text-sm md:text-[16px] rounded-[10px] border-0 cursor-pointer"
+                      className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10 mt-1"
                     >
                       <div className="flex align-content-center justify-center">
                         <img
                           src="/icon/mail-light.svg"
                           alt="Contact"
-                          className="w-4 h-4 p-2"
+                          className="w-4 h-4 sm:h-5 p-2"
                         />
-                        <span className="p-2 text-sm">Email</span>
+                        <span className="p-2 text-[10px] sm:text-[16px]">Email</span>
                       </div>
                     </button>
                     <button
                       onClick={handleShare}
-                      className=" hover:bg-blue-950 text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
+                      className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
                     >
                       <img
                         src="/icon/copy-content.svg"
@@ -256,6 +263,10 @@ const ProfileCard: React.FC = () => {
                         className="w-6 h-6"
                       />
                     </button>
+
+                    </div>
+
+
                   </div>
                   <div className="mt-4 ">
                     <div className="flex items-center space-x-2">
