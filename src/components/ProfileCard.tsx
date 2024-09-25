@@ -159,7 +159,7 @@ const ProfileCard: React.FC = () => {
         <div className="flex items-center justify-center min-h-screen px-4 sm:px-0">
           <div className="max-w-[330px] sm:max-w-[450px] w-full bg-white shadow-lg rounded-[20px] overflow-hidden ring-1 ring-gray-900/5">
             {/* Header */}
-            <div className="relative h-48 md:h-64">
+            <div className="relative md:h-64">
               {isCoverImageLoading && (
                 <div className="flex items-center justify-center w-full h-full">
                   <Loader />
@@ -208,77 +208,77 @@ const ProfileCard: React.FC = () => {
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1">
                     <div className="flex gap-1">
-
-                    <button
-                      onClick={handleSaveContact}
-                      className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
-                    >
-                      <div className="flex align-content-center justify-center">
-                        <img
-                          src="/icon/contact-light.svg"
-                          alt="Contact"
-                          className="w-4 h-4 sm:mt-1 mt-0 p-2"
-                        />
-                        <span className="p-2 text-[10px] sm:text-[16px]">Contact</span>
-                      </div>
-                    </button>
-                    <button
-                      onClick={handleConnect}
-                      className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex h-8 sm:h-10"
-                    >
-                      <div className="flex align-content-center justify-center">
-                        <img
-                          src="/icon/whatsapp.svg"
-                          alt="Contact"
-                          className="w-4 h-4 p-2"
-                        />
-                        <span className="p-2 text-[10px] sm:text-[16px]">Whatsapp</span>
-                      </div>
-                    </button>
+                      <button
+                        onClick={handleSaveContact}
+                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
+                      >
+                        <div className="flex align-content-center justify-center">
+                          <img
+                            src="/icon/contact-light.svg"
+                            alt="Contact"
+                            className="w-4 h-4 sm:mt-1 mt-0 p-2"
+                          />
+                          <span className="p-2 text-[10px] sm:text-[16px]">
+                            Contact
+                          </span>
+                        </div>
+                      </button>
+                      <button
+                        onClick={handleConnect}
+                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex h-8 sm:h-10"
+                      >
+                        <div className="flex align-content-center justify-center">
+                          <img
+                            src="/icon/whatsapp.svg"
+                            alt="Contact"
+                            className="w-4 h-4 p-2"
+                          />
+                          <span className="p-2 text-[10px] sm:text-[16px]">
+                            Whatsapp
+                          </span>
+                        </div>
+                      </button>
                     </div>
-                    
-
                     <div className="flex gap-1">
-                      
-                    <button
-                      onClick={handleEmail}
-                      className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10 mt-1"
-                    >
-                      <div className="flex align-content-center justify-center">
+                      <button
+                        onClick={handleEmail}
+                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10 mt-1"
+                      >
+                        <div className="flex align-content-center justify-center">
+                          <img
+                            src="/icon/mail-light.svg"
+                            alt="Contact"
+                            className="w-4 h-4 sm:h-5 p-2"
+                          />
+                          <span className="p-2 text-[10px] sm:text-[16px]">
+                            Email
+                          </span>
+                        </div>
+                      </button>
+                      <button
+                        onClick={handleShare}
+                        className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
+                      >
                         <img
-                          src="/icon/mail-light.svg"
-                          alt="Contact"
-                          className="w-4 h-4 sm:h-5 p-2"
+                          src="/icon/copy-content.svg"
+                          alt="Share"
+                          className="w-6 h-6"
                         />
-                        <span className="p-2 text-[10px] sm:text-[16px]">Email</span>
-                      </div>
-                    </button>
-                    <button
-                      onClick={handleShare}
-                      className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
-                    >
-                      <img
-                        src="/icon/copy-content.svg"
-                        alt="Share"
-                        className="w-6 h-6"
-                      />
-                    </button>
-
+                      </button>
                     </div>
-
-
                   </div>
-                  <div className="mt-4 ">
+                  <div className="mt-[-5px] sm:mt-4">
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/phone.svg"
                         alt="Phone"
-                        className="w-6 h-6 md:w-8 md:h-8"
+                        className="w-4 h-4 md:w-8 md:h-8"
                       />
-                      <p className="text-sm md:text-[16px] font-semibold text-naviblue">
+                      <p className="text-[10px] md:text-[16px] font-semibold text-naviblue">
                         <a
-                        className="text-naviblue"
-                        href={`tel:${exhibitorData?.phoneNumber}`}>
+                          className="text-naviblue"
+                          href={`tel:${exhibitorData?.phoneNumber}`}
+                        >
                           {exhibitorData?.phoneNumber}
                         </a>
                       </p>
@@ -287,12 +287,13 @@ const ProfileCard: React.FC = () => {
                       <img
                         src="/icon/email.svg"
                         alt="Email"
-                        className="w-6 h-6 md:w-8 md:h-8"
+                        className="w-4 h-4 md:w-8 md:h-8"
                       />
-                      <p className="text-sm md:text-[16px] font-semibold text-naviblue">
+                      <p className="text-[10px] md:text-[16px] font-semibold text-naviblue">
                         <a
-                        className="text-naviblue"
-                         href={`mailto:${exhibitorData?.email}`}>
+                          className="text-naviblue"
+                          href={`mailto:${exhibitorData?.email}`}
+                        >
                           {exhibitorData?.email}
                         </a>
                       </p>
@@ -301,9 +302,9 @@ const ProfileCard: React.FC = () => {
                       <img
                         src="/icon/location.svg"
                         alt="Location"
-                        className="w-6 h-6 md:w-8 md:h-8"
+                        className="w-4 h-4 md:w-8 md:h-8"
                       />
-                      <p className="text-sm md:text-[16px] font-semibold text-naviblue">
+                      <p className="text-[10px] md:text-[16px] font-semibold text-naviblue">
                         {exhibitorData?.address}
                       </p>
                     </div>
@@ -311,10 +312,13 @@ const ProfileCard: React.FC = () => {
                       <img
                         src="/icon/web.svg"
                         alt="Website"
-                        className="w-6 h-6 md:w-8 md:h-8"
+                        className="w-4 h-4 md:w-8 md:h-8"
                       />
-                      <p className="text-sm md:text-[16px] font-semibold text-naviblue">
-                        <a className="text-naviblue" href={'https://' + exhibitorData?.website}>
+                      <p className="text-[10px] md:text-[16px] font-semibold text-naviblue">
+                        <a
+                          className="text-naviblue"
+                          href={"https://" + exhibitorData?.website}
+                        >
                           {exhibitorData?.website}
                         </a>
                       </p>
@@ -347,7 +351,7 @@ const ProfileCard: React.FC = () => {
             </div>
 
             {/* Tabs */}
-            <div className="border-0 p-4">
+            <div className="border-0">
               <div className="flex space-x-2">
                 {["ABOUT", "COMPANY", "GALLERY"].map((tab) => (
                   <button
