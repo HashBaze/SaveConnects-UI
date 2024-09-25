@@ -12,7 +12,10 @@ import {
   EditGalleryImage,
   CompanyKeyExistsRequest,
   EditExhibitorProfile,
+  editGalleryList,
 } from "../utils/ApiRequest";
+import CoverImageDeleteModel from "../model/CoverImageDeleteModel";
+import GalleryImageRemoveModel from "../model/GalleryImageRemoveModel";
 
 const Dashboard: React.FC = () => {
   const path = window.location.pathname.split("/").pop() || "/";
@@ -22,6 +25,10 @@ const Dashboard: React.FC = () => {
   const [exhibitorData, setExhibitorData] = useState<IExhibitor | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isAlertOpen, setIsAlertOpen] = useState<boolean>(false);
+  const [isGalleryRemoveAlertOpen, setIsGalleryRemoveAlertOpen] =
+    useState<boolean>(false);
+  const [removeUrl, setRemoveUrl] = useState<string>("");
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -71,6 +78,15 @@ const Dashboard: React.FC = () => {
       fetchExhibitorData();
     }
   }, [path]);
+
+  const openAlert = () => {
+    setIsAlertOpen(true);
+  };
+
+  const closeAlert = () => {
+    setIsAlertOpen(false);
+    setIsGalleryRemoveAlertOpen(false);
+  };
 
   const uploadImageToFirebase = async (file: File, path: string) => {
     const storageRef = ref(analytics, path);
@@ -138,6 +154,7 @@ const Dashboard: React.FC = () => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const files = Array.from(event.target.files || []);
+
     if (files && exhibitorData?._id) {
       setIsUploading(true);
       try {
@@ -150,15 +167,54 @@ const Dashboard: React.FC = () => {
             return imageUrl;
           })
         );
-
         await EditGalleryImage(exhibitorData._id, imageUrls);
-
         setExhibitorData((prevData) => ({
           ...prevData!,
           gallery: [...prevData!.gallery, ...imageUrls],
         }));
       } catch (error) {
         console.error("Error uploading gallery image:", error);
+      } finally {
+        setIsUploading(false);
+      }
+    }
+  };
+
+  const handleGalleryImageRemove = async () => {
+    const imageUrlList: string[] = exhibitorData?.gallery.filter(
+      (url) => url !== removeUrl
+    ) as string[];
+
+    if (imageUrlList && exhibitorData?._id) {
+      setIsUploading(true);
+      try {
+        await editGalleryList(exhibitorData._id, imageUrlList);
+        setExhibitorData((prevData) => ({
+          ...prevData!,
+          gallery: [...imageUrlList],
+        }));
+        setIsGalleryRemoveAlertOpen(false);
+      } catch (error) {
+        console.error("Error uploading gallery image:", error);
+      } finally {
+        setIsUploading(false);
+        setIsGalleryRemoveAlertOpen(false);
+      }
+    }
+  };
+
+  const handleRemoveCoverImage = async () => {
+    if (exhibitorData?._id) {
+      setIsUploading(true);
+      try {
+        await EditCoverImage(exhibitorData._id, null);
+        setIsAlertOpen(false);
+        setExhibitorData((prevData) => ({
+          ...prevData!,
+          coverImage: "",
+        }));
+      } catch (error) {
+        console.error("Error uploading cover image:", error);
       } finally {
         setIsUploading(false);
       }
@@ -216,6 +272,13 @@ const Dashboard: React.FC = () => {
             >
               <img src="/icon/edit.svg" alt="Edit" className="w-6 h-6" />
             </div>
+            <button
+              type="button"
+              className="absolute border-red-400 flex items-center justify-center bg-red-400 w-8 h-8 rounded-lg top-[60px] right-[20px] cursor-pointer"
+              onClick={openAlert}
+            >
+              <img src="/icon/delete.svg" alt="Edit" className="w-6 h-6" />
+            </button>
             <input
               type="file"
               ref={coverImageInputRef}
@@ -317,9 +380,22 @@ const Dashboard: React.FC = () => {
             <div className="flex flex-col items-center justify-center lg:justify-start px-8 mt-4 mb-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid lg:grid-cols-5 lg:gap-8">
               {exhibitorData?.gallery.map((image, index) => (
                 <div
-                  className="flex flex-col items-center justify-center bg-naviblue w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-naviblue/90 border border-naviblue shadow-lg"
+                  className="flex relative flex-col items-center justify-center bg-naviblue w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-naviblue/90 border border-naviblue shadow-lg"
                   key={index}
                 >
+                  <button
+                    onClick={() => {
+                      setIsGalleryRemoveAlertOpen(true);
+                      setRemoveUrl(image);
+                    }}
+                    className="flex top-0 left-3 absolute items-center justify-center bg-white w-8 h-8 rounded-lg cursor-pointer mt-4 mr-4"
+                  >
+                    <img
+                      src="/icon/delete.svg"
+                      alt="Delete"
+                      className="w-6 h-6"
+                    />
+                  </button>
                   <img
                     src={image}
                     alt="Gallery"
@@ -328,7 +404,7 @@ const Dashboard: React.FC = () => {
                 </div>
               ))}
               <div
-                className="flex flex-col items-center justify-center bg-gray-200 w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
+                className="flex z-10 flex-col items-center justify-center bg-gray-200 w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
                 onClick={handleGalleryAddClick}
               >
                 <img
@@ -359,6 +435,22 @@ const Dashboard: React.FC = () => {
             onClose={handleCloseQRModal}
             companyKey={exhibitorData?.companyNameKey}
           />
+          {isAlertOpen ? (
+            <CoverImageDeleteModel
+              message={"Are you sure you want to delete?"}
+              onClose={closeAlert}
+              onConfirm={handleRemoveCoverImage}
+            />
+          ) : undefined}
+
+          {isGalleryRemoveAlertOpen ? (
+            <GalleryImageRemoveModel
+              onClose={closeAlert}
+              onConfirm={handleGalleryImageRemove}
+              message={"Are you sure you want to delete?"}
+            />
+          ) : undefined}
+
           {isUploading && <LoadingModal />}
         </div>
       )}

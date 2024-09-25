@@ -72,7 +72,15 @@ const EditExhibitorProfile = async (
   });
 };
 
-const EditCoverImage = async (_id: string, coverImage: string) => {
+const EditCoverImage = async (_id: any, coverImage: any) => {
+  if (!coverImage) {
+    await api.put("/exhibitor/cover-image", {
+      _id,
+      coverImage: null,
+    });
+    return;
+  }
+
   await api.put("/exhibitor/cover-image", {
     _id,
     coverImage,
@@ -85,6 +93,13 @@ const EditGalleryImage = async (_id: string, images: string[]) => {
     images,
   });
 };
+
+const editGalleryList = async (_id: string, images: string[]) => {
+  await api.put("/exhibitor/edit-gallery-list", {
+    _id,
+    images,
+  });
+}
 
 const FogotPosswordRequest = async (email: string) => {
   const response = await api.post("/user/forgot-password", { email });
@@ -153,7 +168,12 @@ const DeleteAttendee = async (_id: string, attendeeId: string | undefined) => {
   return response;
 };
 
-const SendInquiryEmail = async (name: string, from: string, to: string, message: string) => {
+const SendInquiryEmail = async (
+  name: string,
+  from: string,
+  to: string,
+  message: string
+) => {
   const response = await api.post("/mail/send-inquiry-email", {
     name,
     from,
@@ -161,7 +181,7 @@ const SendInquiryEmail = async (name: string, from: string, to: string, message:
     message,
   });
   return response;
-}
+};
 
 const GetAllExhibitors = async () => {
   const response = await api.get("/admin/get-all-exhibitors");
@@ -174,19 +194,19 @@ const ExhibitorStatusChange = async (email: string, status: boolean) => {
     status,
   });
   return response;
-}
+};
 
 const CreateCategory = async (name: string) => {
   const response = await api.post("/category/create", {
     name,
   });
   return response;
-}
+};
 
 const GetAllCategories = async () => {
   const response = await api.get("/category/all");
   return response;
-}
+};
 
 const DeleteCategory = async (name: string) => {
   const response = await api.delete("/category/delete", {
@@ -195,7 +215,7 @@ const DeleteCategory = async (name: string) => {
     },
   });
   return response;
-}
+};
 
 export {
   LoginRequest,
@@ -216,5 +236,6 @@ export {
   ExhibitorStatusChange,
   CreateCategory,
   GetAllCategories,
-  DeleteCategory
+  DeleteCategory,
+  editGalleryList
 };
