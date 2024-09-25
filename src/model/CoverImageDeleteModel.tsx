@@ -1,31 +1,18 @@
-import React from "react";
-
-interface SignOutModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-}
-
-const SignOutModal: React.FC<SignOutModalProps> = ({
-  isOpen,
+export default function CoverImageDeleteModel({
   onClose,
   onConfirm,
-}) => {
-  if (!isOpen) return null;
-
+  message,
+}: any) {
   return (
     <div className="fixed z-50 inset-0 bg-gray-500 bg-opacity-20 flex items-center justify-center p-6">
       <div className="flex flex-col bg-white rounded-lg shadow-xl w-full max-w-[300px] p-6">
         <div className="flex bg-white text-white px-4 rounded-t-lg items-center justify-between">
           <div className="flex-grow text-center">
-            <h2 className="text-lg text-naviblue font-semibold">Sign Out</h2>
+            <h2 className="text-lg text-naviblue font-semibold">Delete ?</h2>
           </div>
         </div>
         <p className="text-sm text-gray-500 font-medium text-center px-[20px]">
-          Are you sure you want to sign out?
-        </p>
-        <p className="text-sm text-gray-500 -mt-2 font-medium text-center px-[20px]">
-          Confirm your choise below to sign out
+          {message}
         </p>
         <div className="flex flex-row gap-2 items-center justify-center">
           <button
@@ -56,6 +43,4 @@ const SignOutModal: React.FC<SignOutModalProps> = ({
       </div>
     </div>
   );
-};
-
-export default SignOutModal;
+}
