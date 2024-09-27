@@ -3,14 +3,13 @@ import React from "react";
 export const Contact: React.FC = () => {
   return (
     <div className="bg-white py-12 px-6">
-      <div className="container mx-auto">
+      <div className="container mx-auto mt-10 mb-10">
         <h2 className="text-3xl font-bold text-center mb-6">
           Get in Touch with Us Save Connects
         </h2>
       </div>
       <section className="mx-auto container p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-5">
-          {/* Feature 1: Mobile Friendly */}
           <div className="bg-white p-6 rounded-lg text-center hover:shadow-gray-300">
             <img
               src="/icon/phone.svg"

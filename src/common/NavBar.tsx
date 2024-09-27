@@ -1,34 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IMenuItem } from "../interface/Interface";
+import { isTokenExpired, logout } from "../utils/JWTUtils";
 
 const NavBar: React.FC = () => {
-
+  const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
+  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const path = window.location.pathname.split("/").pop() || "/";
   const [menuItems, setMenuItems] = useState<IMenuItem[]>([
     {
-      label: "Dashboard",
+      label: "Home",
       link: "/",
       icon: "home",
       alt: "Home",
     },
     {
-      label: "Team",
+      label: "About Us",
       link: "/team",
       icon: "team",
       alt: "Team",
     },
     {
-      label: "Guide1",
+      label: "Contact Us",
       link: "/projects",
       icon: "projects",
       alt: "Projects",
     },
-    {
-      label: "F & Q",
-      link: "/calendar",
-      icon: "calendar",
-      alt: "Calendar",
-    },
   ]);
+
+  const checkIfSignedIn = async () => {
+    const accesstoken = localStorage.getItem("accesstoken");
+    const companyNameKey = localStorage.getItem("companyNameKey");
+
+    if (accesstoken && companyNameKey && companyNameKey === path) {
+      if (isTokenExpired(accesstoken)) {
+        logout();
+      } else {
+        setIsSignedIn(true);
+      }
+    } else {
+      setIsSignedIn(false);
+    }
+  };
+
+  useEffect(() => {
+    checkIfSignedIn();
+  }, []);
 
   return (
     <nav className="bg-gray-800 fixed w-full z-10">
@@ -36,6 +53,7 @@ const NavBar: React.FC = () => {
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <button
+              onClick={() => setIsShowMenu(!isShowMenu)}
               type="button"
               className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-controls="mobile-menu"
@@ -77,16 +95,11 @@ const NavBar: React.FC = () => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
-              ></img>
+              <h1 className="text-white text-2xl font-bold">LOGO</h1>
             </div>
-            
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-          <div className="hidden sm:ml-6 sm:block">
+            <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 {menuItems.map((item, index) => (
                   <a
@@ -101,7 +114,11 @@ const NavBar: React.FC = () => {
             </div>
             <div className="relative ml-3">
               <div>
-                <button
+                {isSignedIn ? (
+                  <button
+                  onClick={() => {
+                    setIsOpenMenu(!isOpenMenu);
+                  }}
                   type="button"
                   className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   id="user-menu-button"
@@ -116,73 +133,84 @@ const NavBar: React.FC = () => {
                     alt=""
                   ></img>
                 </button>
+                ) : (
+                  <a
+                    href="/login"
+                    className="bg-blue-500 text-white sm:py-2 py-2 px-6 w-max rounded-full text-sm hover:bg-blue-700 no-underline"
+                  >
+                    Sign In
+                  </a>
+                )}
               </div>
 
-              {/* <div
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="user-menu-button"
-              >
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  id="user-menu-item-0"
+              {isOpenMenu ? (
+                <div
+                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="user-menu-button"
                 >
-                  Your Profile
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  id="user-menu-item-1"
-                >
-                  Settings
-                </a>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700"
-                  role="menuitem"
-                  id="user-menu-item-2"
-                >
-                  Sign out
-                </a>
-              </div> */}
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    id="user-menu-item-0"
+                  >
+                    Your Profile
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    id="user-menu-item-1"
+                  >
+                    Settings
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    id="user-menu-item-2"
+                  >
+                    Sign out
+                  </a>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="sm:hidden" id="mobile-menu">
-        <div className="space-y-1 px-2 pb-3 pt-2">
-          <a
-            href="#"
-            className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-            aria-current="page"
-          >
-            Dashboard
-          </a>
-          <a
-            href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Team
-          </a>
-          <a
-            href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Projects
-          </a>
-          <a
-            href="#"
-            className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-          >
-            Calendar
-          </a>
+      {isShowMenu ? (
+        <div className="bg-white rounded-lg" id="mobile-menu">
+          <div className="space-y-1 px-2 pb-3 pt-2">
+            <a
+              href="#"
+              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
+            >
+              Team
+            </a>
+            <a
+              href="#"
+              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
+            >
+              Team
+            </a>
+            <a
+              href="#"
+              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
+            >
+              Projects
+            </a>
+            <a
+              href="#"
+              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
+            >
+              Calendar
+            </a>
+          </div>
         </div>
-      </div>
+      ) : null}
     </nav>
   );
 };

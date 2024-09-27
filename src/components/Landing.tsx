@@ -7,6 +7,7 @@ import { FeedBacks } from "./FeedBacks";
 import { RegisterdUsers } from "./RegisterdUsers";
 import { Contact } from "./Contact";
 import { Footer } from "./Footer";
+import { HowItsWorks } from "./HowItsWorks";
 
 const Landing: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const Landing: React.FC = () => {
       <NavBar />
       <BannerArea />
       <CreateAccount />
-      {/* steps for using save connects in hear ! */}
+      <HowItsWorks />
       <TopFeature />
       <FeedBacks />
       <RegisterdUsers />

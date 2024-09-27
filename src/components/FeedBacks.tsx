@@ -3,7 +3,7 @@ import React from "react";
 export const FeedBacks: React.FC = () => {
   return (
     <div className="py-12 bg-white">
-      <div className="container mx-auto flex">
+      <div className="container mx-auto flex mt-10 mb-10">
         <div className="m-auto flex justify-center">
           <h2 className="text-3xl font-bold text-center mb-8">
             Hear from Our Happy Users.
@@ -15,8 +15,9 @@ export const FeedBacks: React.FC = () => {
           />
         </div>
       </div>
-      <div className="container mx-auto">
+      <div  className="container mx-auto">
         <div className="grid grid-cols-1 grid-rows-1 gap-4 sm:grid-cols-2 sm:grid-rows-2">
+
           <div className="p-4 rounded-md shadow-lg hover:shadow-gray-300">
             <div className="flex justify-around p-10">
               <img
