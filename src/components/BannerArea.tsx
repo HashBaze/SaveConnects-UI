@@ -14,7 +14,7 @@ const BannerArea: React.FC = () => {
         <img data-aos="fade-left" src="/icon/arrow-styled.png" alt="Banner Image" className="absolute top-20 right-[50px] z-10" /> */}
 
         <div>
-          <p className="sm:w-2/4 m-auto sm:text-[16px] text-[10px]">
+          <p className="sm:w-2/4 m-auto sm:text-[16px] text-[10px] p-3">
             Let’s simplify your networking. SaveConnects makes it effortless for
             exhibitors to connect, share, and grow. One-click is all it takes to
             turn contacts into opportunities. Join us and experience the future
@@ -28,7 +28,7 @@ const BannerArea: React.FC = () => {
           </a>
         </div>
 
-        <img data-aos="fade-up"
+        <img
           src="/images/saveconnects-header.jpeg"
           alt="Banner Image"
           className="sm:w-2/2 m-auto relative sm:top-[0px] z-0 w-[100%] top-[90px]"
