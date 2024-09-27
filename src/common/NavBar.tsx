@@ -7,26 +7,30 @@ const NavBar: React.FC = () => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const path = window.location.pathname.split("/").pop() || "/";
-  const [menuItems, setMenuItems] = useState<IMenuItem[]>([
-    {
-      label: "Home",
-      link: "/",
-      icon: "home",
-      alt: "Home",
-    },
-    {
-      label: "About Us",
-      link: "/team",
-      icon: "team",
-      alt: "Team",
-    },
-    {
-      label: "Contact Us",
-      link: "/projects",
-      icon: "projects",
-      alt: "Projects",
-    },
-  ]);
+  const [menuItems, setMenuItems] = useState<IMenuItem[]>([]);
+
+  useEffect(() => {
+    setMenuItems([
+      {
+        label: "Home",
+        link: "/",
+        icon: "home",
+        alt: "Home",
+      },
+      {
+        label: "About Us",
+        link: "/team",
+        icon: "team",
+        alt: "Team",
+      },
+      {
+        label: "Contact Us",
+        link: "/projects",
+        icon: "projects",
+        alt: "Projects",
+      },
+    ]);
+  },[]);
 
   const checkIfSignedIn = async () => {
     const accesstoken = localStorage.getItem("accesstoken");
