@@ -16,8 +16,11 @@ import {
 } from "../utils/ApiRequest";
 import CoverImageDeleteModel from "../model/CoverImageDeleteModel";
 import GalleryImageRemoveModel from "../model/GalleryImageRemoveModel";
+import { useAppContext } from "../context/AppProvider";
 
 const Dashboard: React.FC = () => {
+  const { setSelsePersonName } = useAppContext();
+
   const path = window.location.pathname.split("/").pop() || "/";
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -54,6 +57,8 @@ const Dashboard: React.FC = () => {
         try {
           const { data } = await CompanyKeyExistsRequest(path);
 
+          setSelsePersonName(data.data.salesPersonName.split(" ")[0]);
+
           setExhibitorData({
             _id: data.data._id,
             email: data.data.email,
@@ -78,6 +83,7 @@ const Dashboard: React.FC = () => {
       fetchExhibitorData();
     }
   }, [path]);
+
 
   const openAlert = () => {
     setIsAlertOpen(true);

@@ -3,7 +3,7 @@ import { Breadcrumb } from "../interface/Interface";
 import { useAppContext } from "../context/AppProvider";
 
 const Header: React.FC<Breadcrumb> = ({ breadcrumb }: Breadcrumb) => {
-  const { toggleSideBar } = useAppContext();
+  const { toggleSideBar, salesPersonName } = useAppContext();
 
   return (
     <div className="relative top-0 z-10 fixed flex h-12 items-center justify-between bg-white p-4 shadow-md border-b border-gray-200">
@@ -30,8 +30,8 @@ const Header: React.FC<Breadcrumb> = ({ breadcrumb }: Breadcrumb) => {
             alt="Profile"
           />
           <div className="flex flex-col space-y-1 text-sm text-naviblue font-mono sm:font-bold">
+            <span>{salesPersonName}</span>
             <span>{localStorage.getItem("companyNameKey")}</span>
-            <span>{localStorage.getItem("role")}</span>
           </div>
         </div>
       </div>
