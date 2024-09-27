@@ -3,11 +3,9 @@ import Landing from "../components/Landing";
 
 const LandingPage: React.FC = () => {
   return (
-    <>
-      <main className="flex-grow overflow-auto p-2">
-        <Landing />
-      </main>
-    </>
+    <div className="w-full overflow-scroll">
+      <Landing />
+    </div>
   );
 };
 
