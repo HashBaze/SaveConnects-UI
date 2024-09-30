@@ -64,20 +64,19 @@ const ProfileCard: React.FC = () => {
     setIsCoverImageLoading(false);
   };
 
-  // Generate vCard
   const generateVCard = () => {
     if (!exhibitorData) return "";
 
     return `
-      BEGIN:VCARD
-      VERSION:3.0
-      FN:${exhibitorData.salesPersonName}
-      ORG:${exhibitorData.companyName}
-      TEL:${exhibitorData.phoneNumber}
-      EMAIL:${exhibitorData.email}
-      ADR:;;${exhibitorData.address}
-      URL:${exhibitorData.website}
-      END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+FN:${exhibitorData.salesPersonName}
+ORG:${exhibitorData.companyName}
+TEL:${exhibitorData.phoneNumber}
+EMAIL:${exhibitorData.email}
+ADR:;;${exhibitorData.address}
+URL:${exhibitorData.website}
+END:VCARD
     `;
   };
 
@@ -91,36 +90,6 @@ const ProfileCard: React.FC = () => {
     link.click();
     URL.revokeObjectURL(url);
   };
-  // End of generate vCard
-
-  // Download contact
-  const downloadContact = () => {
-    const contact = {
-      fullName: "savinda Jayasekara",
-      phone: "+94771234567",
-      email: "thantrige32@gmail.com",
-    };
-
-    const vCardContent = `
-             BEGIN:VCARD
-             VERSION:3.0
-             FN:${contact.fullName}
-             TEL;TYPE=CELL:${contact.phone}
-             EMAIL:${contact.email}
-             END:VCARD`;
-
-    const blob = new Blob([vCardContent], { type: "text/vcard" });
-
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${contact.fullName}.vcf`;
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-  // End of download contact
 
   const handleShare = () => {
     const currentUrl = window.location.href;
@@ -243,7 +212,7 @@ const ProfileCard: React.FC = () => {
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1">
                     <div className="flex gap-1">
                       <button
-                        onClick={downloadContact}
+                        onClick={handleSaveContact}
                         className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
                       >
                         <div className="flex align-content-center justify-center">
