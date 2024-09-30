@@ -64,6 +64,7 @@ const ProfileCard: React.FC = () => {
     setIsCoverImageLoading(false);
   };
 
+  // Generate vCard
   const generateVCard = () => {
     if (!exhibitorData) return "";
 
@@ -90,6 +91,36 @@ const ProfileCard: React.FC = () => {
     link.click();
     URL.revokeObjectURL(url);
   };
+  // End of generate vCard
+
+  // Download contact
+  const downloadContact = () => {
+    const contact = {
+      fullName: "savinda Jayasekara",
+      phone: "+94771234567",
+      email: "thantrige32@gmail.com",
+    };
+
+    const vCardContent = `
+             BEGIN:VCARD
+             VERSION:3.0
+             FN:${contact.fullName}
+             TEL;TYPE=CELL:${contact.phone}
+             EMAIL:${contact.email}
+             END:VCARD`;
+
+    const blob = new Blob([vCardContent], { type: "text/vcard" });
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${contact.fullName}.vcf`;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  // End of download contact
 
   const handleShare = () => {
     const currentUrl = window.location.href;
@@ -212,7 +243,7 @@ const ProfileCard: React.FC = () => {
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1">
                     <div className="flex gap-1">
                       <button
-                        onClick={handleSaveContact}
+                        onClick={downloadContact}
                         className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
                       >
                         <div className="flex align-content-center justify-center">
@@ -234,7 +265,7 @@ const ProfileCard: React.FC = () => {
                           <img
                             src="/icon/whatsapp.svg"
                             alt="Contact"
-                            className="w-4 h-4 p-2"
+                            className="w-4 h-4 p-2 sm:mt-1"
                           />
                           <span className="p-2 text-[10px] sm:text-[16px]">
                             Whatsapp
@@ -251,7 +282,7 @@ const ProfileCard: React.FC = () => {
                           <img
                             src="/icon/mail-light.svg"
                             alt="Contact"
-                            className="w-4 h-4 sm:h-5 p-2"
+                            className="w-5 h-5 sm:h-5 p-2 sm:mt-1"
                           />
                           <span className="p-2 text-[10px] sm:text-[16px]">
                             Email

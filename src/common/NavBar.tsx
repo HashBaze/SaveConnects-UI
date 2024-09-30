@@ -188,30 +188,15 @@ const NavBar: React.FC = () => {
       {isShowMenu ? (
         <div className="bg-white rounded-lg" id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2">
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
-            >
-              Team
-            </a>
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
-            >
-              Team
-            </a>
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
-            >
-              Projects
-            </a>
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
-            >
-              Calendar
-            </a>
+            {menuItems.map((item, index) => (
+              <a
+                key={index}
+                href={item.link}
+                className="text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium no-underline"
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
         </div>
       ) : null}
