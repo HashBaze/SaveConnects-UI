@@ -214,7 +214,7 @@ END:VCARD`;
             <div className="p-6 sm:mt-8 mt-[-30px]">
               {activeTab === "about" && (
                 <div>
-                  <h3 className="text-lg font-semibold text-naviblue mb-2">
+                  <h3 className="text-lg font-semibold text-naviblue mb-2 mt-5">
                     About Me
                   </h3>
                   <p className="text-gray-600 -mt-1">
@@ -237,8 +237,8 @@ END:VCARD`;
                   <p className="text-[10px] md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
                     {exhibitorData?.about}
                   </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1">
-                    <div className="flex gap-1">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1 mt-5">
+                    <div className="grid shadow-sm sm:grid-cols-3 space-x-1 space-y-1 sm:space-y-0">
                       <button
                         onClick={handleSaveContact}
                         className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
@@ -254,6 +254,7 @@ END:VCARD`;
                           </span>
                         </div>
                       </button>
+
                       <button
                         onClick={handleConnect}
                         className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex h-8 sm:h-10"
@@ -269,11 +270,10 @@ END:VCARD`;
                           </span>
                         </div>
                       </button>
-                    </div>
-                    <div className="flex gap-1">
+
                       <button
                         onClick={handleEmail}
-                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10 mt-1"
+                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10"
                       >
                         <div className="flex items-center justify-center">
                           <img
@@ -286,19 +286,10 @@ END:VCARD`;
                           </span>
                         </div>
                       </button>
-                      <button
-                        onClick={handleShare}
-                        className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
-                      >
-                        <img
-                          src="/icon/copy-content.svg"
-                          alt="Share"
-                          className="w-6 h-6"
-                        />
-                      </button>
                     </div>
                   </div>
-                  <div className="mt-[-5px] sm:mt-4">
+
+                  <div className="sm:mt-4">
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/phone.svg"
@@ -314,6 +305,7 @@ END:VCARD`;
                         </a>
                       </p>
                     </div>
+
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/email.svg"
@@ -329,6 +321,7 @@ END:VCARD`;
                         </a>
                       </p>
                     </div>
+
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/location.svg"
@@ -339,6 +332,7 @@ END:VCARD`;
                         {exhibitorData?.address}
                       </p>
                     </div>
+
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/web.svg"
@@ -353,6 +347,18 @@ END:VCARD`;
                           {exhibitorData?.website}
                         </a>
                       </p>
+                      <div className="flex justify-end items-center w-full h-[10px]">
+                        <button
+                          onClick={handleShare}
+                          className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
+                        >
+                          <img
+                            src="/icon/copy-content.svg"
+                            alt="Share"
+                            className="w-6 h-6"
+                          />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
