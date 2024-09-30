@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IMenuItem } from "../interface/Interface";
 import { isTokenExpired, logout } from "../utils/JWTUtils";
+import { useNavigate } from "react-router-dom";
 
 const NavBar: React.FC = () => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
@@ -8,6 +9,7 @@ const NavBar: React.FC = () => {
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const path = window.location.pathname.split("/").pop() || "/";
   const [menuItems, setMenuItems] = useState<IMenuItem[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setMenuItems([
@@ -139,7 +141,7 @@ const NavBar: React.FC = () => {
                 </button>
                 ) : (
                   <a
-                    href="/login"
+                    onClick={() => navigate("/login")}
                     className="bg-blue-500 text-white sm:py-2 py-2 px-6 w-max rounded-full text-sm hover:bg-blue-700 no-underline"
                   >
                     Sign In
@@ -188,30 +190,15 @@ const NavBar: React.FC = () => {
       {isShowMenu ? (
         <div className="bg-white rounded-lg" id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2">
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
-            >
-              Team
-            </a>
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
-            >
-              Team
-            </a>
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
-            >
-              Projects
-            </a>
-            <a
-              href="#"
-              className="block rounded-md px-3 py-2 text-base font-medium text-naviblue hover:bg-gray-700 hover:text-white text-center no-underline"
-            >
-              Calendar
-            </a>
+            {menuItems.map((item, index) => (
+              <a
+                key={index}
+                href={item.link}
+                className="text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium no-underline"
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
         </div>
       ) : null}
