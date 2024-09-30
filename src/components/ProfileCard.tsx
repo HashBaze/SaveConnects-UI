@@ -52,6 +52,57 @@ const ProfileCard: React.FC = () => {
     }
   }, [path]);
 
+  const dowenloadVcfContact = (exhibitorData: IExhibitor) => {
+    const makeVCardVersion = (): string => `VERSION:3.0`;
+
+    const makeVCardInfo = (info: string): string => `N:${info}`;
+
+    const makeVCardName = (name: string): string => `FN:${name}`;
+
+    const makeVCardOrg = (org: string): string => `ORG:${org}`;
+
+    const makeVCardTitle = (title: string): string => `TITLE:${title}`;
+
+    const makeVCardPhoto = (img: string): string =>
+      `PHOTO;TYPE=JPEG;ENCODING=b:${img}`;
+
+    const makeVCardTel = (phone: string): string =>
+      `TEL;TYPE=WORK,VOICE:${phone}`;
+
+    const makeVCardAdr = (address: string): string =>
+      `ADR;TYPE=WORK,PREF:;;${address}`;
+
+    const makeVCardEmail = (email: string): string => `EMAIL:${email}`;
+
+    const makeVCardTimeStamp = (): string => `REV:${new Date().toISOString()}`;
+
+    const makeabout = (about: string): string => `NOTE:${about}`;
+
+    let vcard = `BEGIN:VCARD
+${makeVCardVersion()}
+${makeVCardInfo(
+  exhibitorData.salesPersonName + ";" + exhibitorData.companyName
+)}
+${makeVCardName(exhibitorData.salesPersonName)}
+${makeVCardOrg(exhibitorData.companyName)}
+${makeVCardTitle(exhibitorData.companyCategory)}
+${makeVCardPhoto(exhibitorData.coverImage)}
+${makeVCardTel(exhibitorData.phoneNumber)}
+${makeVCardAdr(exhibitorData.address)}
+${makeVCardEmail(exhibitorData.email)}
+${makeVCardTimeStamp()}
+${makeabout(exhibitorData.about)}
+END:VCARD`;
+    const a = document.createElement("a");
+    const file = new Blob([vcard], { type: "text/vcard" });
+
+    a.href = URL.createObjectURL(file);
+    a.download = `${exhibitorData.companyName}.vcf`;
+    a.click();
+
+    URL.revokeObjectURL(a.href);
+  };
+
   const handleImageLoad = (index: number) => {
     setLoadingImages((prevLoadingImages) => {
       const updatedLoadingImages = [...prevLoadingImages];
@@ -64,31 +115,8 @@ const ProfileCard: React.FC = () => {
     setIsCoverImageLoading(false);
   };
 
-  const generateVCard = () => {
-    if (!exhibitorData) return "";
-
-    return `
-BEGIN:VCARD
-VERSION:3.0
-FN:${exhibitorData.salesPersonName}
-ORG:${exhibitorData.companyName}
-TEL:${exhibitorData.phoneNumber}
-EMAIL:${exhibitorData.email}
-ADR:;;${exhibitorData.address}
-URL:${exhibitorData.website}
-END:VCARD
-    `;
-  };
-
   const handleSaveContact = () => {
-    const vCardData = generateVCard();
-    const blob = new Blob([vCardData], { type: "text/vcard" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${exhibitorData?.companyName}.vcf`;
-    link.click();
-    URL.revokeObjectURL(url);
+    dowenloadVcfContact(exhibitorData as IExhibitor);
   };
 
   const handleShare = () => {
@@ -230,11 +258,11 @@ END:VCARD
                         onClick={handleConnect}
                         className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex h-8 sm:h-10"
                       >
-                        <div className="flex align-content-center justify-center">
+                        <div className="flex items-center justify-center">
                           <img
                             src="/icon/whatsapp.svg"
                             alt="Contact"
-                            className="w-4 h-4 p-2 sm:mt-1"
+                            className="w-4 h-4 p-2"
                           />
                           <span className="p-2 text-[10px] sm:text-[16px]">
                             Whatsapp
@@ -247,11 +275,11 @@ END:VCARD
                         onClick={handleEmail}
                         className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10 mt-1"
                       >
-                        <div className="flex align-content-center justify-center">
+                        <div className="flex items-center justify-center">
                           <img
                             src="/icon/mail-light.svg"
                             alt="Contact"
-                            className="w-5 h-5 sm:h-5 p-2 sm:mt-1"
+                            className="w-5 h-5 sm:h-5 p-2"
                           />
                           <span className="p-2 text-[10px] sm:text-[16px]">
                             Email

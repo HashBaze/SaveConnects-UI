@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IMenuItem } from "../interface/Interface";
 import { isTokenExpired, logout } from "../utils/JWTUtils";
+import { useNavigate } from "react-router-dom";
 
 const NavBar: React.FC = () => {
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
@@ -8,6 +9,7 @@ const NavBar: React.FC = () => {
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const path = window.location.pathname.split("/").pop() || "/";
   const [menuItems, setMenuItems] = useState<IMenuItem[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setMenuItems([
@@ -139,7 +141,7 @@ const NavBar: React.FC = () => {
                 </button>
                 ) : (
                   <a
-                    href="/login"
+                    onClick={() => navigate("/login")}
                     className="bg-blue-500 text-white sm:py-2 py-2 px-6 w-max rounded-full text-sm hover:bg-blue-700 no-underline"
                   >
                     Sign In
