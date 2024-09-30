@@ -17,6 +17,8 @@ export interface AppContextType {
   setCompanyKey: React.Dispatch<React.SetStateAction<string>>;
   exhibitor: IExhibitor;
   setExhibitor: React.Dispatch<React.SetStateAction<IExhibitor>>;
+  salesPersonName: string;
+  setSelsePersonName: (name: string) => void;
 }
 
 export interface IExhibitor {

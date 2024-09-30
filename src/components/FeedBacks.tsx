@@ -25,7 +25,7 @@ export const FeedBacks: React.FC = () => {
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
               ></img>
-              <p className="text-[14px] w-2/3 text-gray-400">
+              <p className="sm:text-[14px] w-2/3 text-gray-400 text-[12px]">
                 “Duis aute irure dolor in reprehenderit in voluptate velit esse
                 cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat
                 cupida non proident sunt in culpa qui officia deserunt.”
@@ -42,7 +42,7 @@ export const FeedBacks: React.FC = () => {
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
               ></img>
-              <p className="text-[14px] w-2/3 text-gray-400">
+              <p className="sm:text-[14px] w-2/3 text-gray-400 text-[12px]">
                 “Duis aute irure dolor in reprehenderit in voluptate velit esse
                 cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat
                 cupida non proident sunt in culpa qui officia deserunt.”
@@ -59,7 +59,7 @@ export const FeedBacks: React.FC = () => {
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
               ></img>
-              <p className="text-[14px] w-2/3 text-gray-400">
+              <p className="sm:text-[14px] w-2/3 text-gray-400 text-[12px]">
                 “Duis aute irure dolor in reprehenderit in voluptate velit esse
                 cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat
                 cupida non proident sunt in culpa qui officia deserunt.”
@@ -76,7 +76,7 @@ export const FeedBacks: React.FC = () => {
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
               ></img>
-              <p className="text-[14px] w-2/3 text-gray-400">
+              <p className="sm:text-[14px] w-2/3 text-gray-400 text-[12px]">
                 “Duis aute irure dolor in reprehenderit in voluptate velit esse
                 cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat
                 cupida non proident sunt in culpa qui officia deserunt.”

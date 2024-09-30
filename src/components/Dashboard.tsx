@@ -16,8 +16,11 @@ import {
 } from "../utils/ApiRequest";
 import CoverImageDeleteModel from "../model/CoverImageDeleteModel";
 import GalleryImageRemoveModel from "../model/GalleryImageRemoveModel";
+import { useAppContext } from "../context/AppProvider";
 
 const Dashboard: React.FC = () => {
+  const { setSelsePersonName } = useAppContext();
+
   const path = window.location.pathname.split("/").pop() || "/";
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -54,6 +57,8 @@ const Dashboard: React.FC = () => {
         try {
           const { data } = await CompanyKeyExistsRequest(path);
 
+          setSelsePersonName(data.data.salesPersonName.split(" ")[0]);
+
           setExhibitorData({
             _id: data.data._id,
             email: data.data.email,
@@ -79,7 +84,9 @@ const Dashboard: React.FC = () => {
     }
   }, [path]);
 
+
   const openAlert = () => {
+    console.log(exhibitorData?.coverImage);
     setIsAlertOpen(true);
   };
 
@@ -272,13 +279,15 @@ const Dashboard: React.FC = () => {
             >
               <img src="/icon/edit.svg" alt="Edit" className="w-6 h-6" />
             </div>
-            <button
+            {exhibitorData?.coverImage === null ? null : (
+              <button
               type="button"
               className="absolute border-red-400 flex items-center justify-center bg-red-400 w-8 h-8 rounded-lg top-[60px] right-[20px] cursor-pointer"
               onClick={openAlert}
             >
               <img src="/icon/delete.svg" alt="Edit" className="w-6 h-6" />
             </button>
+            )}
             <input
               type="file"
               ref={coverImageInputRef}
@@ -315,7 +324,7 @@ const Dashboard: React.FC = () => {
                   className="w-6 lg:w-8 h-6 lg:h-8"
                 />
                 <div className="text-sm lg:text-lg">
-                  {exhibitorData?.website}
+                  <a href={exhibitorData?.website} className="text-gray-600 hover:text-blue-800 transition-colors duration-300 no-underline" target="_blank">{exhibitorData?.website}</a>
                 </div>
               </div>
               <div className="flex flex-row space-x-2">
@@ -324,7 +333,9 @@ const Dashboard: React.FC = () => {
                   alt="Email"
                   className="w-6 lg:w-8 h-6 lg:h-8"
                 />
-                <div className="text-sm lg:text-lg">{exhibitorData?.email}</div>
+                <div className="text-sm lg:text-lg">
+                  <a href={`mailto:${exhibitorData?.email}`} className="text-gray-600 hover:text-blue-800 transition-colors duration-300 no-underline">{exhibitorData?.email}</a>
+                </div>
               </div>
               <div className="flex flex-row space-x-2">
                 <img
@@ -333,7 +344,8 @@ const Dashboard: React.FC = () => {
                   className="w-6 lg:w-8 h-6 lg:h-8"
                 />
                 <div className="text-sm lg:text-lg">
-                  {exhibitorData?.phoneNumber}
+                  <a href={`tel:${exhibitorData?.phoneNumber}`}
+                   className="text-gray-600 hover:text-blue-800 transition-colors duration-300 no-underline whitespace-nowrap">{exhibitorData?.phoneNumber}</a>
                 </div>
               </div>
               <div className="flex flex-row space-x-2">

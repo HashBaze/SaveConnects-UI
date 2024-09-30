@@ -11,6 +11,8 @@ const AppContext = createContext<AppContextType | null>(null);
 
 const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sideBarOpen, setSideBarOpen] = useState<boolean>(true);
+  const [salesPersonName, setSalesPersonName] = useState(""); 
+
 
   const toggleSideBar = () => setSideBarOpen((prev) => !prev);
 
@@ -34,6 +36,7 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setSideBarOpen,
         toggleSideBar,
         companyKey: "",
+        salesPersonName : salesPersonName,
         setCompanyKey: () => {},
         exhibitor: {
           _id: "",
@@ -50,6 +53,7 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           gallery: [],
         },
         setExhibitor: () => { return; },
+        setSelsePersonName: (name: string) => setSalesPersonName(name)
       }}
     >
       {children}

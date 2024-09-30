@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateAccount: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="bg-white py-12 px-6 flex justify-center items-center">
       <div className="container mx-auto">
@@ -67,7 +69,7 @@ const CreateAccount: React.FC = () => {
         </div>
         <div className="text-center mt-10">
           <a
-            href="/signup"
+            onClick={() => navigate("/signup")}
             className="bg-blue-500 text-white py-3 px-8 rounded-full text-lg hover:bg-blue-700 no-underline"
           >
             Create Account

@@ -52,6 +52,57 @@ const ProfileCard: React.FC = () => {
     }
   }, [path]);
 
+  const dowenloadVcfContact = (exhibitorData: IExhibitor) => {
+    const makeVCardVersion = (): string => `VERSION:3.0`;
+
+    const makeVCardInfo = (info: string): string => `N:${info}`;
+
+    const makeVCardName = (name: string): string => `FN:${name}`;
+
+    const makeVCardOrg = (org: string): string => `ORG:${org}`;
+
+    const makeVCardTitle = (title: string): string => `TITLE:${title}`;
+
+    const makeVCardPhoto = (img: string): string =>
+      `PHOTO;TYPE=JPEG;ENCODING=b:${img}`;
+
+    const makeVCardTel = (phone: string): string =>
+      `TEL;TYPE=WORK,VOICE:${phone}`;
+
+    const makeVCardAdr = (address: string): string =>
+      `ADR;TYPE=WORK,PREF:;;${address}`;
+
+    const makeVCardEmail = (email: string): string => `EMAIL:${email}`;
+
+    const makeVCardTimeStamp = (): string => `REV:${new Date().toISOString()}`;
+
+    const makeabout = (about: string): string => `NOTE:${about}`;
+
+    let vcard = `BEGIN:VCARD
+${makeVCardVersion()}
+${makeVCardInfo(
+  exhibitorData.salesPersonName + ";" + exhibitorData.companyName
+)}
+${makeVCardName(exhibitorData.salesPersonName)}
+${makeVCardOrg(exhibitorData.companyName)}
+${makeVCardTitle(exhibitorData.companyCategory)}
+${makeVCardPhoto(exhibitorData.coverImage)}
+${makeVCardTel(exhibitorData.phoneNumber)}
+${makeVCardAdr(exhibitorData.address)}
+${makeVCardEmail(exhibitorData.email)}
+${makeVCardTimeStamp()}
+${makeabout(exhibitorData.about)}
+END:VCARD`;
+    const a = document.createElement("a");
+    const file = new Blob([vcard], { type: "text/vcard" });
+
+    a.href = URL.createObjectURL(file);
+    a.download = `${exhibitorData.companyName}.vcf`;
+    a.click();
+
+    URL.revokeObjectURL(a.href);
+  };
+
   const handleImageLoad = (index: number) => {
     setLoadingImages((prevLoadingImages) => {
       const updatedLoadingImages = [...prevLoadingImages];
@@ -64,31 +115,8 @@ const ProfileCard: React.FC = () => {
     setIsCoverImageLoading(false);
   };
 
-  const generateVCard = () => {
-    if (!exhibitorData) return "";
-
-    return `
-      BEGIN:VCARD
-      VERSION:3.0
-      FN:${exhibitorData.salesPersonName}
-      ORG:${exhibitorData.companyName}
-      TEL:${exhibitorData.phoneNumber}
-      EMAIL:${exhibitorData.email}
-      ADR:;;${exhibitorData.address}
-      URL:${exhibitorData.website}
-      END:VCARD
-    `;
-  };
-
   const handleSaveContact = () => {
-    const vCardData = generateVCard();
-    const blob = new Blob([vCardData], { type: "text/vcard" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `${exhibitorData?.companyName}.vcf`;
-    link.click();
-    URL.revokeObjectURL(url);
+    dowenloadVcfContact(exhibitorData as IExhibitor);
   };
 
   const handleShare = () => {
@@ -186,7 +214,7 @@ const ProfileCard: React.FC = () => {
             <div className="p-6 sm:mt-8 mt-[-30px]">
               {activeTab === "about" && (
                 <div>
-                  <h3 className="text-lg font-semibold text-naviblue mb-2">
+                  <h3 className="text-lg font-semibold text-naviblue mb-2 mt-5">
                     About Me
                   </h3>
                   <p className="text-gray-600 -mt-1">
@@ -209,8 +237,8 @@ const ProfileCard: React.FC = () => {
                   <p className="text-[10px] md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
                     {exhibitorData?.about}
                   </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1">
-                    <div className="flex gap-1">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1 mt-5">
+                    <div className="grid shadow-sm sm:grid-cols-3 space-x-1 space-y-1 sm:space-y-0">
                       <button
                         onClick={handleSaveContact}
                         className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
@@ -226,11 +254,12 @@ const ProfileCard: React.FC = () => {
                           </span>
                         </div>
                       </button>
+
                       <button
                         onClick={handleConnect}
                         className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex h-8 sm:h-10"
                       >
-                        <div className="flex align-content-center justify-center">
+                        <div className="flex items-center justify-center">
                           <img
                             src="/icon/whatsapp.svg"
                             alt="Contact"
@@ -241,36 +270,26 @@ const ProfileCard: React.FC = () => {
                           </span>
                         </div>
                       </button>
-                    </div>
-                    <div className="flex gap-1">
+
                       <button
                         onClick={handleEmail}
-                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10 mt-1"
+                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10"
                       >
-                        <div className="flex align-content-center justify-center">
+                        <div className="flex items-center justify-center">
                           <img
                             src="/icon/mail-light.svg"
                             alt="Contact"
-                            className="w-4 h-4 sm:h-5 p-2"
+                            className="w-5 h-5 sm:h-5 p-2"
                           />
                           <span className="p-2 text-[10px] sm:text-[16px]">
                             Email
                           </span>
                         </div>
                       </button>
-                      <button
-                        onClick={handleShare}
-                        className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
-                      >
-                        <img
-                          src="/icon/copy-content.svg"
-                          alt="Share"
-                          className="w-6 h-6"
-                        />
-                      </button>
                     </div>
                   </div>
-                  <div className="mt-[-5px] sm:mt-4">
+
+                  <div className="sm:mt-4">
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/phone.svg"
@@ -286,6 +305,7 @@ const ProfileCard: React.FC = () => {
                         </a>
                       </p>
                     </div>
+
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/email.svg"
@@ -301,6 +321,7 @@ const ProfileCard: React.FC = () => {
                         </a>
                       </p>
                     </div>
+
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/location.svg"
@@ -311,6 +332,7 @@ const ProfileCard: React.FC = () => {
                         {exhibitorData?.address}
                       </p>
                     </div>
+
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/web.svg"
@@ -325,6 +347,18 @@ const ProfileCard: React.FC = () => {
                           {exhibitorData?.website}
                         </a>
                       </p>
+                      <div className="flex justify-end items-center w-full h-[10px]">
+                        <button
+                          onClick={handleShare}
+                          className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
+                        >
+                          <img
+                            src="/icon/copy-content.svg"
+                            alt="Share"
+                            className="w-6 h-6"
+                          />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
