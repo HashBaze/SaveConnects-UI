@@ -7,7 +7,7 @@ const BannerArea: React.FC = () => {
     <div className="bg-gray-800 text-white w-full sm:h-screen overflow-hidden mt-[60px] relative">
       <div className="container mx-auto text-center">
         <div className="">
-          <h1 className="sm:text-[40px] text-[20px] font-bold mt-10 flicker">
+          <h1 className="sm:text-[50px] text-[20px] font-bold mt-10 flicker">
             Transform Your Exhibition Experience <br /> with SaveConnects.
           </h1>
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-white shadow dark:bg-gray-800 p-7 sm:p-10">
+    <footer className="bg-gray-800 shadow p-7 sm:p-10">
       <div className="flex items-center justify-between">
         <span className="text-[10px] sm:text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2024{" "}
