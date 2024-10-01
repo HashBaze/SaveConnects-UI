@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const BannerArea: React.FC = () => {
+  const navigate = useNavigate();
   return ( 
     <div className="bg-gray-800 text-white w-full sm:h-screen overflow-hidden mt-[60px] relative">
       <div className="container mx-auto text-center">
@@ -18,7 +20,7 @@ const BannerArea: React.FC = () => {
             of exhibition networking.
           </p>
           <a
-            href="/signup"
+            onClick={() => navigate("/signup")}
             className="z-10 bg-blue-500 text-white sm:py-3 py-2 px-8 w-max relative top-8 rounded-full text-lg hover:bg-blue-700 mt-10 no-underline"
           >
             Create Account
