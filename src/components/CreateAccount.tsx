@@ -2,7 +2,7 @@ import React from "react";
 
 const CreateAccount: React.FC = () => {
   return (
-    <div className="bg-white py-12 px-6 flex justify-center items-center">
+    <div className="py-12 px-6 flex justify-center items-center">
       <div className="container mx-auto">
         <h2 className="sm:text-[30px] text-[20px] font-bold text-center mb-6">
           Ready to Join? Let's Create Your Profile!
@@ -64,14 +64,6 @@ const CreateAccount: React.FC = () => {
               </p>
             </div>
           </div>
-        </div>
-        <div className="text-center mt-10">
-          <a
-            href="/signup"
-            className="bg-blue-500 text-white py-3 px-8 rounded-full text-lg hover:bg-blue-700 no-underline"
-          >
-            Create Account
-          </a>
         </div>
       </div>
     </div>

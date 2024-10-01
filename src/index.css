@@ -22,11 +22,9 @@ html, body {
   min-height: 100%;
 }
 
-/* banner area header text animation ! */
 .flicker {
-  font-family: 'Merienda', sans-serif;
   margin: 1rem auto;
-  color: #ffffff61;
+  color: #ffffff91;
   background: -webkit-gradient(linear, left top, right top, from(#e6e6e6), to(#1d1c1c), color-stop(0.8, #ffffff)) no-repeat;
   background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.8, #fff)) no-repeat;
   background-size: 110px 100%;
