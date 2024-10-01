@@ -1,8 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 const CreateAccount: React.FC = () => {
-  const navigate = useNavigate();
   return (
     <div className="py-12 px-6 flex justify-center items-center">
       <div className="container mx-auto">
