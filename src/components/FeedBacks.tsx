@@ -19,7 +19,7 @@ export const FeedBacks: React.FC = () => {
         <div className="grid grid-cols-1 grid-rows-1 gap-4 sm:grid-cols-2 sm:grid-rows-2">
 
           <div className="p-4 rounded-md shadow-lg hover:shadow-gray-300">
-            <div className="flex justify-around p-10">
+            <div className="flex justify-around sm:p-10">
               <img
                 className="h-16 w-16 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -36,7 +36,7 @@ export const FeedBacks: React.FC = () => {
             </div>
           </div>
           <div className="p-4 rounded-md shadow-lg hover:shadow-gray-300">
-            <div className="flex justify-around p-10">
+            <div className="flex justify-around sm:p-10">
               <img
                 className="h-16 w-16 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -53,7 +53,7 @@ export const FeedBacks: React.FC = () => {
             </div>
           </div>
           <div className="p-4 rounded-md shadow-lg hover:shadow-gray-300">
-            <div className="flex justify-around p-10">
+            <div className="flex justify-around sm:p-10">
               <img
                 className="h-16 w-16 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -70,7 +70,7 @@ export const FeedBacks: React.FC = () => {
             </div>
           </div>
           <div className="p-4 rounded-md shadow-lg hover:shadow-gray-300">
-            <div className="flex justify-around p-10">
+            <div className="flex justify-around sm:p-10">
               <img
                 className="h-16 w-16 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
