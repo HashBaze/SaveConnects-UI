@@ -10,7 +10,7 @@ export const HowItsWorks: React.FC = () => {
   return (
     <div className="bg-white">
       <section className="container mx-auto">
-        <section className="grid grid-cols-1 grid-rows-3 shadow-sm items-center justify-around gap-0">
+        <section className="grid grid-cols-1 grid-rows-3 items-center justify-around gap-0">
           <div className="flex flex-col-reverse md:flex-col-reverse lg:flex-row items-center">
             <div className="p-4 hover:shadow-gray-300 w-5/6">
               <div className="flex justify-center sm:justify-center md:justify-center lg:justify-start">
@@ -58,11 +58,11 @@ export const HowItsWorks: React.FC = () => {
                 Save & Export Contacts
               </h1>
               <p className="text-gray-400 text-[12px] sm:text-[18px] text-center sm:text-center md:text-center lg:text-end md:w-full mt-10">
-                Use QR codes to make your experience at exhibitions easier.
-                Create personalised QR codes and share your company's
-                information, product data, or promotional content with ease.
-                Attendees may engage with your brand with only a quick scan,
-                which makes networking easier and more effective.
+                Effortlessly save and export contacts using QR codes. Simplify
+                networking by generating codes that allow others to instantly
+                add your information to their devices. Whether you're at a
+                conference or meeting, a quick scan ensures seamless connection
+                and hassle-free contact sharing.
               </p>
             </div>
           </div>

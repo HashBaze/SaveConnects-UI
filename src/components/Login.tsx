@@ -87,9 +87,11 @@ const Login: React.FC = () => {
   return (
     <div className="container mx-auto flex items-center justify-center">
       <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-0">
-        <div className="w-full max-w-[450px] px-[25px] sm:px-[10px] py-[10px] sm:py-[50px] bg-white border border-gray-200 rounded-3xl shadow-md relative">
+        <div className="w-full max-w-[450px] px-[25px] sm:px-[10px] py-[10px] sm:py-[50px] sm:bg-white border sm:border-gray-200 rounded-3xl sm:shadow-md relative">
           <div className="flex justify-center">
-            <div className="w-16 h-16 bg-naviblue rounded-full"></div> 
+          <div className="flex flex-shrink-0 items-center">
+              < img src="/images/Without-BG.png" alt="Logo" className="w-32" />
+            </div>
           </div>
           <h2 className="sm:mt-2 lg:mt-6 text-center text-2xl font-extrabold text-naviblue">
             Sign In

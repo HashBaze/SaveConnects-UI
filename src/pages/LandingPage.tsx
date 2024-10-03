@@ -3,7 +3,7 @@ import Landing from "../components/Landing";
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="w-full overflow-scroll">
+    <div className="overflow-scroll w-screen">
       <Landing />
     </div>
   );
