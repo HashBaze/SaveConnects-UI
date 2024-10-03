@@ -3,8 +3,12 @@ import { IMenuItem } from "../interface/Interface";
 import { isTokenExpired, logout } from "../utils/JWTUtils";
 import { useNavigate } from "react-router-dom";
 
-const NavBar: React.FC = () => {
-  const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
+interface NavBarProps {
+  isShowMenu: boolean;
+  setIsShowMenu: (isShowMenu: boolean) => void;
+}
+
+const NavBar: React.FC<NavBarProps> = ({isShowMenu,setIsShowMenu}: NavBarProps) => {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const path = window.location.pathname.split("/").pop() || "/";
@@ -32,7 +36,7 @@ const NavBar: React.FC = () => {
         alt: "Projects",
       },
     ]);
-  },[]);
+  }, []);
 
   const checkIfSignedIn = async () => {
     const accesstoken = localStorage.getItem("accesstoken");
@@ -54,10 +58,11 @@ const NavBar: React.FC = () => {
   }, []);
 
   return (
-    <nav className="bg-gray-800 fixed w-full z-10">
+    <div>
+      <nav className="bg-gray-800 fixed w-full z-30">
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="relative flex h-16 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <div className="relative flex h-20 items-center justify-between">
+          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden p-2">
             <button
               onClick={() => setIsShowMenu(!isShowMenu)}
               type="button"
@@ -77,8 +82,6 @@ const NavBar: React.FC = () => {
                 aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
                   d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                 />
               </svg>
@@ -92,16 +95,19 @@ const NavBar: React.FC = () => {
                 aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
             </button>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex flex-shrink-0 items-center">
-              <h1 className="text-white text-2xl font-bold">LOGO</h1>
+            <div className="flex flex-shrink-0 items-center justify-center cursor-pointer z-20" onClick={()=>{
+                navigate("/");
+            }}>
+              < img src="/images/only-logo.png" alt="Logo" className="h-20 w-auto" />
+              <h3 className="text-center text-white font-poppins z-10 hidden sm:block">
+                SaveConnects
+              </h3>
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -111,7 +117,7 @@ const NavBar: React.FC = () => {
                   <a
                     key={index}
                     href={item.link}
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium no-underline"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium no-underline whitespace-nowrap"
                   >
                     {item.label}
                   </a>
@@ -122,27 +128,25 @@ const NavBar: React.FC = () => {
               <div>
                 {isSignedIn ? (
                   <button
-                  onClick={() => {
-                    setIsOpenMenu(!isOpenMenu);
-                  }}
-                  type="button"
-                  className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  id="user-menu-button"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                >
-                  <span className="absolute -inset-1.5"></span>
-                  <span className="sr-only">Open user menu</span>
-                  <img
-                    className="h-8 w-8 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  ></img>
-                </button>
+                    onClick={() => {
+                      setIsOpenMenu(!isOpenMenu);
+                    }}
+                    type="button"
+                    className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    id="user-menu-button"
+                  >
+                    <span className="absolute -inset-1.5"></span>
+                    <span className="sr-only">Open user menu</span>
+                    <img
+                      className="h-8 w-8 rounded-full"
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      alt=""
+                    ></img>
+                  </button>
                 ) : (
                   <a
                     onClick={() => navigate("/login")}
-                    className="bg-blue-500 text-white sm:py-2 py-2 px-6 w-max rounded-full text-sm hover:bg-blue-700 no-underline"
+                    className="bg-blue-500 text-white sm:py-2 py-2 px-6 w-max rounded-full text-sm hover:bg-blue-700 no-underline whitespace-nowrap"
                   >
                     Sign In
                   </a>
@@ -188,21 +192,24 @@ const NavBar: React.FC = () => {
       </div>
 
       {isShowMenu ? (
-        <div className="bg-white rounded-lg" id="mobile-menu">
+        <div className="bg-gray-300 rounded-lg" id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2">
             {menuItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.link}
-                className="text-gray-900 hover:bg-gray-100 block px-3 py-2 rounded-md text-base font-medium no-underline"
-              >
-                {item.label}
-              </a>
+              <div key={index} className="border-b border-gray-400 border-2 bg-slate-200 rounded-lg">
+                <a
+                  href={item.link}
+                  className="text-gray-700 text-center hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium no-underline"
+                >
+                  {item.label}
+                </a>
+              </div>
             ))}
           </div>
         </div>
       ) : null}
     </nav>
+    </div>
+    
   );
 };
 

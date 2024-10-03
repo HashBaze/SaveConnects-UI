@@ -185,7 +185,7 @@ END:VCARD`;
     <>
       <div className="container mx-auto flex items-center justify-center">
         <div className="flex items-center justify-center min-h-screen px-4 sm:px-0">
-          <div className="max-w-[330px] sm:max-w-[450px] w-full bg-white shadow-lg rounded-[20px] overflow-hidden ring-1 ring-gray-900/5">
+          <div className={`relative max-w-[330px] sm:max-w-[450px] w-full bg-white shadow-lg rounded-[20px] overflow-hidden ring-1 ring-gray-900/5 ${activeTab == "about" ? "h-[90vh]" : null}`}>
             {/* Header */}
             <div className="relative md:h-64">
               {isCoverImageLoading && (
@@ -211,16 +211,16 @@ END:VCARD`;
             </div>
 
             {/* Tab Content */}
-            <div className="p-6 sm:mt-8 mt-[-30px]">
+            <div className="p-6 sm:mt-8 mt-[-30px] h-[100%]">
               {activeTab === "about" && (
-                <div>
+                <div className="flex flex-col items-center justify-around h-[70%] sm:h-[50%]">
                   <h3 className="text-lg font-semibold text-naviblue mb-2 mt-5">
                     About Me
                   </h3>
                   <p className="text-gray-600 -mt-1">
                     Sales Person of {exhibitorData?.companyName}
                   </p>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-center">
                     Hi! My name is {exhibitorData?.salesPersonName}. It's nice
                     to meet you.
                   </p>
@@ -289,7 +289,7 @@ END:VCARD`;
                     </div>
                   </div>
 
-                  <div className="sm:mt-4">
+                  <div className="sm:mt-4 mt-4">
                     <div className="flex items-center space-x-2">
                       <img
                         src="/icon/phone.svg"
@@ -389,7 +389,7 @@ END:VCARD`;
 
             {/* Tabs */}
             <div className="border-0">
-              <div className="flex space-x-2">
+              <div className={`flex space-x-2 ${activeTab == "about" ? 'absolute bottom-0 w-[100%]' : 'relative'}`}>
                 {["ABOUT", "COMPANY", "GALLERY"].map((tab) => (
                   <button
                     key={tab}

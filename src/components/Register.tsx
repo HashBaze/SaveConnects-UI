@@ -129,7 +129,7 @@ const Register: React.FC = () => {
       <div className="flex min-h-screen items-center justify-center">
         <div className="w-full max-w-[600px] px-[40px] lg:px-[120px] md:px-[100px] py-[50px] bg-white border border-gray-500 rounded-3xl shadow-md relative">
           <div className="flex justify-center">
-            <div className="w-16 h-16 bg-naviblue rounded-full"></div>
+          < img src="/images/Without-BG.png" alt="Logo" className="w-32" />
           </div>
           <h2 className="mt-6 text-center text-13xl font-extrabold text-naviblue">
             Create an account

@@ -27,9 +27,9 @@ html, body {
   font-family: 'Merienda', sans-serif;
   margin: 1rem auto;
   color: #ffffffaa;
-  background: -webkit-gradient(linear, left top, right top, from(#e6e6e6), to(#1d1c1c), color-stop(0.8, #ffffff)) no-repeat;
+  background: -webkit-gradient(linear, left top, right top, from(#e6e6e6), to(#1d1c1c), color-stop(0.9, #ffffff)) no-repeat;
   background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.8, #fff)) no-repeat;
-  background-size: 110px 100%;
+  background-size: 100px;
   -webkit-background-clip: text;
   background-clip: text;
   animation: flick 3s infinite;
@@ -42,4 +42,13 @@ html, body {
   100% {
     background-position: top right;
   }
+}
+
+@media screen and (max-width: 420px) {
+  .flicker {
+    font-size: 1.5rem;
+    background-size: 30px;
+    backdrop-filter: blur(10px);
+  }
+  
 }
