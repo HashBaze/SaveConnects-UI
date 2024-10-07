@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import NavBar from "../common/NavBar";
 
 export default function PrivacyPolicy() {
