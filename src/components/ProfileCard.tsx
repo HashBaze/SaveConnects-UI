@@ -185,8 +185,8 @@ END:VCARD`;
     <>
       <div className="flex justify-center">
         <div className="">
-          <div className="absolute top-2 left-0 hidden sm:block">
-            <img src="/images/Without-BG.png" alt="Logo" className="w-24" />
+          <div className="absolute top-2 sm:top-2 sm:left-0 sm:block z-20">
+            <img src="/images/Without-BG.png" alt="Logo" className="sm:w-24 w-16" />
           </div>
           <div className="relative bg-white h-[95vh] shadow-lg rounded-[20px] ring-1 ring-gray-900/5 w-[100%] sm:w-[450px] overflow-scroll scroll-me-1.5">
             {/* Header */}
@@ -392,7 +392,7 @@ END:VCARD`;
                   </div>
                 )}
                 {activeTab === "gallery" && (
-                  <div className="w-[90vw] sm:w-0">
+                  <div className="w-[90vw] sm:w-full">
                     <div
                       className="p-4 bg-gray-50"
                       id="about"
