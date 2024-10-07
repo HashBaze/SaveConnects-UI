@@ -2,7 +2,7 @@ import React from "react";
 
 export const Contact: React.FC = () => {
   return (
-    <div className="bg-white py-12 px-6">
+    <div className="bg-white py-12 px-6" id="contact">
       <div className="container mx-auto mt-10 mb-10">
         <h2 className="text-3xl font-bold text-center mb-6">
           Get in Touch with Us Save Connects

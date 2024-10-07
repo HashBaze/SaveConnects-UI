@@ -16,7 +16,7 @@ export const Footer: React.FC = () => {
         </span>
         <ul className="flex flex-wrap items-center text-[10px] sm:text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
           <li>
-            <a href="#" className="hover:underline me-4 md:me-6 text-gray-300">
+            <a href="privacy-policy" className="hover:underline me-4 md:me-6 text-gray-300">
               Privacy Policy
             </a>
           </li>

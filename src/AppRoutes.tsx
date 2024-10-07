@@ -22,6 +22,7 @@ import AccessDeniedPage from "./pages/AccessDeniedPage";
 
 import { CompanyKeyExistsRequest } from "./utils/ApiRequest";
 import { isTokenExpired, logout } from "./utils/JWTUtils";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 
 const AppRoutes: React.FC = () => {
   const [validCompanyKey, setValidCompanyKey] = useState<string | null>(null);
@@ -101,6 +102,7 @@ const AppRoutes: React.FC = () => {
         { path: "signup", element: <RegisterPage /> },
         { path: "login", element: <LoginPage /> },
         { path: "admin", element: <AdminRegisterPage /> },
+        { path: "privacy-policy", element: <PrivacyPolicyPage /> },
         {
           path: ":companyNameKey",
           element: validCompanyKey ? (
