@@ -183,226 +183,246 @@ END:VCARD`;
 
   return (
     <>
-      <div className="container mx-auto flex items-center justify-center">
-        <div className="flex items-center justify-center min-h-screen px-4 sm:px-0">
-          <div className={`relative max-w-[330px] sm:max-w-[450px] w-full bg-white shadow-lg rounded-[20px] overflow-hidden ring-1 ring-gray-900/5 ${activeTab == "about" ? "h-[90vh]" : null}`}>
+      <div className="flex justify-center">
+        <div className="">
+          <div className="absolute top-2 left-0 hidden sm:block">
+            <img src="/images/Without-BG.png" alt="Logo" className="w-24" />
+          </div>
+          <div className="relative bg-white h-[95vh] shadow-lg rounded-[20px] ring-1 ring-gray-900/5 w-[100%] sm:w-[450px] overflow-scroll scroll-me-1.5">
             {/* Header */}
-            <div className="relative md:h-64">
+            <div className="relative h-[200px]">
               {isCoverImageLoading && (
-                <div className="flex items-center justify-center w-full h-full">
+                <div className="flex items-center justify-center w-full">
                   <Loader />
                 </div>
               )}
               <img
-                className={`w-full h-[120px] sm:h-full object-cover ${
+                className={`w-full h-full object-cover ${
                   isCoverImageLoading ? "hidden" : "block"
                 }`}
                 src={exhibitorData?.coverImage}
                 alt="Profile"
                 onLoad={handleCoverImageLoad}
               />
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/15 sm:translate-y-1/2">
-                <img
-                  className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border-4 border-white"
-                  src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="Profile"
-                />
-              </div>
             </div>
 
-            {/* Tab Content */}
-            <div className="p-6 sm:mt-8 mt-[-30px] h-[100%]">
-              {activeTab === "about" && (
-                <div className="flex flex-col items-center justify-around h-[70%] sm:h-[50%]">
-                  <h3 className="text-lg font-semibold text-naviblue mb-2 mt-5">
-                    About Me
-                  </h3>
-                  <p className="text-gray-600 -mt-1">
-                    Sales Person of {exhibitorData?.companyName}
-                  </p>
-                  <p className="text-gray-600 text-center">
-                    Hi! My name is {exhibitorData?.salesPersonName}. It's nice
-                    to meet you.
-                  </p>
-                </div>
-              )}
-              {activeTab === "company" && (
-                <div>
-                  <h3 className="text-[24px] text-naviblue font-semibold my-2 text-center">
-                    {exhibitorData?.salesPersonName} <br />
-                    <span className="text-[16px] text-gray-600">
-                      {exhibitorData?.companyName}
-                    </span>
-                  </h3>
-                  <p className="text-[10px] md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
-                    {exhibitorData?.about}
-                  </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1 mt-5">
-                    <div className="grid shadow-sm sm:grid-cols-3 space-x-1 space-y-1 sm:space-y-0">
-                      <button
-                        onClick={handleSaveContact}
-                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
-                      >
-                        <div className="flex align-content-center justify-center">
-                          <img
-                            src="/icon/contact-light.svg"
-                            alt="Contact"
-                            className="w-4 h-4 sm:mt-1 mt-0 p-2"
-                          />
-                          <span className="p-2 text-[10px] sm:text-[16px]">
-                            Contact
-                          </span>
-                        </div>
-                      </button>
-
-                      <button
-                        onClick={handleConnect}
-                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex h-8 sm:h-10"
-                      >
-                        <div className="flex items-center justify-center">
-                          <img
-                            src="/icon/whatsapp.svg"
-                            alt="Contact"
-                            className="w-4 h-4 p-2"
-                          />
-                          <span className="p-2 text-[10px] sm:text-[16px]">
-                            Whatsapp
-                          </span>
-                        </div>
-                      </button>
-
-                      <button
-                        onClick={handleEmail}
-                        className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10"
-                      >
-                        <div className="flex items-center justify-center">
-                          <img
-                            src="/icon/mail-light.svg"
-                            alt="Contact"
-                            className="w-5 h-5 sm:h-5 p-2"
-                          />
-                          <span className="p-2 text-[10px] sm:text-[16px]">
-                            Email
-                          </span>
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="sm:mt-4 mt-4">
-                    <div className="flex items-center space-x-2">
-                      <img
-                        src="/icon/phone.svg"
-                        alt="Phone"
-                        className="w-4 h-4 md:w-8 md:h-8"
-                      />
-                      <p className="text-[10px] md:text-[16px] font-semibold text-naviblue">
-                        <a
-                          className="text-naviblue"
-                          href={`tel:${exhibitorData?.phoneNumber}`}
-                        >
-                          {exhibitorData?.phoneNumber}
-                        </a>
-                      </p>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <img
-                        src="/icon/email.svg"
-                        alt="Email"
-                        className="w-4 h-4 md:w-8 md:h-8"
-                      />
-                      <p className="text-[10px] md:text-[16px] font-semibold text-naviblue">
-                        <a
-                          className="text-naviblue"
-                          href={`mailto:${exhibitorData?.email}`}
-                        >
-                          {exhibitorData?.email}
-                        </a>
-                      </p>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <img
-                        src="/icon/location.svg"
-                        alt="Location"
-                        className="w-4 h-4 md:w-8 md:h-8"
-                      />
-                      <p className="text-[10px] md:text-[16px] font-semibold text-naviblue">
-                        {exhibitorData?.address}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <img
-                        src="/icon/web.svg"
-                        alt="Website"
-                        className="w-4 h-4 md:w-8 md:h-8"
-                      />
-                      <p className="text-[10px] md:text-[16px] font-semibold text-naviblue">
-                        <a
-                          className="text-naviblue"
-                          href={"https://" + exhibitorData?.website}
-                        >
-                          {exhibitorData?.website}
-                        </a>
-                      </p>
-                      <div className="flex justify-end items-center w-full h-[10px]">
-                        <button
-                          onClick={handleShare}
-                          className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
-                        >
-                          <img
-                            src="/icon/copy-content.svg"
-                            alt="Share"
-                            className="w-6 h-6"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-              {activeTab === "gallery" && (
-                <div className="grid w-full grid-cols-2 gap-2 mt-8">
-                  {exhibitorData?.gallery?.slice(0, 4).map((image, index) => (
-                    <div key={index} className="relative">
-                      {loadingImages[index] && (
-                        <div className="flex items-center justify-center p-4">
-                          <Loader />
-                        </div>
-                      )}
-
-                      <img
-                        src={image}
-                        alt="Gallery"
-                        className={`w-[130px] h-[130px] md:w-[200px] md:h-[200px] rounded-lg object-cover ${
-                          loadingImages[index] ? "hidden" : "block"
-                        }`} //
-                        onLoad={() => handleImageLoad(index)}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Tabs */}
-            <div className="border-0">
-              <div className={`flex space-x-2 ${activeTab == "about" ? 'absolute bottom-0 w-[100%]' : 'relative'}`}>
-                {["ABOUT", "COMPANY", "GALLERY"].map((tab) => (
+            <div className="mb-4 border-b border-gray-200 dark:border-gray-700 p-2 overflow-scroll">
+              <div className="flex flex-row justify-around items-center p-3 pb-0">
+                {["about", "company", "gallery"].map((tab) => (
                   <button
-                    key={tab}
-                    className={`flex-1 text-sm md:text-lg text-naviblue py-2 cursor-pointer font-medium border-0 bg-white ${
-                      activeTab.toUpperCase() === tab
-                        ? "text-naviblue border-b-2 border-white"
-                        : "text-gray-500 hover:text-gray-700"
+                    className={`inline-block sm:p-2 border-b-0 rounded-t-lg w-[75px] sm:w-[100px] cursor-pointer ${
+                      activeTab === tab
+                        ? "bg-naviblue text-white h-[50px] border-0"
+                        : "bg-white"
                     }`}
-                    onClick={() => setActiveTab(tab.toLowerCase())}
+                    id={`${tab}-tab`}
+                    type="button"
+                    role="tab"
+                    onClick={() => setActiveTab(tab)}
                   >
                     {tab}
                   </button>
                 ))}
+              </div>
+
+              <div id="default-tab-content p-2">
+                {activeTab === "about" && (
+                  <div
+                    className="p-4 rounded-lg bg-gray-50 "
+                    id="about"
+                    role="tabpanel"
+                    aria-labelledby="about-tab"
+                  >
+                    <div className="flex flex-col items-center justify-around h-[50vh]">
+                      <h3 className="text-lg font-semibold text-naviblue mb-2 mt-5">
+                        About Me
+                      </h3>
+                      <p className="text-gray-600 -mt-1">
+                        Sales Person of {exhibitorData?.companyName}
+                      </p>
+                      <p className="text-gray-600 text-center">
+                        Hi! My name is {exhibitorData?.salesPersonName}. It's
+                        nice to meet you.
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {activeTab === "company" && (
+                  <div
+                    className="p-4 bg-gray-50"
+                    id="company"
+                    role="tabpanel"
+                    aria-labelledby="company-tab"
+                  >
+                    <div className="">
+                      <h3 className="text-[24px] text-naviblue font-semibold my-2 text-center">
+                        {exhibitorData?.salesPersonName} <br />
+                        <span className="text-[16px] text-gray-600">
+                          {exhibitorData?.companyName}
+                        </span>
+                      </h3>
+                      <p className="text-[10px] md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
+                        {exhibitorData?.about}
+                      </p>
+                      <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1 mt-5">
+                        <div className="flex gap-2">
+                          <button
+                            onClick={handleSaveContact}
+                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
+                          >
+                            <div className="flex align-content-center justify-center">
+                              <img
+                                src="/icon/contact-light.svg"
+                                alt="Contact"
+                                className="w-4 h-4 sm:mt-1 mt-0 p-2"
+                              />
+                              <span className="p-2 text-[10px] sm:text-[16px]">
+                                Contact
+                              </span>
+                            </div>
+                          </button>
+
+                          <button
+                            onClick={handleConnect}
+                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex h-8 sm:h-10"
+                          >
+                            <div className="flex items-center justify-center">
+                              <img
+                                src="/icon/whatsapp.svg"
+                                alt="Contact"
+                                className="w-4 h-4 p-2"
+                              />
+                              <span className="p-2 text-[10px] sm:text-[16px]">
+                                Whatsapp
+                              </span>
+                            </div>
+                          </button>
+
+                          <button
+                            onClick={handleEmail}
+                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10"
+                          >
+                            <div className="flex items-center justify-center">
+                              <img
+                                src="/icon/mail-light.svg"
+                                alt="Contact"
+                                className="w-5 h-5 sm:h-5 p-2"
+                              />
+                              <span className="p-2 text-[10px] sm:text-[16px]">
+                                Email
+                              </span>
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="sm:mt-4 mt-4 space-y-3">
+                        <div className="flex items-center space-x-2">
+                          <img
+                            src="/icon/phone.svg"
+                            alt="Phone"
+                            className="w-4 h-4 md:w-6 md:h-6"
+                          />
+                          <p className="text-[10px] md:text-[16px] text-naviblue">
+                            <a
+                              className="text-gray-400 no-underline hover:underline"
+                              href={`tel:${exhibitorData?.phoneNumber}`}
+                            >
+                              {exhibitorData?.phoneNumber}
+                            </a>
+                          </p>
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <img
+                            src="/icon/email.svg"
+                            alt="Email"
+                            className="w-4 h-4 md:w-6 md:h-6"
+                          />
+                          <p className="text-[10px] md:text-[16px] text-naviblue">
+                            <a
+                              className="text-gray-400 no-underline hover:underline"
+                              href={`mailto:${exhibitorData?.email}`}
+                            >
+                              {exhibitorData?.email}
+                            </a>
+                          </p>
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <img
+                            src="/icon/location.svg"
+                            alt="Location"
+                            className="w-4 h-4 md:w-6 md:h-6"
+                          />
+                          <p className="text-[10px] md:text-[16px] text-gray-400">
+                            {exhibitorData?.address}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center space-x-2">
+                          <img
+                            src="/icon/web.svg"
+                            alt="Website"
+                            className="w-4 h-4 md:w-6 md:h-6"
+                          />
+                          <p className="text-[10px] md:text-[16px] text-naviblue">
+                            <a
+                              className="text-gray-400 no-underline hover:underline"
+                              href={"https://" + exhibitorData?.website}
+                            >
+                              {exhibitorData?.website}
+                            </a>
+                          </p>
+                          <div className="flex justify-end items-center w-full h-[10px]">
+                            <button
+                              onClick={handleShare}
+                              className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
+                            >
+                              <img
+                                src="/icon/copy-content.svg"
+                                alt="Share"
+                                className="w-6 h-6"
+                              />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {activeTab === "gallery" && (
+                  <div className="w-[90vw] sm:w-0">
+                    <div
+                      className="p-4 bg-gray-50"
+                      id="about"
+                      role="tabpanel"
+                      aria-labelledby="about-tab"
+                    >
+                      <div className="grid grid-cols-2 gap-2">
+                        {exhibitorData?.gallery
+                          ?.slice(0, 4)
+                          .map((image, index) => (
+                            <div key={index} className="relative mx-auto">
+                              {loadingImages[index] && (
+                                <div className="flex items-center justify-center p-4">
+                                  <Loader />
+                                </div>
+                              )}
+                              <img
+                                src={image}
+                                alt="Gallery"
+                                className={`w-[130px] h-[130px] md:h-[200px] md:w-[200px] rounded-lg object-cover ${
+                                  loadingImages[index] ? "hidden" : "block"
+                                }`}
+                                onLoad={() => handleImageLoad(index)}
+                              />
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

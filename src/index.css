@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
-@import 'aos/dist/aos.css';
+@import "aos/dist/aos.css";
 
 @tailwind base;
 @tailwind components;
@@ -7,14 +7,16 @@
 
 /* Set the default font for all elements */
 * {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
 }
 
 /* Apply the background color to the entire page */
-html, body {
+html,
+body {
   @apply bg-[#F5F7F8];
+  scroll-behavior: smooth;
 }
 
 /* Ensure the main container also covers the full height */
@@ -24,11 +26,27 @@ html, body {
 
 /* banner area header text animation ! */
 .flicker {
-  font-family: 'Merienda', sans-serif;
+  font-family: "Merienda", sans-serif;
   margin: 1rem auto;
   color: #ffffffaa;
-  background: -webkit-gradient(linear, left top, right top, from(#e6e6e6), to(#1d1c1c), color-stop(0.9, #ffffff)) no-repeat;
-  background: gradient(linear, left top, right top, from(#222), to(#222), color-stop(0.8, #fff)) no-repeat;
+  background: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(#e6e6e6),
+      to(#1d1c1c),
+      color-stop(0.9, #ffffff)
+    )
+    no-repeat;
+  background: gradient(
+      linear,
+      left top,
+      right top,
+      from(#222),
+      to(#222),
+      color-stop(0.8, #fff)
+    )
+    no-repeat;
   background-size: 100px;
   -webkit-background-clip: text;
   background-clip: text;
@@ -50,5 +68,8 @@ html, body {
     background-size: 30px;
     backdrop-filter: blur(10px);
   }
-  
+}
+
+html {
+  scroll-behavior: smooth;
 }

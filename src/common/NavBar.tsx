@@ -24,14 +24,8 @@ const NavBar: React.FC<NavBarProps> = ({isShowMenu,setIsShowMenu}: NavBarProps) 
         alt: "Home",
       },
       {
-        label: "About Us",
-        link: "/team",
-        icon: "team",
-        alt: "Team",
-      },
-      {
         label: "Contact Us",
-        link: "/projects",
+        link: "#contact",
         icon: "projects",
         alt: "Projects",
       },
