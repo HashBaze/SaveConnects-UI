@@ -14,7 +14,7 @@ const Landing: React.FC = () => {
 
   return (
     <div
-      className="overflow-scroll"
+      className="overflow-scroll scroll-smooth"
       onClick={() => {
         if (isOpenMenu) {
           setIsOpenMenu(false);
