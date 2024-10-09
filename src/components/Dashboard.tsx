@@ -416,15 +416,15 @@ const Dashboard: React.FC = () => {
                 </div>
               ))}
               <div
-                className="flex z-10 flex-col items-center justify-center bg-gray-200 w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
+                className="flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
                 onClick={handleGalleryAddClick}
               >
                 <img
                   src="/icon/image.svg"
                   alt="Add Image"
-                  className="w-16 h-16"
+                  className="w-8 h-8 sm:w-16 sm:h-16"
                 />
-                <span className="mt-2 text-gray-600">Add Image</span>
+                <span className="mt-2 text-[10px] sm:text-[16px] text-gray-600">Add Image</span>
               </div>
             </div>
             <input
