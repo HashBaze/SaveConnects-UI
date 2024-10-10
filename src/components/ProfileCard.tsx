@@ -186,18 +186,24 @@ END:VCARD`;
       <div className="flex justify-center">
         <div className="">
           <div className="absolute top-2 sm:top-2 sm:left-0 sm:block z-20">
-            <img src="/images/Without-BG.png" alt="Logo" className="sm:w-24 w-16" />
+            <a href="/" className="p-2">
+              <img
+                src="/images/Without-BG.png"
+                alt="Logo"
+                className="sm:w-24 w-16"
+              />
+            </a>
           </div>
           <div className="relative bg-white h-[95vh] shadow-lg rounded-[20px] ring-1 ring-gray-900/5 w-[100%] sm:w-[450px] overflow-scroll scroll-me-1.5">
             {/* Header */}
-            <div className="relative h-[200px]">
+            <div className="relative">
               {isCoverImageLoading && (
                 <div className="flex items-center justify-center w-full">
                   <Loader />
                 </div>
               )}
               <img
-                className={`w-full h-full object-cover ${
+                className={`w-full object-cover ${
                   isCoverImageLoading ? "hidden" : "block"
                 }`}
                 src={exhibitorData?.coverImage}
@@ -249,7 +255,7 @@ END:VCARD`;
                 )}
                 {activeTab === "company" && (
                   <div
-                    className="p-4 bg-gray-50"
+                    className="p-4 rounded-lg bg-gray-50"
                     id="company"
                     role="tabpanel"
                     aria-labelledby="company-tab"
@@ -394,7 +400,7 @@ END:VCARD`;
                 {activeTab === "gallery" && (
                   <div className="w-[90vw] sm:w-full">
                     <div
-                      className="p-4 bg-gray-50"
+                      className="p- rounded-lg bg-gray-50"
                       id="about"
                       role="tabpanel"
                       aria-labelledby="about-tab"

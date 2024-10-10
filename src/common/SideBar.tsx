@@ -56,7 +56,7 @@ const Sidebar: React.FC = () => {
         }`}
       >
         <div className="flex mt-4 items-center justify-center h-20 border-b px-8">
-          <div className="w-8 h-8 bg-naviblue rounded-lg"></div>
+          <img src="/images/Without-BG.png" alt="Logo" className="w-16" />
           <h1 className="text-[22px] ml-2 font-bold text-naviblue">
             SaveConnects
           </h1>
