@@ -2,7 +2,7 @@ import React from "react";
 
 const CreateAccount: React.FC = () => {
   return (
-    <div className="py-12 px-6 flex justify-center items-center">
+    <div className="py-12 bg-gray-200 px-6 flex justify-center items-center">
       <div className="container mx-auto">
         <h2 className="sm:text-[30px] text-[20px] font-bold text-center mb-6">
           Ready to Join? Let's Create Your Profile!
@@ -24,7 +24,7 @@ const CreateAccount: React.FC = () => {
                 alt="Easy Connect through WhatsApp"
                 className="mx-auto mb-4 w-12 h-13 mt-5"
               />
-              <p className="text-gray-500 md:text-sm">
+              <p className="text-gray-500 md:text-[16px]">
                 Click the <strong>Create Account</strong> button, fill in your
                 deets, and boom, you're almost there!
               </p>
@@ -39,7 +39,7 @@ const CreateAccount: React.FC = () => {
                 alt="Easy Connect through WhatsApp"
                 className="mx-auto mb-4 w-12 h-13 mt-5"
               />
-              <p className="text-gray-500 md:text-sm">
+              <p className="text-gray-500 md:text-[16px]">
               Please choose the category that best describes your company.
               </p>
             </div>
@@ -58,7 +58,7 @@ const CreateAccount: React.FC = () => {
                 className="mx-auto mb-4 w-12 h-13 mt-5"
               />
 
-              <p className="text-gray-500 md:text-sm">
+              <p className="text-gray-500 md:text-[16px]">
                 Fill in your profile details to make it official. Let’s get you
                 ready to network like a pro!
               </p>

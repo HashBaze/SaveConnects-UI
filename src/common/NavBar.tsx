@@ -53,7 +53,7 @@ const NavBar: React.FC<NavBarProps> = ({isShowMenu,setIsShowMenu}: NavBarProps) 
 
   return (
     <div>
-      <nav className="bg-gray-800 fixed w-full z-30">
+      <nav className="bg-gray-800 fixed w-full z-30 top-0">
       <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="relative flex h-20 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden p-2">
@@ -98,8 +98,8 @@ const NavBar: React.FC<NavBarProps> = ({isShowMenu,setIsShowMenu}: NavBarProps) 
             <div className="flex flex-shrink-0 items-center justify-center cursor-pointer z-20" onClick={()=>{
                 navigate("/");
             }}>
-              < img src="/images/only-logo.png" alt="Logo" className="h-20 w-auto" />
-              <h3 className="text-center text-white font-poppins z-10 hidden sm:block">
+              < img src="/images/only-logo.png" alt="Logo" className="sm:h-20 h-10 w-auto" />
+              <h3 className="text-center text-[10px] sm:text-[20px] text-white font-poppins z-10">
                 SaveConnects
               </h3>
             </div>
@@ -140,7 +140,7 @@ const NavBar: React.FC<NavBarProps> = ({isShowMenu,setIsShowMenu}: NavBarProps) 
                 ) : (
                   <a
                     onClick={() => navigate("/login")}
-                    className="bg-blue-500 text-white sm:py-2 py-2 px-6 w-max rounded-full text-sm hover:bg-blue-700 no-underline whitespace-nowrap"
+                    className="bg-blue-500 cursor-pointer text-white sm:py-2 py-2 px-6 w-max rounded-full text-sm hover:bg-blue-700 no-underline whitespace-nowrap"
                   >
                     Sign In
                   </a>

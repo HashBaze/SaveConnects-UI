@@ -15,7 +15,7 @@ const DashboardPage: React.FC = () => {
         } ${sideBarOpen ? "ml-0" : ""}`}
       >
         <Header breadcrumb="Dashboard" />
-        <main className="flex-grow overflow-auto p-0 md:p-2">
+        <main className="flex-grow h-screen p-0 md:p-2">
           <Dashboard />
         </main>
       </div>

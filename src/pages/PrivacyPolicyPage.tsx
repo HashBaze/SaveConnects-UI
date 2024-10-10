@@ -2,7 +2,7 @@ import PrivacyPolicy from "../components/PrivacyPolicy";
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="overflow-scroll w-screen">
+    <div className="">
       <PrivacyPolicy />
     </div>
   );

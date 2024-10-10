@@ -4,6 +4,7 @@ import { CompanyKeyExistsRequest } from "../utils/ApiRequest";
 import EmailModal from "../model/EmailModal";
 import { toast } from "react-toastify";
 import { Loader } from "react-feather";
+import ProfileImageViewModal from "../model/ProfileImageViewModal";
 
 const ProfileCard: React.FC = () => {
   const [activeTab, setActiveTab] = useState("company");
@@ -12,6 +13,8 @@ const ProfileCard: React.FC = () => {
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [loadingImages, setLoadingImages] = useState<boolean[]>([]);
   const [isCoverImageLoading, setIsCoverImageLoading] = useState(true);
+  const [viewImageModal, setViewImageModal] = useState(false);
+  const [modalImage , setModalImage] = useState('');
 
   useEffect(() => {
     const availableRoutes = [
@@ -194,16 +197,16 @@ END:VCARD`;
               />
             </a>
           </div>
-          <div className="relative bg-white h-[95vh] shadow-lg rounded-[20px] ring-1 ring-gray-900/5 w-[100%] sm:w-[450px] overflow-scroll scroll-me-1.5">
+          <div className="relative bg-white h-[95vh] shadow-lg rounded-[20px] ring-1 ring-gray-900/5 w-[100%] sm:w-[450px] overflow-scroll custom-scrollbar">
             {/* Header */}
-            <div className="relative">
+            <div className="relative h-[200px]">
               {isCoverImageLoading && (
-                <div className="flex items-center justify-center w-full">
-                  <Loader />
-                </div>
+                <h5 className="text-center text-3xl text-naviblue font-bold">
+                  Loading...
+                </h5>
               )}
               <img
-                className={`w-full object-cover ${
+                className={`w-full h-full object-cover ${
                   isCoverImageLoading ? "hidden" : "block"
                 }`}
                 src={exhibitorData?.coverImage}
@@ -212,7 +215,7 @@ END:VCARD`;
               />
             </div>
 
-            <div className="mb-4 border-b border-gray-200 dark:border-gray-700 p-2 overflow-scroll">
+            <div className="mb-4 border-b border-gray-200 dark:border-gray-700 p-2">
               <div className="flex flex-row justify-around items-center p-3 pb-0">
                 {["about", "company", "gallery"].map((tab) => (
                   <button
@@ -267,7 +270,7 @@ END:VCARD`;
                           {exhibitorData?.companyName}
                         </span>
                       </h3>
-                      <p className="text-[10px] md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
+                      <p className="text-[10px] whitespace-normal md:text-[16px] lg:text-[14px] text-gray-600 text-justify">
                         {exhibitorData?.about}
                       </p>
                       <div className="flex flex-col sm:flex-row items-center justify-center gap-1 space-x-2 md:space-x-1 mt-5">
@@ -416,13 +419,25 @@ END:VCARD`;
                                 </div>
                               )}
                               <img
+                                onClick={() => {
+                                  setViewImageModal(true);
+                                  console.log(image);
+                                  setModalImage(image);
+                                }}
                                 src={image}
                                 alt="Gallery"
-                                className={`w-[130px] h-[130px] md:h-[200px] md:w-[200px] rounded-lg object-cover ${
+                                className={`w-[130px] cursor-pointer h-[130px] md:h-[200px] md:w-[200px] rounded-lg object-cover ${
                                   loadingImages[index] ? "hidden" : "block"
                                 }`}
                                 onLoad={() => handleImageLoad(index)}
                               />
+                              {viewImageModal && (
+                                <ProfileImageViewModal
+                                  onClose={() => setViewImageModal(false)}
+                                  companyName={exhibitorData?.companyName}
+                                  initialData={modalImage}
+                                />
+                              )}
                             </div>
                           ))}
                       </div>
