@@ -84,7 +84,6 @@ const Dashboard: React.FC = () => {
     }
   }, [path]);
 
-
   const openAlert = () => {
     console.log(exhibitorData?.coverImage);
     setIsAlertOpen(true);
@@ -260,7 +259,7 @@ const Dashboard: React.FC = () => {
   return (
     <>
       {isLoading ? (
-        <div className="flex-grow overflow-auto">
+        <div className="flex-grow w-screen h-[100%]">
           <Loading />
         </div>
       ) : (
@@ -281,12 +280,12 @@ const Dashboard: React.FC = () => {
             </div>
             {exhibitorData?.coverImage === null ? null : (
               <button
-              type="button"
-              className="absolute border-red-400 flex items-center justify-center bg-red-400 w-8 h-8 rounded-lg top-[60px] right-[20px] cursor-pointer"
-              onClick={openAlert}
-            >
-              <img src="/icon/delete.svg" alt="Edit" className="w-6 h-6" />
-            </button>
+                type="button"
+                className="absolute border-red-400 flex items-center justify-center bg-red-400 w-8 h-8 rounded-lg top-[60px] right-[20px] cursor-pointer"
+                onClick={openAlert}
+              >
+                <img src="/icon/delete.svg" alt="Edit" className="w-6 h-6" />
+              </button>
             )}
             <input
               type="file"
@@ -324,7 +323,13 @@ const Dashboard: React.FC = () => {
                   className="w-6 lg:w-8 h-6 lg:h-8"
                 />
                 <div className="text-sm lg:text-lg">
-                  <a href={exhibitorData?.website} className="text-gray-600 hover:text-blue-800 transition-colors duration-300 no-underline" target="_blank">{exhibitorData?.website}</a>
+                  <a
+                    href={exhibitorData?.website}
+                    className="text-gray-600 hover:text-blue-800 transition-colors duration-300 no-underline"
+                    target="_blank"
+                  >
+                    {exhibitorData?.website}
+                  </a>
                 </div>
               </div>
               <div className="flex flex-row space-x-2">
@@ -334,7 +339,12 @@ const Dashboard: React.FC = () => {
                   className="w-6 lg:w-8 h-6 lg:h-8"
                 />
                 <div className="text-sm lg:text-lg">
-                  <a href={`mailto:${exhibitorData?.email}`} className="text-gray-600 hover:text-blue-800 transition-colors duration-300 no-underline">{exhibitorData?.email}</a>
+                  <a
+                    href={`mailto:${exhibitorData?.email}`}
+                    className="text-gray-600 hover:text-blue-800 transition-colors duration-300 no-underline"
+                  >
+                    {exhibitorData?.email}
+                  </a>
                 </div>
               </div>
               <div className="flex flex-row space-x-2">
@@ -344,8 +354,12 @@ const Dashboard: React.FC = () => {
                   className="w-6 lg:w-8 h-6 lg:h-8"
                 />
                 <div className="text-sm lg:text-lg">
-                  <a href={`tel:${exhibitorData?.phoneNumber}`}
-                   className="text-gray-600 hover:text-blue-800 transition-colors duration-300 no-underline whitespace-nowrap">{exhibitorData?.phoneNumber}</a>
+                  <a
+                    href={`tel:${exhibitorData?.phoneNumber}`}
+                    className="text-gray-600 hover:text-blue-800 transition-colors duration-300 no-underline whitespace-nowrap"
+                  >
+                    {exhibitorData?.phoneNumber}
+                  </a>
                 </div>
               </div>
               <div className="flex flex-row space-x-2">
@@ -415,17 +429,22 @@ const Dashboard: React.FC = () => {
                   />
                 </div>
               ))}
-              <div
-                className="flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
-                onClick={handleGalleryAddClick}
-              >
-                <img
-                  src="/icon/image.svg"
-                  alt="Add Image"
-                  className="w-8 h-8 sm:w-16 sm:h-16"
-                />
-                <span className="mt-2 text-[10px] sm:text-[16px] text-gray-600">Add Image</span>
-              </div>
+
+              {exhibitorData?.gallery && exhibitorData.gallery.length < 4 ? (
+                <div
+                  className="flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
+                  onClick={handleGalleryAddClick}
+                >
+                  <img
+                    src="/icon/image.svg"
+                    alt="Add Image"
+                    className="w-8 h-8 sm:w-16 sm:h-16"
+                  />
+                  <span className="mt-2 text-[10px] sm:text-[16px] text-gray-600">
+                    Add Image
+                  </span>
+                </div>
+              ) : null}
             </div>
             <input
               type="file"
