@@ -2,7 +2,7 @@ import React from "react";
 
 export const RegisterdUsers: React.FC = () => {
   return (
-    <div className="bg-gray-50 py-12">
+    <div className="bg-gray-200 py-12">
       <div className="container mx-auto mt-10 mb-10">
         {/* Title */}
         <h2 className="text-3xl font-bold text-center mb-8">

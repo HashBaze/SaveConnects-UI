@@ -2,7 +2,7 @@ import React from "react";
 
 const LoadingModal: React.FC = () => {
   return (
-    <div className="fixed absolute inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
       <div className="flex p-6 bg-white rounded-lg shadow-xl">
         <div className="flex items-center space-x-4">
           <svg

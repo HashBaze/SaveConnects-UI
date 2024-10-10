@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 const AppLayout: React.FC = () => {
 
   return (
-    <div className="relative flex h-screen overflow-hidden">
+    <div className="">
       <Outlet />
         <ToastContainer
           position="top-right"
