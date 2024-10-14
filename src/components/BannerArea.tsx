@@ -13,7 +13,7 @@ const BannerArea: React.FC = () => {
         </div>
 
         <div>
-          <p className="sm:w-2/4 m-auto sm:text-[16px] text-[8px] p-3 text-gray-300 w-2/">
+          <p className="sm:w-2/4 m-auto sm:text-[18px] text-[8px] p-3 text-gray-300 w-2/">
             Let’s simplify your networking. SaveConnects makes it effortless for
             exhibitors to connect, share, and grow. One-click is all it takes to
             turn contacts into opportunities. Join us and experience the future

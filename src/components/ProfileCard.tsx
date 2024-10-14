@@ -14,7 +14,7 @@ const ProfileCard: React.FC = () => {
   const [loadingImages, setLoadingImages] = useState<boolean[]>([]);
   const [isCoverImageLoading, setIsCoverImageLoading] = useState(true);
   const [viewImageModal, setViewImageModal] = useState(false);
-  const [modalImage , setModalImage] = useState('');
+  const [modalImage, setModalImage] = useState("");
 
   useEffect(() => {
     const availableRoutes = [
@@ -444,6 +444,9 @@ END:VCARD`;
                     </div>
                   </div>
                 )}
+                <div className="flex justify-center items-end mt-5 text-gray-400">
+                  <small className="text-center">Powered By HashBaze © 2024. All rights reserved.</small>
+                </div>
               </div>
             </div>
           </div>
