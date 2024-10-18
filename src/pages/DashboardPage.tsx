@@ -11,7 +11,7 @@ const DashboardPage: React.FC = () => {
       <SideBar />
       <div
         className={`flex flex-col flex-grow transition-all duration-300 ${
-          sideBarOpen ? "lg:ml-64" : "lg:ml-0"
+          sideBarOpen ? "lg:ml-72" : "lg:ml-0"
         } ${sideBarOpen ? "ml-0" : ""}`}
       >
         <Header breadcrumb="Dashboard" />
