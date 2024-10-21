@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "vite"
+    
   },
   "dependencies": {
     "@types/firebase": "^2.4.32",
