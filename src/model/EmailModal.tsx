@@ -36,6 +36,10 @@ const EmailModal: React.FC<EmailModalProps> = ({
         setLoading(true);
         await SendInquiryEmail(name, email, exhibitorEmail, message);
         toast.success("Email sent successfully");
+        setLoading(false);
+        setEmail("");
+        setName("");
+        setMessage("");
         onClose();
       } catch (err) {
         setLoading(false);

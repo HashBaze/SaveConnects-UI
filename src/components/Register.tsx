@@ -55,7 +55,7 @@ const Register: React.FC = () => {
       newErrors.companyCategory = "Company Category is required.";
     if (!formData.email) {
       newErrors.email = "Email is required.";
-    } else if (emailRegex.test(formData.email)) {
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email address is invalid.";
     }
     if (!formData.password) {
