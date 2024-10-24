@@ -49,11 +49,23 @@ const ProfileCard: React.FC = () => {
         } catch (err) {
           console.error("Failed to fetch exhibitor data:", err);
         }
+
+
       };
 
       fetchExhibitorData();
     }
   }, [path]);
+
+  const formatPhoneNumber = (phoneNumber:string) => {
+    let [countryCode, actualNumber] = phoneNumber.split(' ');
+  
+    if (actualNumber[0] === '0') {
+      actualNumber = actualNumber.slice(1);
+    }
+  
+    return `${countryCode} ${actualNumber}`;
+  };
 
   const dowenloadVcfContact = (exhibitorData: IExhibitor) => {
     const makeVCardVersion = (): string => `VERSION:3.0`;
@@ -243,11 +255,6 @@ END:VCARD`;
                     aria-labelledby="about-tab"
                   >
                     <div className="flex flex-col items-center h-[50vh] justify-center space-y-4">
-                      {/* <img
-                      src={exhibitorData?.profileImage || "/default-profile.png"}
-                      alt="Profile Picture"
-                      className="w-24 h-24 rounded-full border-4 border-naviblue object-cover shadow-md"
-                    /> */}
                       <h3 className="text-xl font-semibold text-naviblue">
                         {exhibitorData?.salesPersonName}
                       </h3>
@@ -345,9 +352,9 @@ END:VCARD`;
                           <p className="text-[10px] md:text-[16px] text-naviblue">
                             <a
                               className="text-gray-400 no-underline hover:underline"
-                              href={`tel:${exhibitorData?.phoneNumber}`}
+                              href={`tel:${exhibitorData?.phoneNumber ? formatPhoneNumber(exhibitorData.phoneNumber) : ""}`}
                             >
-                              {exhibitorData?.phoneNumber}
+                              {exhibitorData?.phoneNumber ? formatPhoneNumber(exhibitorData.phoneNumber) : ""}
                             </a>
                           </p>
                         </div>

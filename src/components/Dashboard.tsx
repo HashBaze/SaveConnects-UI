@@ -85,11 +85,9 @@ const Dashboard: React.FC = () => {
 
       fetchExhibitorData();
     }
-    console.log(galleryImageArray);
   }, [path, galleryImageArray]);
 
   const openAlert = () => {
-    console.log(exhibitorData?.coverImage);
     setIsAlertOpen(true);
   };
 
@@ -194,33 +192,33 @@ const Dashboard: React.FC = () => {
       console.log(selectedFiles);
     }
 
-    if (exhibitorData && exhibitorData?.gallery.length >= 4) {
-      const files = Array.from(event.target.files || []);
+    // if (exhibitorData && exhibitorData?.gallery.length >= 4) {
+    //   const files = Array.from(event.target.files || []);
 
-      if (files && exhibitorData?._id) {
-        setIsUploading(true);
-        try {
-          const imageUrls: string[] = await Promise.all(
-            files.map(async (file) => {
-              const imageUrl = await uploadImageToFirebase(
-                file,
-                `gallery-images/${file.name}`
-              );
-              return imageUrl;
-            })
-          );
-          await EditGalleryImage(exhibitorData._id, imageUrls);
-          setExhibitorData((prevData) => ({
-            ...prevData!,
-            gallery: [...prevData!.gallery, ...imageUrls],
-          }));
-        } catch (error) {
-          console.error("Error uploading gallery image:", error);
-        } finally {
-          setIsUploading(false);
-        }
-      }
-    }
+    //   if (files && exhibitorData?._id) {
+    //     setIsUploading(true);
+    //     try {
+    //       const imageUrls: string[] = await Promise.all(
+    //         files.map(async (file) => {
+    //           const imageUrl = await uploadImageToFirebase(
+    //             file,
+    //             `gallery-images/${file.name}`
+    //           );
+    //           return imageUrl;
+    //         })
+    //       );
+    //       await EditGalleryImage(exhibitorData._id, imageUrls);
+    //       setExhibitorData((prevData) => ({
+    //         ...prevData!,
+    //         gallery: [...prevData!.gallery, ...imageUrls],
+    //       }));
+    //     } catch (error) {
+    //       console.error("Error uploading gallery image:", error);
+    //     } finally {
+    //       setIsUploading(false);
+    //     }
+    //   }
+    // }
   };
 
   const upload4GalleryImages = async () => {
@@ -259,7 +257,6 @@ const Dashboard: React.FC = () => {
     ) as string[];
 
     if (imageUrlList && exhibitorData?._id) {
-      setIsUploading(true);
       try {
         await editGalleryList(exhibitorData._id, imageUrlList);
         setExhibitorData((prevData) => ({
@@ -401,7 +398,7 @@ const Dashboard: React.FC = () => {
             <div className="text-[16px] font-medium px-8 mt-1">
               {exhibitorData?.companyCategory}
             </div>
-            <div className="flex flex-col px-8 mt-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:flex lg:flex-row lg:space-x-[80px]">
+            <div className="flex flex-wrap flex-col px-8 mt-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-2 lg:flex lg:flex-row lg:space-x-[70px]">
               <div className="flex flex-row space-x-2">
                 <img
                   src="/icon/web.svg"
@@ -492,10 +489,10 @@ const Dashboard: React.FC = () => {
                   Best Products
                 </div>
               </div>
-              <div className="mt-4">
+              {/* <div className="mt-4">
                 {exhibitorData && exhibitorData?.gallery.length === 4 ? (
                   <button
-                    onClick={()=>{
+                    onClick={() => {
                       setDeleteAllOpen(true);
                     }}
                     className="flex items-center justify-center bg-red-400 w-8 h-8 rounded-lg cursor-pointer mt-4 mr-4"
@@ -507,7 +504,7 @@ const Dashboard: React.FC = () => {
                     />
                   </button>
                 ) : null}
-              </div>
+              </div> */}
             </section>
             <section className="overflow-scroll custom-scrollbar">
               <div className="flex relative flex-wrap flex-row items-center justify-center lg:justify-start px-8 mt-4 mb-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid lg:grid-cols-5 lg:gap-8">
@@ -516,7 +513,7 @@ const Dashboard: React.FC = () => {
                     className="flex relative flex-col items-center justify-center bg-naviblue w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-naviblue/90 border border-naviblue shadow-lg"
                     key={index}
                   >
-                    {exhibitorData.gallery.length > 4 ? (
+                    {exhibitorData.gallery.length >= 1 ? (
                       <button
                         onClick={() => {
                           setIsGalleryRemoveAlertOpen(true);
@@ -553,9 +550,13 @@ const Dashboard: React.FC = () => {
                   </div>
                 ))}
 
-                {exhibitorData?.gallery && exhibitorData.gallery.length >= 4 ? (
+                {exhibitorData?.gallery && exhibitorData.gallery.length >= 1 ? (
                   <div
-                    className="flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
+                    className={`flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg ${
+                      galleryImageArray && galleryImageArray?.length >= 1
+                        ? "hidden"
+                        : ""
+                    }`}
                     onClick={handleGalleryAddClick}
                   >
                     <img
@@ -569,9 +570,13 @@ const Dashboard: React.FC = () => {
                   </div>
                 ) : (
                   <div
-                    className="flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
+                    className={`flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg ${
+                      galleryImageArray && galleryImageArray?.length > 1
+                        ? "hidden"
+                        : ""
+                    }`}
                     onClick={
-                      galleryImageArray?.length === 4
+                      galleryImageArray?.length === 1
                         ? upload4GalleryImages
                         : handleGalleryAddClick
                     }
@@ -582,13 +587,22 @@ const Dashboard: React.FC = () => {
                       className="w-8 h-8 sm:w-16 sm:h-16"
                     />
                     <span className="mt-2 text-[10px] sm:text-[16px] text-gray-600">
-                      {galleryImageArray?.length === 4
+                      {galleryImageArray?.length === 1
                         ? "Upload"
-                        : "Select 4 images"}
+                        : "Select image"}
                     </span>
                   </div>
                 )}
               </div>
+
+              {galleryImageArray?.length === 1 ? (
+                <button
+                  onClick={upload4GalleryImages}
+                  className="flex text-white items-center ms-4 justify-center bg-naviblue w-[150px] h-[40px] rounded-lg cursor-pointer hover:bg-naviblue/90 border border-naviblue"
+                >
+                  Upload
+                </button>
+              ) : null}
             </section>
             <input
               type="file"
@@ -628,7 +642,7 @@ const Dashboard: React.FC = () => {
 
           {isDeleteAllOpen ? (
             <GalleryImageRemoveModel
-              onClose={()=>{
+              onClose={() => {
                 setDeleteAllOpen(false);
               }}
               onConfirm={removeAllGalleryImages}
