@@ -8,6 +8,7 @@ import { GetAllCategories } from "../utils/ApiRequest";
 import { ICategory } from "../interface/Interface";
 
 const Register: React.FC = () => {
+  const emailRegex = /^[a-z]+@[^\s@]+\.[^\s@]+$/;
   const [hide, setHide] = useState<boolean>(true);
   const [confirmHide, setConfirmHide] = useState<boolean>(true);
   const [formData, setFormData] = useState({
@@ -54,7 +55,7 @@ const Register: React.FC = () => {
       newErrors.companyCategory = "Company Category is required.";
     if (!formData.email) {
       newErrors.email = "Email is required.";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    } else if (emailRegex.test(formData.email)) {
       newErrors.email = "Email address is invalid.";
     }
     if (!formData.password) {
@@ -90,7 +91,7 @@ const Register: React.FC = () => {
       localStorage.setItem("role", response.data.role);
       toast.success("Registration Successful");
       reset();
-      if(response.data.role === "Exhibitor") {
+      if (response.data.role === "Exhibitor") {
         navigate(`/${response.data.companyKey}`, { replace: true });
         window.location.reload();
       } else {
@@ -129,7 +130,7 @@ const Register: React.FC = () => {
       <div className="flex min-h-screen items-center justify-center">
         <div className="w-full max-w-[600px] px-[40px] lg:px-[120px] md:px-[100px] py-[50px] bg-white border border-gray-500 rounded-3xl shadow-md relative">
           <div className="flex justify-center">
-          < img src="/images/Without-BG.png" alt="Logo" className="w-32" />
+            <img src="/images/Without-BG.png" alt="Logo" className="w-32" />
           </div>
           <h2 className="mt-6 text-center text-13xl font-extrabold text-naviblue">
             Create an account
@@ -197,9 +198,18 @@ const Register: React.FC = () => {
                 <input
                   type="email"
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={(e) => {
+                    setFormData({ ...formData, email: e.target.value });
+                    if (!emailRegex.test(formData.email)) {
+                      setErrors({
+                        ...errors,
+                        email:
+                          "Please enter a valid email address , (simple characters)",
+                      });
+                    } else {
+                      setErrors({ ...errors, email: "" });
+                    }
+                  }}
                   placeholder="Enter your email address"
                   className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-naviblue focus:border-naviblue sm:text-sm"
                 />
