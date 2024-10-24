@@ -237,22 +237,32 @@ END:VCARD`;
               <div id="default-tab-content p-2">
                 {activeTab === "about" && (
                   <div
-                    className="p-4 rounded-lg bg-gray-50 "
+                    className="p-6 rounded-xl bg-gray-50"
                     id="about"
                     role="tabpanel"
                     aria-labelledby="about-tab"
                   >
-                    <div className="flex flex-col items-center justify-around h-[50vh]">
-                      <h3 className="text-lg font-semibold text-naviblue mb-2 mt-5">
-                        About Me
+                    <div className="flex flex-col items-center h-[50vh] justify-center space-y-4">
+                      {/* <img
+                      src={exhibitorData?.profileImage || "/default-profile.png"}
+                      alt="Profile Picture"
+                      className="w-24 h-24 rounded-full border-4 border-naviblue object-cover shadow-md"
+                    /> */}
+                      <h3 className="text-xl font-semibold text-naviblue">
+                        {exhibitorData?.salesPersonName}
                       </h3>
-                      <p className="text-gray-600 -mt-1">
-                        Sales Person of {exhibitorData?.companyName}
+                      <p className="text-gray-500 text-sm text-center">
+                        Sales Person at {exhibitorData?.companyName}
                       </p>
                       <p className="text-gray-600 text-center">
                         Hi! My name is {exhibitorData?.salesPersonName}. It's
                         nice to meet you.
                       </p>
+                      <button
+                      onClick={() => setActiveTab("company")}
+                      className="px-6 py-2 bg-naviblue text-white rounded-lg shadow-sm hover:bg-naviblue/90 transition duration-200">
+                      Connect with Me
+                    </button>
                     </div>
                   </div>
                 )}
@@ -277,15 +287,15 @@ END:VCARD`;
                         <div className="flex gap-2">
                           <button
                             onClick={handleSaveContact}
-                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex justify-between h-8 sm:h-10"
+                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex items-center h-8 sm:h-10"
                           >
-                            <div className="flex align-content-center justify-center">
+                            <div className="flex items-center justify-center space-x-1 px-2">
                               <img
                                 src="/icon/contact-light.svg"
                                 alt="Contact"
-                                className="w-4 h-4 sm:mt-1 mt-0 p-2"
+                                className="w-4 h-4"
                               />
-                              <span className="p-2 text-[10px] sm:text-[16px]">
+                              <span className="text-[10px] sm:text-[16px]">
                                 Contact
                               </span>
                             </div>
@@ -293,15 +303,15 @@ END:VCARD`;
 
                           <button
                             onClick={handleConnect}
-                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex h-8 sm:h-10"
+                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex items-center h-8 sm:h-10"
                           >
-                            <div className="flex items-center justify-center">
+                            <div className="flex items-center justify-center space-x-1 px-2">
                               <img
                                 src="/icon/whatsapp.svg"
-                                alt="Contact"
-                                className="w-4 h-4 p-2"
+                                alt="Whatsapp"
+                                className="w-4 h-4"
                               />
-                              <span className="p-2 text-[10px] sm:text-[16px]">
+                              <span className="text-[10px] sm:text-[16px]">
                                 Whatsapp
                               </span>
                             </div>
@@ -309,15 +319,15 @@ END:VCARD`;
 
                           <button
                             onClick={handleEmail}
-                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer h-8 sm:h-10"
+                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex items-center h-8 sm:h-10"
                           >
-                            <div className="flex items-center justify-center">
+                            <div className="flex items-center justify-center space-x-1 px-2">
                               <img
                                 src="/icon/mail-light.svg"
-                                alt="Contact"
-                                className="w-5 h-5 sm:h-5 p-2"
+                                alt="Email"
+                                className="w-5 h-5"
                               />
-                              <span className="p-2 text-[10px] sm:text-[16px]">
+                              <span className="text-[10px] sm:text-[16px]">
                                 Email
                               </span>
                             </div>
@@ -375,9 +385,9 @@ END:VCARD`;
                             alt="Website"
                             className="w-4 h-4 md:w-6 md:h-6"
                           />
-                          <p className="text-[10px] md:text-[16px] text-naviblue">
+                          <p className="text-[10px] whitespace-nowrap md:text-[16px] text-naviblue">
                             <a
-                              className="text-gray-400 no-underline hover:underline"
+                              className="text-gray-400 hover:underline"
                               href={"https://" + exhibitorData?.website}
                             >
                               {exhibitorData?.website}
@@ -445,7 +455,9 @@ END:VCARD`;
                   </div>
                 )}
                 <div className="flex justify-center items-end mt-5 text-gray-400">
-                  <small className="text-center">Powered By HashBaze © 2024. All rights reserved.</small>
+                  <small className="text-center">
+                    Powered By HashBaze © 2024. All rights reserved.
+                  </small>
                 </div>
               </div>
             </div>

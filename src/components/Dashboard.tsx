@@ -24,6 +24,7 @@ const Dashboard: React.FC = () => {
   const path = window.location.pathname.split("/").pop() || "/";
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isDeleteAllOpen, setDeleteAllOpen] = useState<boolean>(false);
   const [isQRModalOpen, setIsQRModalOpen] = useState<boolean>(false);
   const [exhibitorData, setExhibitorData] = useState<IExhibitor | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -32,6 +33,8 @@ const Dashboard: React.FC = () => {
   const [isGalleryRemoveAlertOpen, setIsGalleryRemoveAlertOpen] =
     useState<boolean>(false);
   const [removeUrl, setRemoveUrl] = useState<string>("");
+  const [galleryImageArray, setGalleryImageArray] = useState<any[]>();
+  const [base64array, setBase64array] = useState<string[]>();
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -82,7 +85,8 @@ const Dashboard: React.FC = () => {
 
       fetchExhibitorData();
     }
-  }, [path]);
+    console.log(galleryImageArray);
+  }, [path, galleryImageArray]);
 
   const openAlert = () => {
     console.log(exhibitorData?.coverImage);
@@ -159,13 +163,72 @@ const Dashboard: React.FC = () => {
   const handleGalleryImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const files = Array.from(event.target.files || []);
+    if (exhibitorData && exhibitorData?.gallery.length < 4) {
+      const selectedFiles = Array.from(event.target.files || []);
 
-    if (files && exhibitorData?._id) {
+      setGalleryImageArray((prevArray) => [
+        ...(prevArray || []),
+        ...selectedFiles,
+      ]);
+
+      const base64Promises = selectedFiles.map((file) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            resolve(reader.result as string);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      });
+
+      try {
+        const base64Images: string[] = (await Promise.all(
+          base64Promises
+        )) as string[];
+        setBase64array((prevArray) => [...(prevArray || []), ...base64Images]);
+      } catch (error) {
+        console.error("Error converting files to base64", error);
+      }
+
+      console.log(selectedFiles);
+    }
+
+    if (exhibitorData && exhibitorData?.gallery.length >= 4) {
+      const files = Array.from(event.target.files || []);
+
+      if (files && exhibitorData?._id) {
+        setIsUploading(true);
+        try {
+          const imageUrls: string[] = await Promise.all(
+            files.map(async (file) => {
+              const imageUrl = await uploadImageToFirebase(
+                file,
+                `gallery-images/${file.name}`
+              );
+              return imageUrl;
+            })
+          );
+          await EditGalleryImage(exhibitorData._id, imageUrls);
+          setExhibitorData((prevData) => ({
+            ...prevData!,
+            gallery: [...prevData!.gallery, ...imageUrls],
+          }));
+        } catch (error) {
+          console.error("Error uploading gallery image:", error);
+        } finally {
+          setIsUploading(false);
+        }
+      }
+    }
+  };
+
+  const upload4GalleryImages = async () => {
+    if (galleryImageArray && exhibitorData?._id) {
       setIsUploading(true);
       try {
         const imageUrls: string[] = await Promise.all(
-          files.map(async (file) => {
+          galleryImageArray.map(async (file) => {
             const imageUrl = await uploadImageToFirebase(
               file,
               `gallery-images/${file.name}`
@@ -173,11 +236,15 @@ const Dashboard: React.FC = () => {
             return imageUrl;
           })
         );
-        await EditGalleryImage(exhibitorData._id, imageUrls);
-        setExhibitorData((prevData) => ({
-          ...prevData!,
-          gallery: [...prevData!.gallery, ...imageUrls],
-        }));
+
+        EditGalleryImage(exhibitorData._id, imageUrls).then(() => {
+          setExhibitorData((prevData) => ({
+            ...prevData!,
+            gallery: [...prevData!.gallery, ...imageUrls],
+          }));
+          setGalleryImageArray([]);
+          setBase64array([]);
+        });
       } catch (error) {
         console.error("Error uploading gallery image:", error);
       } finally {
@@ -206,6 +273,25 @@ const Dashboard: React.FC = () => {
         setIsUploading(false);
         setIsGalleryRemoveAlertOpen(false);
       }
+    }
+  };
+
+  const removeAllGalleryImages = async () => {
+    setIsUploading(true);
+    try {
+      if (exhibitorData?._id != null) {
+        await editGalleryList(exhibitorData._id, []);
+        setExhibitorData((prevData) => ({
+          ...prevData!,
+          gallery: [],
+        }));
+      }
+      setDeleteAllOpen(false);
+    } catch (error) {
+      console.error("Error uploading gallery image:", error);
+    } finally {
+      setIsUploading(false);
+      setDeleteAllOpen(false);
     }
   };
 
@@ -397,24 +483,22 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
           <div className="flex flex-col w-[calc(100%-10px)] h-[auto] py-2 mt-[40px] bg-white rounded-2xl shadow-lg">
-            <div className="text-[22px] font-bold text-naviblue px-8 mt-4">
-              Gallery Section
-            </div>
-            <div className="text-[16px] text-gray-500 font-medium px-8 mt-1">
-              Best Products
-            </div>
-            <div className="flex flex-col items-center justify-center lg:justify-start px-8 mt-4 mb-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid lg:grid-cols-5 lg:gap-8">
-              {exhibitorData?.gallery.map((image, index) => (
-                <div
-                  className="flex relative flex-col items-center justify-center bg-naviblue w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-naviblue/90 border border-naviblue shadow-lg"
-                  key={index}
-                >
+            <section className="flex justify-between p-3">
+              <div>
+                <div className="text-[22px] font-bold text-naviblue px-8 mt-4">
+                  Gallery Section
+                </div>
+                <div className="text-[16px] text-gray-500 font-medium px-8 mt-1">
+                  Best Products
+                </div>
+              </div>
+              <div className="mt-4">
+                {exhibitorData && exhibitorData?.gallery.length === 4 ? (
                   <button
-                    onClick={() => {
-                      setIsGalleryRemoveAlertOpen(true);
-                      setRemoveUrl(image);
+                    onClick={()=>{
+                      setDeleteAllOpen(true);
                     }}
-                    className="flex top-0 left-3 absolute items-center justify-center bg-white w-8 h-8 rounded-lg cursor-pointer mt-4 mr-4"
+                    className="flex items-center justify-center bg-red-400 w-8 h-8 rounded-lg cursor-pointer mt-4 mr-4"
                   >
                     <img
                       src="/icon/delete.svg"
@@ -422,30 +506,90 @@ const Dashboard: React.FC = () => {
                       className="w-6 h-6"
                     />
                   </button>
-                  <img
-                    src={image}
-                    alt="Gallery"
-                    className="w-full h-full object-cover rounded-lg"
-                  />
-                </div>
-              ))}
+                ) : null}
+              </div>
+            </section>
+            <section className="overflow-scroll custom-scrollbar">
+              <div className="flex relative flex-wrap flex-row items-center justify-center lg:justify-start px-8 mt-4 mb-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid lg:grid-cols-5 lg:gap-8">
+                {exhibitorData?.gallery.map((image, index) => (
+                  <div
+                    className="flex relative flex-col items-center justify-center bg-naviblue w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-naviblue/90 border border-naviblue shadow-lg"
+                    key={index}
+                  >
+                    {exhibitorData.gallery.length > 4 ? (
+                      <button
+                        onClick={() => {
+                          setIsGalleryRemoveAlertOpen(true);
+                          setRemoveUrl(image);
+                        }}
+                        className="flex top-0 left-3 absolute items-center justify-center bg-white w-8 h-8 rounded-lg cursor-pointer mt-4 mr-4"
+                      >
+                        <img
+                          src="/icon/delete.svg"
+                          alt="Delete"
+                          className="w-6 h-6"
+                        />
+                      </button>
+                    ) : null}
 
-              {exhibitorData?.gallery && exhibitorData.gallery.length < 4 ? (
-                <div
-                  className="flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
-                  onClick={handleGalleryAddClick}
-                >
-                  <img
-                    src="/icon/image.svg"
-                    alt="Add Image"
-                    className="w-8 h-8 sm:w-16 sm:h-16"
-                  />
-                  <span className="mt-2 text-[10px] sm:text-[16px] text-gray-600">
-                    Add Image
-                  </span>
-                </div>
-              ) : null}
-            </div>
+                    <img
+                      src={image}
+                      alt="Gallery"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </div>
+                ))}
+
+                {base64array?.map((image, index) => (
+                  <div
+                    className="flex relative flex-col items-center justify-center bg-naviblue w-[300px] h-[300px] rounded-[20px] cursor-pointer hover:bg-naviblue/90 border border-naviblue shadow-lg"
+                    key={index}
+                  >
+                    <img
+                      src={image}
+                      alt="Gallery"
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </div>
+                ))}
+
+                {exhibitorData?.gallery && exhibitorData.gallery.length >= 4 ? (
+                  <div
+                    className="flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
+                    onClick={handleGalleryAddClick}
+                  >
+                    <img
+                      src="/icon/image.svg"
+                      alt="Add Image"
+                      className="w-8 h-8 sm:w-16 sm:h-16"
+                    />
+                    <span className="mt-2 text-[10px] sm:text-[16px] text-gray-600">
+                      Add Image
+                    </span>
+                  </div>
+                ) : (
+                  <div
+                    className="flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg"
+                    onClick={
+                      galleryImageArray?.length === 4
+                        ? upload4GalleryImages
+                        : handleGalleryAddClick
+                    }
+                  >
+                    <img
+                      src="/icon/image.svg"
+                      alt="Add Image"
+                      className="w-8 h-8 sm:w-16 sm:h-16"
+                    />
+                    <span className="mt-2 text-[10px] sm:text-[16px] text-gray-600">
+                      {galleryImageArray?.length === 4
+                        ? "Upload"
+                        : "Select 4 images"}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </section>
             <input
               type="file"
               ref={galleryInputRef}
@@ -479,6 +623,16 @@ const Dashboard: React.FC = () => {
               onClose={closeAlert}
               onConfirm={handleGalleryImageRemove}
               message={"Are you sure you want to delete?"}
+            />
+          ) : undefined}
+
+          {isDeleteAllOpen ? (
+            <GalleryImageRemoveModel
+              onClose={()=>{
+                setDeleteAllOpen(false);
+              }}
+              onConfirm={removeAllGalleryImages}
+              message={"Are you sure you want to delete All Gallery Images ?"}
             />
           ) : undefined}
 
