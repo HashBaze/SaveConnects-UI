@@ -75,6 +75,7 @@ const Dashboard: React.FC = () => {
             address: data.data.address,
             about: data.data.about,
             gallery: data.data.gallery,
+            designation: data.data.designation,
           });
         } catch (err) {
           console.error("Failed to fetch exhibitor data:", err);
@@ -188,8 +189,6 @@ const Dashboard: React.FC = () => {
       } catch (error) {
         console.error("Error converting files to base64", error);
       }
-
-      console.log(selectedFiles);
     }
 
     // if (exhibitorData && exhibitorData?.gallery.length >= 4) {
@@ -320,7 +319,8 @@ const Dashboard: React.FC = () => {
         newData.phoneNumber,
         newData.companyAddress,
         newData.about,
-        newData.website
+        newData.website,
+        newData.designation
       );
       toast.success("Profile updated successfully");
       setExhibitorData((prevData) => ({
