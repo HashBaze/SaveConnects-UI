@@ -39,7 +39,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
   ];
 
   const phoneRegex = {
-    "+94": /^(\+94)?[1-9]\d{8}$/, // Sri Lanka: +94 followed by 9 digits, starting with 1-9
+    "+94": /^\+?(\d{1,3})?[-.\s]?(\(?\d{3}\)?)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
     "+1": /^(\+1)?\d{10}$/, // USA/Canada: +1 followed by 10 digits
     "+44": /^(\+44)?[1-9]\d{9}$/, // UK: +44 followed by 10 digits, starting with 1-9
     "+91": /^(\+91)?[1-9]\d{9}$/, // India: +91 followed by 10 digits, starting with 1-9
@@ -97,6 +97,11 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
     } else {
       setPhoneError(false);
     }
+
+    if (formData.phoneNumber.charAt(0) === "0") {
+      formData.phoneNumber = formData.phoneNumber.slice(1);
+    }
+
     e.preventDefault();
     const dataToSave = {
       ...formData,

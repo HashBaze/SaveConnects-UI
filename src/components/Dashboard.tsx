@@ -332,6 +332,7 @@ const Dashboard: React.FC = () => {
         address: newData.companyAddress,
         about: newData.about,
         website: newData.website,
+        designation: newData.designation,
       }));
     } catch (err) {
       toast.error("Failed to update profile");
@@ -347,13 +348,21 @@ const Dashboard: React.FC = () => {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center">
-          <div className="w-full h-[200px] lg:h-[300px] md:h-[250px] bg-gray-300 rounded-2xl relative">
-            {exhibitorData?.coverImage && (
+          <div className="w-full flex justify-center items-center h-[200px] lg:h-[300px] md:h-[250px] bg-gray-300 rounded-2xl relative">
+            {exhibitorData?.coverImage ? (
               <img
                 src={exhibitorData.coverImage}
                 alt="Cover Image"
                 className="w-full h-full object-cover rounded-2xl"
               />
+            ) : (
+              <>
+                <img
+                  src='/images/empty-bg.png'
+                  alt="Cover Image"
+                  className="w-[50%] h-full object-cover"
+                />
+              </>
             )}
             <div
               className="absolute flex items-center justify-center bg-white w-8 h-8 rounded-lg top-[20px] right-[20px] cursor-pointer"
@@ -361,7 +370,7 @@ const Dashboard: React.FC = () => {
             >
               <img src="/icon/edit.svg" alt="Edit" className="w-6 h-6" />
             </div>
-            {exhibitorData?.coverImage === null ? null : (
+            {exhibitorData?.coverImage && (
               <button
                 type="button"
                 className="absolute border-red-400 flex items-center justify-center bg-red-400 w-8 h-8 rounded-lg top-[60px] right-[20px] cursor-pointer"
@@ -484,9 +493,6 @@ const Dashboard: React.FC = () => {
               <div>
                 <div className="text-[22px] font-bold text-naviblue px-8 mt-4">
                   Gallery Section
-                </div>
-                <div className="text-[16px] text-gray-500 font-medium px-8 mt-1">
-                  Best Products
                 </div>
               </div>
               {/* <div className="mt-4">
