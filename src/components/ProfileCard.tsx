@@ -47,6 +47,7 @@ const ProfileCard: React.FC = () => {
           });
 
           setLoadingImages(new Array(data.data.gallery.length).fill(true));
+          setIsCoverImageLoading(true);
         } catch (err) {
           console.error("Failed to fetch exhibitor data:", err);
         }
@@ -210,15 +211,27 @@ END:VCARD`;
           </div>
           <div className="relative bg-white h-[95vh] shadow-lg rounded-[20px] ring-1 ring-gray-900/5 w-[100%] sm:w-[450px] overflow-scroll custom-scrollbar">
             {/* Header */}
-            <div className="relative h-[200px]">
-              {exhibitorData?.coverImage && isCoverImageLoading && (
-                <h5 className="text-center text-3xl text-naviblue font-bold">
+            <div className="relative h-[200px] bg-gray-300">
+              
+
+              {exhibitorData?.coverImage && isCoverImageLoading ? (
+                <h5 className="text-center absolute top-0 bottom-0 left-0 right-0 m-auto bg-white text-3xl text-naviblue font-bold">
                   Loading...
                 </h5>
+              ) : (
+                <img
+                  className={`w-full h-full object-cover ${
+                    exhibitorData?.coverImage ? "hidden" : "block"
+                  }`}
+                  src="/images/empty-bg.png"
+                  alt="Profile"
+                  onLoad={handleCoverImageLoad}
+                />
               )}
+              
               <img
                 className={`w-full h-full object-cover ${
-                  isCoverImageLoading ? "hidden" : "block"
+                  exhibitorData?.coverImage ? "block" : "hidden"
                 }`}
                 src={exhibitorData?.coverImage}
                 alt="Profile"
@@ -258,12 +271,14 @@ END:VCARD`;
                         {exhibitorData?.salesPersonName}
                       </h3>
                       <p className="text-gray-500 text-sm text-center">
-                        Sales Person at {exhibitorData?.companyName}
+                        {exhibitorData?.designation} at{" "}
+                        {exhibitorData?.companyName}
                       </p>
                       <p className="text-gray-600 text-center">
                         Hi! My name is {exhibitorData?.salesPersonName}. It's
                         nice to meet you.
                       </p>
+
                       <button
                         onClick={() => setActiveTab("company")}
                         className="px-6 py-2 bg-naviblue text-white rounded-lg shadow-sm hover:bg-naviblue/90 transition duration-200"
@@ -298,12 +313,12 @@ END:VCARD`;
                           >
                             <div className="flex items-center justify-center space-x-1 px-2">
                               <img
-                                src="/icon/contact-light.svg"
+                                src="/icon/save-contact.svg"
                                 alt="Contact"
                                 className="w-4 h-4"
                               />
                               <span className="text-[10px] sm:text-[16px]">
-                                Contact
+                                Save
                               </span>
                             </div>
                           </button>
@@ -352,7 +367,11 @@ END:VCARD`;
                           <p className="text-[10px] md:text-[16px] text-naviblue">
                             <a
                               className="text-gray-400 no-underline hover:underline"
-                              href={exhibitorData ? `tel:${exhibitorData.phoneNumber}` : "#"}
+                              href={
+                                exhibitorData
+                                  ? `tel:${exhibitorData.phoneNumber}`
+                                  : "#"
+                              }
                             >
                               {exhibitorData?.phoneNumber}
                             </a>
