@@ -189,8 +189,6 @@ const Dashboard: React.FC = () => {
       } catch (error) {
         console.error("Error converting files to base64", error);
       }
-
-      console.log(selectedFiles);
     }
 
     // if (exhibitorData && exhibitorData?.gallery.length >= 4) {

@@ -443,7 +443,6 @@ END:VCARD`;
                               <img
                                 onClick={() => {
                                   setViewImageModal(true);
-                                  console.log(image);
                                   setModalImage(image);
                                 }}
                                 src={image}

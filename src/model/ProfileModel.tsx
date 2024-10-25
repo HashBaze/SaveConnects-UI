@@ -102,7 +102,6 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
       ...formData,
       phoneNumber: `${countryCode} ${formData.phoneNumber}`,
     };
-    console.log(dataToSave);
     onSave(dataToSave);
     onClose();
   };
