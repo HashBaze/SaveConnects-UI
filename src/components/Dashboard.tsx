@@ -75,6 +75,7 @@ const Dashboard: React.FC = () => {
             address: data.data.address,
             about: data.data.about,
             gallery: data.data.gallery,
+            designation: data.data.designation,
           });
         } catch (err) {
           console.error("Failed to fetch exhibitor data:", err);
@@ -320,7 +321,8 @@ const Dashboard: React.FC = () => {
         newData.phoneNumber,
         newData.companyAddress,
         newData.about,
-        newData.website
+        newData.website,
+        newData.designation
       );
       toast.success("Profile updated successfully");
       setExhibitorData((prevData) => ({

@@ -58,7 +58,8 @@ const EditExhibitorProfile = async (
   phoneNumber: string,
   companyAddress: string,
   about: string,
-  website: string
+  website: string,
+  designation: string
 ) => {
   await api.put("/exhibitor/edit", {
     _id,
@@ -69,6 +70,7 @@ const EditExhibitorProfile = async (
     address: companyAddress,
     website,
     about,
+    designation
   });
 };
 

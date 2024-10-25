@@ -22,8 +22,10 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
     companyAddress: "",
     about: "",
     website: "",
+    designation: "",
   });
   const [countryCode, setCountryCode] = useState<string>("+94");
+  const [phoneError, setPhoneError] = useState<boolean>(false);
 
   const countryOptions = [
     "+94 (SR)",
@@ -35,6 +37,25 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
     "+7 (RU)",
     "+86 (CN)",
   ];
+
+  const phoneRegex = {
+    "+94": /^(\+94)?[1-9]\d{8}$/, // Sri Lanka: +94 followed by 9 digits, starting with 1-9
+    "+1": /^(\+1)?\d{10}$/, // USA/Canada: +1 followed by 10 digits
+    "+44": /^(\+44)?[1-9]\d{9}$/, // UK: +44 followed by 10 digits, starting with 1-9
+    "+91": /^(\+91)?[1-9]\d{9}$/, // India: +91 followed by 10 digits, starting with 1-9
+    "+62": /^(\+62)?[1-9]\d{8,11}$/, // Indonesia: +62 followed by 9-12 digits, starting with 1-9
+    "+55": /^(\+55)?[1-9]\d{9,10}$/, // Brazil: +55 followed by 10-11 digits, starting with 1-9
+    "+86": /^(\+86)?[1-9]\d{9}$/, // China: +86 followed by 10 digits, starting with 1-9
+    "+7": /^(\+7)?[1-9]\d{9}$/, // Russia: +7 followed by 10 digits, starting with 1-9
+  };
+
+  const validatePhoneNumber = (
+    countryCode: string,
+    phoneNumber: string
+  ): boolean => {
+    const regex = phoneRegex[countryCode as keyof typeof phoneRegex];
+    return regex ? regex.test(phoneNumber) : false;
+  };
 
   const needsScrollbar = countryOptions.length > 5;
 
@@ -49,8 +70,9 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
         companyAddress: initialData.address,
         about: initialData.about,
         website: initialData.website,
+        designation: initialData.designation,
       });
-      setCountryCode(code || "+1");
+      setCountryCode(code || "+94");
     }
   }, [initialData]);
 
@@ -69,11 +91,18 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    if (!validatePhoneNumber(countryCode, formData.phoneNumber)) {
+      setPhoneError(true);
+      return;
+    } else {
+      setPhoneError(false);
+    }
     e.preventDefault();
     const dataToSave = {
       ...formData,
       phoneNumber: `${countryCode} ${formData.phoneNumber}`,
     };
+    console.log(dataToSave);
     onSave(dataToSave);
     onClose();
   };
@@ -94,7 +123,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
             <img src="/icon/close.svg" alt="Close" className="w-6 h-6" />
           </button>
         </div>
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form className="p-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex h-12 lg:h-16">
               <input
@@ -140,14 +169,21 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                   </option>
                 ))}
               </select>
-              <input
-                type="tel"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                placeholder="Phone Number"
-                className="w-[70%] ml-1 text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
-              />
+              <div>
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  placeholder="Phone Number"
+                  className="w-[100%] h-[73%] ml-1 text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
+                />
+                {phoneError && (
+                  <p className="text-red-500 text-[12px]">
+                    Invalid phone number
+                  </p>
+                )}
+              </div>
             </div>
             <div className="flex h-12 lg:h-16">
               <input
@@ -170,6 +206,16 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
               />
             </div>
           </div>
+          <div className="flex h-12 lg:h-16">
+            <input
+              type="text"
+              name="designation"
+              value={formData.designation}
+              onChange={handleChange}
+              placeholder="Designation"
+              className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
+            />
+          </div>
           <div className="flex h-auto">
             <textarea
               name="about"
@@ -181,7 +227,8 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
           </div>
           <div className="flex justify-end">
             <button
-              type="submit"
+              onClick={handleSubmit}
+              type="button"
               className="flex items-center bg-naviblue text-white px-4 py-2 rounded-lg border border-naviblue hover:bg-gray-600"
             >
               <img

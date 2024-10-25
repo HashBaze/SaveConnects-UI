@@ -43,29 +43,28 @@ const ProfileCard: React.FC = () => {
             address: data.data.address,
             about: data.data.about,
             gallery: data.data.gallery,
+            designation: data.data.designation,
           });
 
           setLoadingImages(new Array(data.data.gallery.length).fill(true));
         } catch (err) {
           console.error("Failed to fetch exhibitor data:", err);
         }
-
-
       };
 
       fetchExhibitorData();
     }
   }, [path]);
 
-  const formatPhoneNumber = (phoneNumber:string) => {
-    let [countryCode, actualNumber] = phoneNumber.split(' ');
-  
-    if (actualNumber[0] === '0') {
-      actualNumber = actualNumber.slice(1);
-    }
-  
-    return `${countryCode} ${actualNumber}`;
-  };
+  // const formatPhoneNumber = (phoneNumber: string) => {
+  //   let [countryCode, actualNumber] = phoneNumber.split(" ");
+
+  //   if (actualNumber[0] === "0") {
+  //     actualNumber = actualNumber.slice(1);
+  //   }
+
+  //   return `${countryCode} ${actualNumber}`;
+  // };
 
   const dowenloadVcfContact = (exhibitorData: IExhibitor) => {
     const makeVCardVersion = (): string => `VERSION:3.0`;
@@ -212,7 +211,7 @@ END:VCARD`;
           <div className="relative bg-white h-[95vh] shadow-lg rounded-[20px] ring-1 ring-gray-900/5 w-[100%] sm:w-[450px] overflow-scroll custom-scrollbar">
             {/* Header */}
             <div className="relative h-[200px]">
-              {isCoverImageLoading && (
+              {exhibitorData?.coverImage && isCoverImageLoading && (
                 <h5 className="text-center text-3xl text-naviblue font-bold">
                   Loading...
                 </h5>
@@ -266,10 +265,11 @@ END:VCARD`;
                         nice to meet you.
                       </p>
                       <button
-                      onClick={() => setActiveTab("company")}
-                      className="px-6 py-2 bg-naviblue text-white rounded-lg shadow-sm hover:bg-naviblue/90 transition duration-200">
-                      Connect with Me
-                    </button>
+                        onClick={() => setActiveTab("company")}
+                        className="px-6 py-2 bg-naviblue text-white rounded-lg shadow-sm hover:bg-naviblue/90 transition duration-200"
+                      >
+                        Connect with Me
+                      </button>
                     </div>
                   </div>
                 )}
@@ -335,7 +335,7 @@ END:VCARD`;
                                 className="w-5 h-5"
                               />
                               <span className="text-[10px] sm:text-[16px]">
-                                Email
+                                Inquiry
                               </span>
                             </div>
                           </button>
@@ -352,9 +352,9 @@ END:VCARD`;
                           <p className="text-[10px] md:text-[16px] text-naviblue">
                             <a
                               className="text-gray-400 no-underline hover:underline"
-                              href={`tel:${exhibitorData?.phoneNumber ? formatPhoneNumber(exhibitorData.phoneNumber) : ""}`}
+                              href={exhibitorData ? `tel:${exhibitorData.phoneNumber}` : "#"}
                             >
-                              {exhibitorData?.phoneNumber ? formatPhoneNumber(exhibitorData.phoneNumber) : ""}
+                              {exhibitorData?.phoneNumber}
                             </a>
                           </p>
                         </div>
@@ -392,26 +392,31 @@ END:VCARD`;
                             alt="Website"
                             className="w-4 h-4 md:w-6 md:h-6"
                           />
-                          <p className="text-[10px] whitespace-nowrap md:text-[16px] text-naviblue">
-                            <a
-                              className="text-gray-400 hover:underline"
-                              href={"https://" + exhibitorData?.website}
-                            >
-                              {exhibitorData?.website}
-                            </a>
-                          </p>
-                          <div className="flex justify-end items-center w-full h-[10px]">
-                            <button
-                              onClick={handleShare}
-                              className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
-                            >
-                              <img
-                                src="/icon/copy-content.svg"
-                                alt="Share"
-                                className="w-6 h-6"
-                              />
-                            </button>
-                          </div>
+                          {exhibitorData?.website && (
+                            <p className="text-[10px] whitespace-nowrap md:text-[16px] text-naviblue">
+                              <a
+                                className="text-gray-400 hover:underline"
+                                href={"https://" + exhibitorData?.website}
+                              >
+                                {exhibitorData?.website}
+                              </a>
+                            </p>
+                          )}
+
+                          {exhibitorData?.website && (
+                            <div className="flex justify-end items-center w-full h-[10px]">
+                              <button
+                                onClick={handleShare}
+                                className=" hover:bg-blue-200 bg-transparent text-white rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] border-0 cursor-pointer"
+                              >
+                                <img
+                                  src="/icon/copy-content.svg"
+                                  alt="Share"
+                                  className="w-6 h-6"
+                                />
+                              </button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
