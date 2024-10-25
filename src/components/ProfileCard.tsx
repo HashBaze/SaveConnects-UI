@@ -57,16 +57,6 @@ const ProfileCard: React.FC = () => {
     }
   }, [path]);
 
-  // const formatPhoneNumber = (phoneNumber: string) => {
-  //   let [countryCode, actualNumber] = phoneNumber.split(" ");
-
-  //   if (actualNumber[0] === "0") {
-  //     actualNumber = actualNumber.slice(1);
-  //   }
-
-  //   return `${countryCode} ${actualNumber}`;
-  // };
-
   const dowenloadVcfContact = (exhibitorData: IExhibitor) => {
     const makeVCardVersion = (): string => `VERSION:3.0`;
 
@@ -77,9 +67,6 @@ const ProfileCard: React.FC = () => {
     const makeVCardOrg = (org: string): string => `ORG:${org}`;
 
     const makeVCardTitle = (title: string): string => `TITLE:${title}`;
-
-    const makeVCardPhoto = (img: string): string =>
-      `PHOTO;TYPE=JPEG;ENCODING=b:${img}`;
 
     const makeVCardTel = (phone: string): string =>
       `TEL;TYPE=WORK,VOICE:${phone}`;
@@ -101,7 +88,6 @@ ${makeVCardInfo(
 ${makeVCardName(exhibitorData.salesPersonName)}
 ${makeVCardOrg(exhibitorData.companyName)}
 ${makeVCardTitle(exhibitorData.companyCategory)}
-${makeVCardPhoto(exhibitorData.coverImage)}
 ${makeVCardTel(exhibitorData.phoneNumber)}
 ${makeVCardAdr(exhibitorData.address)}
 ${makeVCardEmail(exhibitorData.email)}
@@ -212,8 +198,6 @@ END:VCARD`;
           <div className="relative bg-white h-[95vh] shadow-lg rounded-[20px] ring-1 ring-gray-900/5 w-[100%] sm:w-[450px] overflow-scroll custom-scrollbar">
             {/* Header */}
             <div className="relative h-[200px] bg-gray-300">
-              
-
               {exhibitorData?.coverImage && isCoverImageLoading ? (
                 <h5 className="text-center absolute top-0 bottom-0 left-0 right-0 m-auto bg-white text-3xl text-naviblue font-bold">
                   Loading...
@@ -228,7 +212,7 @@ END:VCARD`;
                   onLoad={handleCoverImageLoad}
                 />
               )}
-              
+
               <img
                 className={`w-full h-full object-cover ${
                   exhibitorData?.coverImage ? "block" : "hidden"
