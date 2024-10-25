@@ -65,3 +65,9 @@ export interface ExhibitorHederData {
   companyName: string;
   role: string;
 }
+
+export interface IRankedUser {
+  Email: string; 
+  Name:string
+  Score:number
+}

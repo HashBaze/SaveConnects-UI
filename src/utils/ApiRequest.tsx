@@ -188,6 +188,8 @@ const GetAllExhibitors = async () => {
   return response;
 };
 
+
+
 const ExhibitorStatusChange = async (email: string, status: boolean) => {
   const response = await api.post("/admin/change-exhibitor-status", {
     email,
@@ -216,6 +218,10 @@ const DeleteCategory = async (name: string) => {
   });
   return response;
 };
+const GetRankedUsers= async()=>{
+  const response = await api.get("mail/ranked-recods");
+  return response
+}
 
 export {
   LoginRequest,
@@ -237,5 +243,6 @@ export {
   CreateCategory,
   GetAllCategories,
   DeleteCategory,
-  editGalleryList
+  editGalleryList,
+  GetRankedUsers
 };

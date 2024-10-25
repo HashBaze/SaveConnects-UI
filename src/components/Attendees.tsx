@@ -5,12 +5,13 @@ import LoadingModal from "../model/LoadingModel";
 import Pagination from "../model/PaginationModel";
 import DeleteConformModel from "../model/DeleteConformModel";
 import Loading from "./Loading";
-import { IAttendee } from "../interface/Interface";
+import { IAttendee ,IRankedUser} from "../interface/Interface";
 import {
   AddAttendee,
   GetExhibitorProfile,
   EditAttendee,
   DeleteAttendee,
+  GetRankedUsers,
 } from "../utils/ApiRequest";
 import { toast } from "react-toastify";
 
@@ -25,6 +26,8 @@ const Attendees: React.FC = () => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage] = useState(12);
+  const [rankedUsers, setRankedUsers] = useState<IRankedUser[]>([]);
+  const [isSorted, setIsSorted] = useState(false);
 
   const handleOpenModel = () => setIsOpen(true);
 
@@ -40,14 +43,30 @@ const Attendees: React.FC = () => {
     setInitialData(null);
   };
 
+
   const fetchData = async () => {
     setIsLoading(true);
     try {
       const response = await GetExhibitorProfile();
       setAttendees(response.data.exhibitor.attendees);
       setExhibitorId(response.data.exhibitor._id);
+      
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const RankedData = async () => {
+    setIsLoading(true);
+    try {
+      const rank_users = await GetRankedUsers();
+      setRankedUsers(rank_users.data);
+      console.log(rank_users.data)
+       // Store ranked users in state
+    } catch (err) {
+      console.log(err);
     } finally {
       setIsLoading(false);
     }
@@ -57,6 +76,8 @@ const Attendees: React.FC = () => {
     const accessToken = localStorage.getItem("accesstoken");
     if (accessToken) {
       fetchData();
+      RankedData();
+
     }
   }, []);
 
@@ -143,6 +164,7 @@ const Attendees: React.FC = () => {
   };
 
   const createWorksheetFromAttendees = (attendees: IAttendee[]) => {
+    
     return XLSX.utils.json_to_sheet(
       attendees.map((attendee) => ({
         Name: attendee.name,
@@ -152,6 +174,7 @@ const Attendees: React.FC = () => {
         "Additional Note": attendee.note,
       }))
     );
+   
   };
 
   const handleExportExcel = () => {
@@ -181,6 +204,44 @@ const Attendees: React.FC = () => {
     link.click();
     document.body.removeChild(link);
   };
+
+
+  const handleSort = () => {
+      if (!attendees || !rankedUsers) return;
+    
+      console.log("Attendees:", attendees);
+      
+    
+      const emailToScore = Object.fromEntries(
+        rankedUsers.map(user => [user.Email, user.Score]) 
+      );
+
+      const rankedAttendees = attendees
+        .filter(attendee => emailToScore[attendee.email] !== undefined)
+        .map(attendee => ({
+          ...attendee,
+          score: emailToScore[attendee.email]
+        }))
+        .sort((a, b) => b.score - a.score); 
+    
+      console.log("Ranked Attendees:", rankedAttendees);
+      setAttendees(rankedAttendees);
+    };
+    
+  const handleSortToggle = () => {
+      if (isSorted) {
+       
+        fetchData();
+        setAttendees(attendees);  
+      } else { 
+      
+        RankedData();    
+        handleSort();
+      }
+      setIsSorted(!isSorted);
+    };
+    
+ 
 
   return (
     <>
@@ -235,6 +296,23 @@ const Attendees: React.FC = () => {
                 <span className="hidden sm:inline">New Attendee</span>
                 <span className="inline sm:hidden">New</span>
               </button>
+              <button
+                  className="flex items-center justify-center bg-naviblue hover:bg-naviblue/90 text-white px-4 py-2 rounded-[10px] border border-gray-300"
+                  onClick={handleSortToggle}
+                >
+                  <img
+                    className="w-4 h-4 mr-2"
+                    src="/icon/sort.svg"
+                    alt={isSorted ? "All Attendees" : "Sort Attendees"}
+                  />
+                  <span className="hidden sm:inline">
+                    {isSorted ? "All Attendees" : "Sort Attendees"}
+                  </span>
+                  <span className="inline sm:hidden">
+                    {isSorted ? "All" : "Sort"}
+                  </span>
+            </button>
+
             </div>
           </div>
 
