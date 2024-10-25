@@ -309,7 +309,7 @@ END:VCARD`;
                         <div className="flex gap-2">
                           <button
                             onClick={handleSaveContact}
-                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex items-center h-8 sm:h-10"
+                            className="bg-naviblue w-[83px] sm:w-[120px] text-white rounded-[10px] border-0 cursor-pointer justify-center flex items-center h-8 sm:h-10"
                           >
                             <div className="flex items-center justify-center space-x-1 px-2">
                               <img
@@ -325,7 +325,7 @@ END:VCARD`;
 
                           <button
                             onClick={handleConnect}
-                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex items-center h-8 sm:h-10"
+                            className="bg-naviblue w-[83px] sm:w-[120px] text-white rounded-[10px] border-0 cursor-pointer justify-center flex items-center h-8 sm:h-10"
                           >
                             <div className="flex items-center justify-center space-x-1 px-2">
                               <img
@@ -341,7 +341,7 @@ END:VCARD`;
 
                           <button
                             onClick={handleEmail}
-                            className="bg-naviblue text-white rounded-[10px] border-0 cursor-pointer flex items-center h-8 sm:h-10"
+                            className="bg-naviblue w-[83px] sm:w-[120px] text-white rounded-[10px] border-0 cursor-pointer justify-center flex items-center h-8 sm:h-10"
                           >
                             <div className="flex items-center justify-center space-x-1 px-2">
                               <img
