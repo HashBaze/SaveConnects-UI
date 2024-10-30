@@ -207,39 +207,47 @@ const Attendees: React.FC = () => {
 
 
   const handleSort = () => {
-      if (!attendees || !rankedUsers) return;
+    if (!attendees || !rankedUsers) return;
+  
+    console.log("Attendees:", attendees);
+  
+    const emailToScore = Object.fromEntries(
+      rankedUsers.map(user => [user.Email, user.Score])
+    );
+  
+    const rankedAttendees = attendees
+      .filter(attendee => emailToScore[attendee.email] !== undefined)
+      .map(attendee => ({
+        ...attendee,
+        score: emailToScore[attendee.email],
+        ranked:true
+      }))
+      .sort((a, b) => b.score - a.score);
+  
+    const unrankedAttendees = attendees
+      .filter(attendee => emailToScore[attendee.email] === undefined)
+      .map(attendee => ({
+        ...attendee,
+        score: null ,
+        ranked:false
+      }));
+  
+    const sortedAttendees = [...rankedAttendees, ...unrankedAttendees];
     
-      console.log("Attendees:", attendees);
-      
-    
-      const emailToScore = Object.fromEntries(
-        rankedUsers.map(user => [user.Email, user.Score]) 
-      );
-
-      const rankedAttendees = attendees
-        .filter(attendee => emailToScore[attendee.email] !== undefined)
-        .map(attendee => ({
-          ...attendee,
-          score: emailToScore[attendee.email]
-        }))
-        .sort((a, b) => b.score - a.score); 
-    
-      console.log("Ranked Attendees:", rankedAttendees);
-      setAttendees(rankedAttendees);
-    };
-    
-  const handleSortToggle = () => {
-      if (isSorted) {
-       
-        fetchData();
-        setAttendees(attendees);  
-      } else { 
-      
-        RankedData();    
-        handleSort();
-      }
-      setIsSorted(!isSorted);
-    };
+    console.log("Sorted Attendees:", sortedAttendees);
+    setAttendees(sortedAttendees);
+  };
+  
+const handleSortToggle = () => {
+  if (!isSorted) {
+    RankedData();
+    handleSort();
+  } else {
+  
+    fetchData();
+  }
+  setIsSorted(!isSorted);
+};
     
  
 
@@ -259,7 +267,7 @@ const Attendees: React.FC = () => {
               Attendees Table
             </h2>
 
-            <div className="flex flex-row justify-center gap-2">
+            <div className="flex flex-grow justify-center gap-2">
               <button
                 className="flex items-center justify-center bg-naviblue hover:bg-naviblue/90 text-white px-4 py-2 rounded-[10px] border border-gray-300"
                 onClick={handleExportExcel}
@@ -342,7 +350,7 @@ const Attendees: React.FC = () => {
               </thead>
               <tbody>
                 {currentItems?.map((attendee, index) => (
-                  <tr key={index} className="border-b">
+                  <tr key={index} className={`border-b ${attendee.ranked ? 'bg-blue-100' : ''}`} >
                     <td className="p-2 text-center text-gray-800 max-w-[100px] lg:max-w-[200px] break-words lg:break-normal">
                       {attendee.name}
                     </td>

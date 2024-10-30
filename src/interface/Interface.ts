@@ -44,6 +44,7 @@ export interface IAttendee {
   contactNumber: string;
   companyName: string;
   note: string;
+  ranked:boolean;
 }
 
 export interface IProfileModal {

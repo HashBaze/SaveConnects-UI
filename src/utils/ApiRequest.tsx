@@ -219,7 +219,7 @@ const DeleteCategory = async (name: string) => {
   return response;
 };
 const GetRankedUsers= async()=>{
-  const response = await api.get("mail/ranked-recods");
+  const response = await api.get("/exhibitor/ranked-email-recods");
   return response
 }
 
