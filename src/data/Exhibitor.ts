@@ -21,4 +21,7 @@ export const Exhibitor: IExhibitor = {
   ]
   ,
   designation: "CEO", 
+  facebookProfile: "https://www.facebook.com",
+  linkedinProfile: "https://www.linkedin.com",
+  instagramProfile: "https://www.instagram.com",
 };
