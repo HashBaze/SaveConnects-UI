@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ICategory } from "../interface/Interface";
+import { ICategory } from "../interface/InterFace";
 
 interface CategoryModalProps {
   isOpen: boolean;

@@ -5,7 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { AppContextType } from "../interface/Interface";
+import { AppContextType } from "../interface/InterFace";
 
 const AppContext = createContext<AppContextType | null>(null);
 

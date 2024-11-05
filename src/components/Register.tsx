@@ -5,7 +5,7 @@ import { RegisterRequest } from "../utils/ApiRequest";
 import { toast } from "react-toastify";
 import SelectModel from "../model/SelectModel";
 import { GetAllCategories } from "../utils/ApiRequest";
-import { ICategory } from "../interface/Interface";
+import { ICategory } from "../interface/InterFace";
 
 const Register: React.FC = () => {
   const emailRegex = /^[a-z]+@[^\s@]+\.[^\s@]+$/;

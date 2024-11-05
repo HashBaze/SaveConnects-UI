@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IProfileModal, IExhibitor } from "../interface/Interface";
+import { IProfileModal, IExhibitor } from "../interface/InterFace";
 
 interface EditProfileModalProps {
   isOpen: boolean;
