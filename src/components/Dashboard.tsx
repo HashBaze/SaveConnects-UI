@@ -5,7 +5,7 @@ import LoadingModal from "../model/LoadingModel";
 import QRGenerateModal from "../model/QRGenerateModel";
 import Loading from "./Loading";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { analytics } from "../firebase/firebase";
+import { analytics } from "../firebase/fireBase";
 import { toast } from "react-toastify";
 import {
   EditCoverImage,
