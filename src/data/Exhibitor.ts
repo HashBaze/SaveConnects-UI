@@ -1,4 +1,4 @@
-import { IExhibitor } from "../interface/Interface";
+import { IExhibitor } from "../interface/InterFace";
 
 export const Exhibitor: IExhibitor = {
   _id: "1",
@@ -21,4 +21,7 @@ export const Exhibitor: IExhibitor = {
   ]
   ,
   designation: "CEO", 
+  facebookProfile: "https://www.facebook.com",
+  linkedinProfile: "https://www.linkedin.com",
+  instagramProfile: "https://www.instagram.com",
 };

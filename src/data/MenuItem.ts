@@ -1,4 +1,4 @@
-import { IMenuItem } from "../interface/Interface";
+import { IMenuItem } from "../interface/InterFace";
 
 export const getMenuItems = (companyNameKey: string | null): IMenuItem[] => {
   const role = localStorage.getItem("role");

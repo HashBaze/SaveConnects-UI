@@ -5,7 +5,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { AppContextType } from "../interface/Interface";
+import { AppContextType } from "../interface/InterFace";
 
 const AppContext = createContext<AppContextType | null>(null);
 
@@ -52,6 +52,9 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           about: "",
           gallery: [],
           designation: "",
+          facebookProfile: "",
+          linkedinProfile: "",
+          instagramProfile: "",
         },
         setExhibitor: () => { return; },
         setSelsePersonName: (name: string) => setSalesPersonName(name)

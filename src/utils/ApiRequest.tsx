@@ -59,7 +59,11 @@ const EditExhibitorProfile = async (
   companyAddress: string,
   about: string,
   website: string,
-  designation: string
+  designation: string,
+  facebookProfile: string,
+  linkedinProfile: string,
+  instagramProfile: string,
+
 ) => {
   await api.put("/exhibitor/edit", {
     _id,
@@ -70,7 +74,10 @@ const EditExhibitorProfile = async (
     address: companyAddress,
     website,
     about,
-    designation
+    designation,
+    facebookProfile,
+    linkedinProfile,
+    instagramProfile
   });
 };
 
@@ -101,7 +108,7 @@ const editGalleryList = async (_id: string, images: string[]) => {
     _id,
     images,
   });
-}
+};
 
 const FogotPosswordRequest = async (email: string) => {
   const response = await api.post("/user/forgot-password", { email });
@@ -174,13 +181,15 @@ const SendInquiryEmail = async (
   name: string,
   from: string,
   to: string,
-  message: string
+  message: string,
+  contact: string
 ) => {
   const response = await api.post("/mail/send-inquiry-email", {
     name,
     from,
     to,
     message,
+    contact
   });
   return response;
 };
@@ -239,5 +248,5 @@ export {
   CreateCategory,
   GetAllCategories,
   DeleteCategory,
-  editGalleryList
+  editGalleryList,
 };

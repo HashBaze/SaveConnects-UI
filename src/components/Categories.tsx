@@ -3,7 +3,7 @@ import CategoryModel from "../model/CategoryModel";
 import LoadingModal from "../model/LoadingModel";
 import DeleteConformModel from "../model/DeleteConformModel";
 import Loading from "./Loading";
-import { ICategory } from "../interface/Interface";
+import { ICategory } from "../interface/InterFace";
 import {
   CreateCategory,
   GetAllCategories,
