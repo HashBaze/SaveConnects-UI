@@ -165,7 +165,6 @@ const Dashboard: React.FC = () => {
   const handleGalleryImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    // if (exhibitorData && exhibitorData?.gallery.length < 4) {
     const selectedFiles = Array.from(event.target.files || []);
 
     setGalleryImageArray((prevArray) => [
@@ -192,35 +191,6 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       console.error("Error converting files to base64", error);
     }
-    // }
-
-    // if (exhibitorData && exhibitorData?.gallery) {
-    //   const files = Array.from(event.target.files || []);
-
-    //   if (files && exhibitorData?._id) {
-    //     setIsUploading(true);
-    //     try {
-    //       const imageUrls: string[] = await Promise.all(
-    //         files.map(async (file) => {
-    //           const imageUrl = await uploadImageToFirebase(
-    //             file,
-    //             `gallery-images/${file.name}`
-    //           );
-    //           return imageUrl;
-    //         })
-    //       );
-    //       await EditGalleryImage(exhibitorData._id, imageUrls);
-    //       setExhibitorData((prevData) => ({
-    //         ...prevData!,
-    //         gallery: [...prevData!.gallery, ...imageUrls],
-    //       }));
-    //     } catch (error) {
-    //       console.error("Error uploading gallery image:", error);
-    //     } finally {
-    //       setIsUploading(false);
-    //     }
-    //   }
-    // }
   };
 
   const upload4GalleryImages = async () => {
@@ -548,26 +518,6 @@ const Dashboard: React.FC = () => {
                     />
                   </div>
                 ))}
-
-                {/* {exhibitorData?.gallery && exhibitorData.gallery.length >= 1 ? (
-                  <div
-                    className={`flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg ${
-                      galleryImageArray && galleryImageArray?.length >= 1
-                        ? "hidden"
-                        : ""
-                    }`}
-                    onClick={handleGalleryAddClick}
-                  >
-                    <img
-                      src="/icon/image.svg"
-                      alt="Add Image"
-                      className="w-8 h-8 sm:w-16 sm:h-16"
-                    />
-                    <span className="mt-2 text-[10px] sm:text-[16px] text-gray-600">
-                      Add Image
-                    </span>
-                  </div>
-                ) : ( */}
                 <div
                   className={`flex z-10 flex-col items-center justify-center bg-gray-200 sm:w-[300px] sm:h-[300px] w-[100px] h-[100px] rounded-[20px] cursor-pointer hover:bg-gray-300 border border-gray-300 shadow-lg ${
                     exhibitorData &&
@@ -588,7 +538,6 @@ const Dashboard: React.FC = () => {
                     Select Image
                   </span>
                 </div>
-                {/* )} */}
               </div>
 
               {galleryImageArray && galleryImageArray?.length >= 1 ? (
