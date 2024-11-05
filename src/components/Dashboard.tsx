@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { IExhibitor, IProfileModal } from "../interface/InterFace";
+import { IExhibitor, IProfileModal } from "../interface/InterFaces";
 import ProfileModal from "../model/ProfileModel";
 import LoadingModal from "../model/LoadingModel";
 import QRGenerateModal from "../model/QRGenerateModel";

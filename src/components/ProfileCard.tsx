@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IExhibitor } from "../interface/InterFace";
+import { IExhibitor } from "../interface/InterFaces";
 import { CompanyKeyExistsRequest } from "../utils/ApiRequest";
 import EmailModal from "../model/EmailModal";
 import { toast } from "react-toastify";

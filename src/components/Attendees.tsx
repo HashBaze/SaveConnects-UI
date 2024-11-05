@@ -5,7 +5,7 @@ import LoadingModal from "../model/LoadingModel";
 import Pagination from "../model/PaginationModel";
 import DeleteConformModel from "../model/DeleteConformModel";
 import Loading from "./Loading";
-import { IAttendee } from "../interface/InterFace";
+import { IAttendee } from "../interface/InterFaces";
 import {
   AddAttendee,
   GetExhibitorProfile,

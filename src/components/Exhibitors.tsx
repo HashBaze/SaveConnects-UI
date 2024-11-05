@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Pagination from "../model/PaginationModel";
 import Loading from "./Loading";
-import { IExhibitor } from "../interface/InterFace";
+import { IExhibitor } from "../interface/InterFaces";
 import { GetAllExhibitors, ExhibitorStatusChange } from "../utils/ApiRequest";
 import { toast } from "react-toastify";
 
