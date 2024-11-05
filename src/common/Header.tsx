@@ -1,5 +1,5 @@
 import React from "react";
-import { Breadcrumb } from "../interface/InterFace";
+import { Breadcrumb } from "../interface/InterFaces";
 import { useAppContext } from "../context/AppProvider";
 
 const Header: React.FC<Breadcrumb> = ({ breadcrumb }: Breadcrumb) => {

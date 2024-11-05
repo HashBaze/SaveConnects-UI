@@ -1,4 +1,4 @@
-import { IExhibitor } from "../interface/InterFace";
+import { IExhibitor } from "../interface/InterFaces";
 
 export const Exhibitor: IExhibitor = {
   _id: "1",
