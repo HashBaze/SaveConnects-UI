@@ -504,22 +504,6 @@ const Dashboard: React.FC = () => {
                   Gallery Section
                 </div>
               </div>
-              {/* <div className="mt-4">
-                {exhibitorData && exhibitorData?.gallery.length === 4 ? (
-                  <button
-                    onClick={() => {
-                      setDeleteAllOpen(true);
-                    }}
-                    className="flex items-center justify-center bg-red-400 w-8 h-8 rounded-lg cursor-pointer mt-4 mr-4"
-                  >
-                    <img
-                      src="/icon/delete.svg"
-                      alt="Delete"
-                      className="w-6 h-6"
-                    />
-                  </button>
-                ) : null}
-              </div> */}
             </section>
             <section className="overflow-scroll custom-scrollbar">
               <div className="flex relative flex-wrap flex-row items-center justify-center lg:justify-start px-8 mt-4 mb-4 space-y-4 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 lg:grid lg:grid-cols-5 lg:gap-8">
