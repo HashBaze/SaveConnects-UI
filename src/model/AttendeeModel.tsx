@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IAttendee } from "../interface/Interface";
+import { IAttendee } from "../interface/InterFace";
 
 interface AttendeeModalProps {
   isOpen: boolean;

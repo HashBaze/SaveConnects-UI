@@ -11,7 +11,7 @@ export interface Breadcrumb {
 
 export interface AppContextType {
   sideBarOpen: boolean;
-  setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toggleSideBar: () => void;
   companyKey: string;
   setCompanyKey: React.Dispatch<React.SetStateAction<string>>;
@@ -36,6 +36,9 @@ export interface IExhibitor {
   gallery: string[];
   isEnabled?: boolean;
   designation: string;
+  facebookProfile: string;
+  linkedinProfile: string;
+  instagramProfile: string;
 }
 
 export interface IAttendee {
@@ -56,6 +59,9 @@ export interface IProfileModal {
   about: string;
   website: string;
   designation: string;
+  facebookProfile: string;
+  linkedinProfile: string;
+  instagramProfile: string;
 }
 
 export interface ICategory {

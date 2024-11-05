@@ -19,6 +19,7 @@ const EmailModal: React.FC<EmailModalProps> = ({
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [contact, setContact] = useState<string>("");
 
   if (!isOpen) return null;
 
@@ -34,12 +35,13 @@ const EmailModal: React.FC<EmailModalProps> = ({
     if (exhibitorEmail) {
       try {
         setLoading(true);
-        await SendInquiryEmail(name, email, exhibitorEmail, message);
+        await SendInquiryEmail(name, email, exhibitorEmail, message, contact);
         toast.success("Email sent successfully");
         setLoading(false);
         setEmail("");
         setName("");
         setMessage("");
+        setContact("");
         onClose();
       } catch (err) {
         setLoading(false);
@@ -67,6 +69,20 @@ const EmailModal: React.FC<EmailModalProps> = ({
               onChange={(e) => setName(e.target.value)}
               className="mt-1 block w-full h-[40px] border-naviblue rounded-md shadow-sm p-2"
               placeholder="Enter your name"
+            />
+          </div>
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Contact Number ...
+          </label>
+          <div className="flex">
+            <input
+              type="text"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              className="mt-1 block w-full h-[40px] border-naviblue rounded-md shadow-sm p-2"
+              placeholder="Enter your Contact Number"
             />
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IProfileModal, IExhibitor } from "../interface/Interface";
+import { IProfileModal, IExhibitor } from "../interface/InterFace";
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -23,6 +23,9 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
     about: "",
     website: "",
     designation: "",
+    facebookProfile: "",
+    linkedinProfile: "",
+    instagramProfile: "",
   });
   const [countryCode, setCountryCode] = useState<string>("+94");
   const [phoneError, setPhoneError] = useState<boolean>(false);
@@ -71,6 +74,9 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
         about: initialData.about,
         website: initialData.website,
         designation: initialData.designation,
+        facebookProfile: initialData.facebookProfile,
+        linkedinProfile: initialData.linkedinProfile,
+        instagramProfile: initialData.instagramProfile,
       });
       setCountryCode(code || "+94");
     }
@@ -210,6 +216,52 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
               />
             </div>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex h-12 lg:h-16">
+              <input
+                type="text"
+                name="salesPersonName"
+                value={formData.salesPersonName}
+                onChange={handleChange}
+                placeholder="Sales Person Name"
+                className="w-full text-sm lg:text-lg p-4 border rounded-md lg:rounded-lg"
+              />
+            </div>
+            <div className="flex h-12 lg:h-16">
+              <input
+                type="text"
+                name="instagramProfile"
+                value={formData.instagramProfile}
+                onChange={handleChange}
+                placeholder="Instagram Profile"
+                className="w-full text-sm lg:text-lg p-4 border rounded-md lg:rounded-lg"
+              />
+            </div>
+            <div className="flex h-12 lg:h-16">
+              <input
+                type="text"
+                name="facebookProfile"
+                value={formData.facebookProfile}
+                onChange={handleChange}
+                placeholder="Facebook Profile"
+                className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
+              />
+            </div>
+            
+            <div className="flex h-12 lg:h-16">
+              <input
+                type="text"
+                name="linkedinProfile"
+                value={formData.linkedinProfile}
+                onChange={handleChange}
+                placeholder="Linkedin Profile"
+                className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
+              />
+            </div>
+          </div>
+
+
           <div className="flex h-12 lg:h-16">
             <input
               type="text"

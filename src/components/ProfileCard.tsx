@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IExhibitor } from "../interface/Interface";
+import { IExhibitor } from "../interface/InterFace";
 import { CompanyKeyExistsRequest } from "../utils/ApiRequest";
 import EmailModal from "../model/EmailModal";
 import { toast } from "react-toastify";
@@ -26,36 +26,39 @@ const ProfileCard: React.FC = () => {
       "attendees",
     ];
     if (!availableRoutes.includes(path)) {
-      const fetchExhibitorData = async () => {
-        try {
-          const { data } = await CompanyKeyExistsRequest(path);
-
-          setExhibitorData({
-            _id: data.data._id,
-            email: data.data.email,
-            salesPersonName: data.data.salesPersonName,
-            companyName: data.data.companyName,
-            companyNameKey: data.data.companyNameKey,
-            coverImage: data.data.coverImage,
-            companyCategory: data.data.companyCategory,
-            phoneNumber: data.data.phoneNumber,
-            website: data.data.website,
-            address: data.data.address,
-            about: data.data.about,
-            gallery: data.data.gallery,
-            designation: data.data.designation,
-          });
-
-          setLoadingImages(new Array(data.data.gallery.length).fill(true));
-          setIsCoverImageLoading(true);
-        } catch (err) {
-          console.error("Failed to fetch exhibitor data:", err);
-        }
-      };
-
       fetchExhibitorData();
     }
   }, [path]);
+
+  const fetchExhibitorData = async () => {
+    try {
+      const { data } = await CompanyKeyExistsRequest(path);
+
+      setExhibitorData({
+        _id: data.data._id,
+        email: data.data.email,
+        salesPersonName: data.data.salesPersonName,
+        companyName: data.data.companyName,
+        companyNameKey: data.data.companyNameKey,
+        coverImage: data.data.coverImage,
+        companyCategory: data.data.companyCategory,
+        phoneNumber: data.data.phoneNumber,
+        website: data.data.website,
+        address: data.data.address,
+        about: data.data.about,
+        gallery: data.data.gallery,
+        designation: data.data.designation,
+        facebookProfile: data.data.facebookProfile,
+        linkedinProfile: data.data.linkedinProfile,
+        instagramProfile: data.data.instagramProfile,
+      });
+
+      setLoadingImages(new Array(data.data.gallery.length).fill(true));
+      setIsCoverImageLoading(true);
+    } catch (err) {
+      console.error("Failed to fetch exhibitor data:", err);
+    }
+  };
 
   const dowenloadVcfContact = (exhibitorData: IExhibitor) => {
     const makeVCardVersion = (): string => `VERSION:3.0`;
@@ -421,6 +424,47 @@ END:VCARD`;
                             </div>
                           )}
                         </div>
+                        <div className="flex  items-center justify-center gap-4">
+                          {exhibitorData?.facebookProfile && (
+                            <a
+                              href={exhibitorData?.facebookProfile}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <img
+                                src="/icon/facebook.svg"
+                                alt="Facebook"
+                                className="w-5 h-6"
+                              />
+                            </a>
+                          )}
+                          {exhibitorData?.linkedinProfile && (
+                            <a
+                              href={exhibitorData?.linkedinProfile}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <img
+                                src="/icon/linkedin.svg"
+                                alt="Linkedin"
+                                className="w-7 h-7"
+                              />
+                            </a>
+                          )}
+                          {exhibitorData?.instagramProfile && (
+                            <a
+                              href={exhibitorData?.instagramProfile}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <img
+                                src="/icon/instagram.svg"
+                                alt="Instagram"
+                                className="w-6 h-6"
+                              />
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -434,36 +478,34 @@ END:VCARD`;
                       aria-labelledby="about-tab"
                     >
                       <div className="grid grid-cols-2 gap-2">
-                        {exhibitorData?.gallery
-                          ?.slice(0, 4)
-                          .map((image, index) => (
-                            <div key={index} className="relative mx-auto">
-                              {loadingImages[index] && (
-                                <div className="flex items-center justify-center p-4">
-                                  <Loader />
-                                </div>
-                              )}
-                              <img
-                                onClick={() => {
-                                  setViewImageModal(true);
-                                  setModalImage(image);
-                                }}
-                                src={image}
-                                alt="Gallery"
-                                className={`w-[130px] cursor-pointer h-[130px] md:h-[200px] md:w-[200px] rounded-lg object-cover ${
-                                  loadingImages[index] ? "hidden" : "block"
-                                }`}
-                                onLoad={() => handleImageLoad(index)}
+                        {exhibitorData?.gallery.map((image, index) => (
+                          <div key={index} className="relative mx-auto">
+                            {loadingImages[index] && (
+                              <div className="flex items-center justify-center p-4">
+                                <Loader />
+                              </div>
+                            )}
+                            <img
+                              onClick={() => {
+                                setViewImageModal(true);
+                                setModalImage(image);
+                              }}
+                              src={image}
+                              alt="Gallery"
+                              className={`w-[130px] cursor-pointer h-[130px] md:h-[200px] md:w-[200px] rounded-lg object-cover ${
+                                loadingImages[index] ? "hidden" : "block"
+                              }`}
+                              onLoad={() => handleImageLoad(index)}
+                            />
+                            {viewImageModal && (
+                              <ProfileImageViewModal
+                                onClose={() => setViewImageModal(false)}
+                                companyName={exhibitorData?.companyName}
+                                initialData={modalImage}
                               />
-                              {viewImageModal && (
-                                <ProfileImageViewModal
-                                  onClose={() => setViewImageModal(false)}
-                                  companyName={exhibitorData?.companyName}
-                                  initialData={modalImage}
-                                />
-                              )}
-                            </div>
-                          ))}
+                            )}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
