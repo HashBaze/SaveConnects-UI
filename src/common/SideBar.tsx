@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../context/AppProvider";
 import { getMenuItems } from "../data/MenuItem";
-import { IMenuItem } from "../interface/InterFace";
+import { IMenuItem } from "../interface/Interface";
 import { useNavigate, useLocation } from "react-router-dom";
 import SignOutModal from "../model/SignOutModel";
 

@@ -6,7 +6,7 @@ import React, {
   MouseEvent,
 } from "react";
 import { useClickAway } from "react-use";
-import { ICategory } from "../interface/InterFace";
+import { ICategory } from "../interface/Interface";
 
 interface SelectModelProps {
   options: ICategory[];

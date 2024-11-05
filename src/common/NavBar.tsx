@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IMenuItem } from "../interface/InterFace";
+import { IMenuItem } from "../interface/Interface";
 import { isTokenExpired, logout } from "../utils/JWTUtils";
 import { useNavigate } from "react-router-dom";
 
