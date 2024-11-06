@@ -26,9 +26,11 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
     facebookProfile: "",
     linkedinProfile: "",
     instagramProfile: "",
+    services: [],
   });
   const [countryCode, setCountryCode] = useState<string>("+94");
   const [phoneError, setPhoneError] = useState<boolean>(false);
+  const [servicesText, setServicesText] = useState<string>();
 
   const countryOptions = [
     "+94 (SR)",
@@ -64,6 +66,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
 
   useEffect(() => {
     if (initialData) {
+      setServicesText(initialData.services.join(", "));
       const [code, number] = initialData.phoneNumber.split(" ", 2);
       setFormData({
         salesPersonName: initialData.salesPersonName,
@@ -77,6 +80,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
         facebookProfile: initialData.facebookProfile,
         linkedinProfile: initialData.linkedinProfile,
         instagramProfile: initialData.instagramProfile,
+        services: initialData.services,
       });
       setCountryCode(code || "+94");
     }
@@ -108,6 +112,8 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
       formData.phoneNumber = formData.phoneNumber.slice(1);
     }
 
+    formData.services = (servicesText || "").split(",").map((service) => service.trim());
+
     e.preventDefault();
     const dataToSave = {
       ...formData,
@@ -135,7 +141,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
         </div>
         <form className="p-6 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex h-12 lg:h-16">
+            <div className="flex h-12 lg:h-12">
               <input
                 type="text"
                 name="salesPersonName"
@@ -145,7 +151,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 className="w-full text-sm lg:text-lg p-4 border rounded-md lg:rounded-lg"
               />
             </div>
-            <div className="flex h-12 lg:h-16">
+            <div className="flex h-12 lg:h-12">
               <input
                 type="text"
                 name="companyName"
@@ -155,7 +161,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 className="w-full text-sm lg:text-lg p-4 border rounded-md lg:rounded-lg"
               />
             </div>
-            <div className="flex h-12 lg:h-16">
+            <div className="flex h-12 lg:h-12">
               <input
                 type="email"
                 name="companyEmail"
@@ -165,11 +171,11 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
               />
             </div>
-            <div className="flex h-12 lg:h-16">
+            <div className="flex h-12 lg:h-11">
               <select
                 value={countryCode}
                 onChange={handleCountryCodeChange}
-                className={`w-[30%] text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg ${
+                className={`w-[35%] text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg ${
                   needsScrollbar ? "max-h-36 overflow-y-auto" : ""
                 }`}
               >
@@ -186,7 +192,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                   value={formData.phoneNumber}
                   onChange={handleChange}
                   placeholder="Phone Number"
-                  className="w-[100%] h-[73%] ml-1 text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
+                  className="w-[100%] ml-1 text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
                 />
                 {phoneError && (
                   <p className="text-red-500 text-[12px]">
@@ -195,7 +201,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 )}
               </div>
             </div>
-            <div className="flex h-12 lg:h-16">
+            <div className="flex h-12 lg:h-12">
               <input
                 type="text"
                 name="companyAddress"
@@ -205,7 +211,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
               />
             </div>
-            <div className="flex h-12 lg:h-16">
+            <div className="flex h-12 lg:h-12">
               <input
                 type="text"
                 name="website"
@@ -218,7 +224,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex h-12 lg:h-16">
+            <div className="flex h-12 lg:h-12">
               <input
                 type="text"
                 name="salesPersonName"
@@ -228,7 +234,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 className="w-full text-sm lg:text-lg p-4 border rounded-md lg:rounded-lg"
               />
             </div>
-            <div className="flex h-12 lg:h-16">
+            <div className="flex h-12 lg:h-12">
               <input
                 type="text"
                 name="instagramProfile"
@@ -238,7 +244,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 className="w-full text-sm lg:text-lg p-4 border rounded-md lg:rounded-lg"
               />
             </div>
-            <div className="flex h-12 lg:h-16">
+            <div className="flex h-12 lg:h-12">
               <input
                 type="text"
                 name="facebookProfile"
@@ -248,8 +254,8 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
               />
             </div>
-            
-            <div className="flex h-12 lg:h-16">
+
+            <div className="flex h-12 lg:h-12">
               <input
                 type="text"
                 name="linkedinProfile"
@@ -261,8 +267,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
             </div>
           </div>
 
-
-          <div className="flex h-12 lg:h-16">
+          <div className="flex h-12 lg:h-12">
             <input
               type="text"
               name="designation"
@@ -271,6 +276,22 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
               placeholder="Designation"
               className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
             />
+          </div>
+
+          <div>
+            <small className="mb-3">Services (comma separated , )</small>
+            <div className="flex h-12 mt-1 lg:h-12">
+              <input
+                type="text"
+                name="services"
+                value={servicesText}
+                onChange={(e)=>{
+                  setServicesText(e.target.value);
+                }}
+                placeholder="Services"
+                className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
+              />
+            </div>
           </div>
           <div className="flex h-auto">
             <textarea

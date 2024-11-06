@@ -39,6 +39,7 @@ export interface IExhibitor {
   facebookProfile: string;
   linkedinProfile: string;
   instagramProfile: string;
+  services: string[];
 }
 
 export interface IAttendee {
@@ -62,6 +63,7 @@ export interface IProfileModal {
   facebookProfile: string;
   linkedinProfile: string;
   instagramProfile: string;
+  services: string[];
 }
 
 export interface ICategory {

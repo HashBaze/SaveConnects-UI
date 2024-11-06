@@ -79,6 +79,7 @@ const Dashboard: React.FC = () => {
             facebookProfile: data.data.facebookProfile,
             linkedinProfile: data.data.linkedinProfile,
             instagramProfile: data.data.instagramProfile,
+            services: data.data.services,
           });
         } catch (err) {
           console.error("Failed to fetch exhibitor data:", err);
@@ -296,7 +297,8 @@ const Dashboard: React.FC = () => {
         newData.designation,
         newData.facebookProfile,
         newData.linkedinProfile,
-        newData.instagramProfile
+        newData.instagramProfile,
+        newData.services
       );
       toast.success("Profile updated successfully");
       setExhibitorData((prevData) => ({
@@ -312,6 +314,7 @@ const Dashboard: React.FC = () => {
         facebookProfile: newData.facebookProfile,
         linkedinProfile: newData.linkedinProfile,
         instagramProfile: newData.instagramProfile,
+        services: newData.services,
       }));
     } catch (err) {
       toast.error("Failed to update profile");
@@ -433,6 +436,7 @@ const Dashboard: React.FC = () => {
                   </a>
                 </div>
               </div>
+
               <div className="flex flex-row space-x-2">
                 <img
                   src="/icon/location.svg"
@@ -450,6 +454,55 @@ const Dashboard: React.FC = () => {
                 {exhibitorData?.about}
               </div>
             </div>
+
+            <h4 className="text-[16px] mb-3 px-8 mt-4">
+              Social Media Links
+            </h4>
+            <div className="flex items-center justify-start">
+              <div className="flex flex-row space-x-4 px-8 mb-4">
+                {exhibitorData?.facebookProfile && (
+                  <a
+                    href={exhibitorData?.facebookProfile}
+                    target="_blank"
+                    className="text-naviblue"
+                  >
+                    <img
+                      src="/icon/facebook.svg"
+                      alt="Facebook"
+                      className="w-6 h-6 p-1"
+                    />
+                  </a>
+                )}
+                {exhibitorData?.linkedinProfile && (
+                  <a
+                    href={exhibitorData?.linkedinProfile}
+                    target="_blank"
+                    className="text-naviblue"
+                  >
+                    <img
+                      src="/icon/linkedin.svg"
+                      alt="Instagram"
+                      className="w-8"
+                    />
+                  </a>
+                )}
+
+                {exhibitorData?.instagramProfile && (
+                  <a
+                    href={exhibitorData?.instagramProfile}
+                    target="_blank"
+                    className="text-naviblue"
+                  >
+                    <img
+                      src="/icon/instagram.svg"
+                      alt="Instagram"
+                      className="w-8"
+                    />
+                  </a>
+                )}
+              </div>
+            </div>
+
             <div className="flex items-center justify-center lg:justify-start px-8 mb-4">
               <button
                 onClick={handleOpenQRModal}

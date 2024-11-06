@@ -55,6 +55,7 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           facebookProfile: "",
           linkedinProfile: "",
           instagramProfile: "",
+          services: [],
         },
         setExhibitor: () => { return; },
         setSelsePersonName: (name: string) => setSalesPersonName(name)
