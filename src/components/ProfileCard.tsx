@@ -51,6 +51,7 @@ const ProfileCard: React.FC = () => {
         facebookProfile: data.data.facebookProfile,
         linkedinProfile: data.data.linkedinProfile,
         instagramProfile: data.data.instagramProfile,
+        services: data.data.services,
       });
 
       setLoadingImages(new Array(data.data.gallery.length).fill(true));
@@ -265,6 +266,23 @@ END:VCARD`;
                         Hi! My name is {exhibitorData?.salesPersonName}. It's
                         nice to meet you.
                       </p>
+
+                      {exhibitorData?.services && (
+                        <div className="relative bg-gray-200 p-2 rounded-lg left-0 space-y-1 text-left w-full">
+                          <h4 className="text-md font-medium text-gray-700 mb-2">
+                            Our Services:
+                          </h4>
+
+                          {exhibitorData.services.map((service, index) => (
+                            <div key={index} className="flex items-center gap-2">
+                              <p className="text-gray-600 font-semibold">
+                                {index + 1}.
+                              </p>
+                              <p className="text-gray-600">{service}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
 
                       <button
                         onClick={() => setActiveTab("company")}

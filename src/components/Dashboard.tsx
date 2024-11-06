@@ -79,6 +79,7 @@ const Dashboard: React.FC = () => {
             facebookProfile: data.data.facebookProfile,
             linkedinProfile: data.data.linkedinProfile,
             instagramProfile: data.data.instagramProfile,
+            services: data.data.services,
           });
         } catch (err) {
           console.error("Failed to fetch exhibitor data:", err);
@@ -296,7 +297,8 @@ const Dashboard: React.FC = () => {
         newData.designation,
         newData.facebookProfile,
         newData.linkedinProfile,
-        newData.instagramProfile
+        newData.instagramProfile,
+        newData.services
       );
       toast.success("Profile updated successfully");
       setExhibitorData((prevData) => ({
@@ -312,6 +314,7 @@ const Dashboard: React.FC = () => {
         facebookProfile: newData.facebookProfile,
         linkedinProfile: newData.linkedinProfile,
         instagramProfile: newData.instagramProfile,
+        services: newData.services,
       }));
     } catch (err) {
       toast.error("Failed to update profile");
