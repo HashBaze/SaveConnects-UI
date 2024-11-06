@@ -112,7 +112,13 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
       formData.phoneNumber = formData.phoneNumber.slice(1);
     }
 
-    formData.services = (servicesText || "").split(",").map((service) => service.trim());
+    formData.services = (servicesText || "")
+      .split(",")
+      .map((service) => service.trim());
+
+    if (formData.services.length === 1 && formData.services[0] === "") {
+      formData.services = [];
+    }
 
     e.preventDefault();
     const dataToSave = {
@@ -285,7 +291,7 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 type="text"
                 name="services"
                 value={servicesText}
-                onChange={(e)=>{
+                onChange={(e) => {
                   setServicesText(e.target.value);
                 }}
                 placeholder="Services"
