@@ -63,6 +63,7 @@ const EditExhibitorProfile = async (
   facebookProfile: string,
   linkedinProfile: string,
   instagramProfile: string,
+  services: string[],
 
 ) => {
   await api.put("/exhibitor/edit", {
@@ -77,7 +78,8 @@ const EditExhibitorProfile = async (
     designation,
     facebookProfile,
     linkedinProfile,
-    instagramProfile
+    instagramProfile,
+    services
   });
 };
 

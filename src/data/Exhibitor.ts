@@ -24,4 +24,5 @@ export const Exhibitor: IExhibitor = {
   facebookProfile: "https://www.facebook.com",
   linkedinProfile: "https://www.linkedin.com",
   instagramProfile: "https://www.instagram.com",
+  services: ["Software Development", "Mobile App Development", "Web Development"],
 };
