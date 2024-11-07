@@ -267,14 +267,17 @@ END:VCARD`;
                         nice to meet you.
                       </p>
 
-                      {exhibitorData?.services && (
+                      {exhibitorData && exhibitorData?.services.length > 0 ? (
                         <div className="relative bg-gray-200 p-2 rounded-lg left-0 space-y-1 text-left w-full">
                           <h4 className="text-md font-medium text-gray-700 mb-2">
                             Our Services:
                           </h4>
 
                           {exhibitorData.services.map((service, index) => (
-                            <div key={index} className="flex items-center gap-2">
+                            <div
+                              key={index}
+                              className="flex items-center gap-2"
+                            >
                               <p className="text-gray-600 font-semibold">
                                 {index + 1}.
                               </p>
@@ -282,7 +285,7 @@ END:VCARD`;
                             </div>
                           ))}
                         </div>
-                      )}
+                      ): null}
 
                       <button
                         onClick={() => setActiveTab("company")}
