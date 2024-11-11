@@ -233,13 +233,14 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
             <div className="flex h-12 lg:h-12">
               <input
                 type="text"
-                name="salesPersonName"
-                value={formData.salesPersonName}
+                name="designation"
+                value={formData.designation}
                 onChange={handleChange}
-                placeholder="Sales Person Name"
-                className="w-full text-sm lg:text-lg p-4 border rounded-md lg:rounded-lg"
+                placeholder="Designation"
+                className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
               />
             </div>
+
             <div className="flex h-12 lg:h-12">
               <input
                 type="text"
@@ -271,17 +272,6 @@ const ProfileModal: React.FC<EditProfileModalProps> = ({
                 className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
               />
             </div>
-          </div>
-
-          <div className="flex h-12 lg:h-12">
-            <input
-              type="text"
-              name="designation"
-              value={formData.designation}
-              onChange={handleChange}
-              placeholder="Designation"
-              className="w-full text-sm lg:text-lg p-2 border rounded-md lg:rounded-lg"
-            />
           </div>
 
           <div>

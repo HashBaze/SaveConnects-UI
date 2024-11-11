@@ -8,7 +8,8 @@ import { GetAllCategories } from "../utils/ApiRequest";
 import { ICategory } from "../interface/InterFaces";
 
 const Register: React.FC = () => {
-  const emailRegex = /^[a-z]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[a-z0-9]+@[^\s@]+\.[^\s@]+$/;
+
   const [hide, setHide] = useState<boolean>(true);
   const [confirmHide, setConfirmHide] = useState<boolean>(true);
   const [formData, setFormData] = useState({
@@ -47,8 +48,7 @@ const Register: React.FC = () => {
     const newErrors: { [key: string]: string } = {};
 
     const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[#$@!%*?&])[A-Za-z\d#$@!%*?&]{8,}$/;
-
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[#$@!%*?&+])[A-Za-z\d#$@!%*?&+]{8,}$/;
     if (!formData.companyName)
       newErrors.companyName = "Company Name is required.";
     if (!formData.companyCategory)
@@ -199,15 +199,16 @@ const Register: React.FC = () => {
                   type="email"
                   value={formData.email}
                   onChange={(e) => {
-                    setFormData({ ...formData, email: e.target.value });
-                    if (!emailRegex.test(formData.email)) {
+                    const emailValue = e.target.value;
+                    setFormData({ ...formData, email: emailValue });
+                    if (emailRegex.test(emailValue)) {
+                      setErrors({ ...errors, email: "" });
+                    } else {
                       setErrors({
                         ...errors,
                         email:
-                          "Please enter a valid email address , (simple characters)",
+                          "Please enter a valid email address (only simple characters)",
                       });
-                    } else {
-                      setErrors({ ...errors, email: "" });
                     }
                   }}
                   placeholder="Enter your email address"
