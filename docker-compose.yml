@@ -5,11 +5,56 @@
 # docker pull using DockerHub, so please change username: tishan001 replace to your dockerhub username
 # and also change repo: save-connects to your dockerhub repo
 
+# version: '3.8'
+
+# services:
+#   backend:
+#     image: tishan001/save-connects:backend
+#     container_name: saveconnects-backend
+#     restart: unless-stopped
+#     env_file:
+#       - ./SaveConnects-BE/.env
+#     ports:
+#       - 8080:8080
+#     networks:
+#       - save-connects
+
+#   frontend:
+#     image: tishan001/save-connects:frontend
+#     container_name: saveconnects-frontend
+#     restart: unless-stopped
+#     env_file:
+#       - ./SaveConnects-UI/.env
+#     ports:
+#       - 3000:3000
+#     networks:
+#       - save-connects
+#     depends_on:
+#       - backend
+
+# networks:
+#   save-connects:
+#     driver: bridge
+
 version: '3.8'
 
 services:
+  mongodb:
+    image: mongo
+    container_name: saveconnects-mongodb
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=hbroot@123
+      - MONGO_INITDB_DATABASE=saveconnects-db
+    ports:
+      - "27017:27017"  
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - save-connects
   backend:
-    image: tishan001/save-connects:backend
+    image: hashbaze/save-connects:backend
     container_name: saveconnects-backend
     restart: unless-stopped
     env_file:
@@ -18,9 +63,13 @@ services:
       - 8080:8080
     networks:
       - save-connects
+    depends_on:
+      - mongodb
+    volumes:
+      - ./SaveConnects-BE/logs:/app/logs 
 
   frontend:
-    image: tishan001/save-connects:frontend
+    image: hashbaze/save-connects:frontend
     container_name: saveconnects-frontend
     restart: unless-stopped
     env_file:
@@ -35,3 +84,7 @@ services:
 networks:
   save-connects:
     driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
