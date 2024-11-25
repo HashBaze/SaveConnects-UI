@@ -198,18 +198,20 @@ const Register: React.FC = () => {
                 <input
                   type="email"
                   value={formData.email}
-                  onChange={(e) => {
+                  onBlur={(e) => {
                     const emailValue = e.target.value;
-                    setFormData({ ...formData, email: emailValue });
-                    if (emailRegex.test(emailValue)) {
-                      setErrors({ ...errors, email: "" });
-                    } else {
+                    if (!emailRegex.test(emailValue)) {
                       setErrors({
                         ...errors,
                         email:
                           "Please enter a valid email address (only simple characters)",
                       });
+                    } else {
+                      setErrors({ ...errors, email: "" });
                     }
+                  }}
+                  onChange={(e) => {
+                    setFormData({ ...formData, email: e.target.value });
                   }}
                   placeholder="Enter your email address"
                   className="block w-full h-8 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-naviblue focus:border-naviblue sm:text-sm"
@@ -219,6 +221,7 @@ const Register: React.FC = () => {
                 <p className="text-red-500 text-sm">{errors.email}</p>
               )}
             </div>
+
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-6">
               <div className="relative">
                 <label className="block text-sm font-medium text-gray-700">
